@@ -1,3 +1,4 @@
+//Dependencies
 import React , { Component } from "react";
 import {Link} from 'react-router-dom';
 import axios from 'axios';
@@ -12,6 +13,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 //CSS Styles
+//This is to make the Delete button look like a link
 const styleLink = {
     overflow: 'visible',
     width: 'auto',
@@ -42,12 +44,14 @@ const User = props => (
 //Class Component
 export default class UserList extends Component {   
 
+    //Set state and bindings
     constructor(props){
         super(props);
         this.deleteUser  = this.deleteUser.bind(this);
         this.state = {users: []};
     }
 
+    //Get all the users when the component mounts
     componentDidMount(){
         axios.get(API_URL)
         .then(response => {
@@ -86,7 +90,6 @@ export default class UserList extends Component {
             return <User users={currentUser} deleteUser={this.deleteUser} key={currentUser._id}/>;
     });
 };
-
 
     render(){
         return(

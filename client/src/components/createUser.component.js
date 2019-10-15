@@ -1,3 +1,4 @@
+//Dependencies
 import React , { Component } from "react";
 import axios from 'axios';
 
@@ -18,6 +19,7 @@ const styleBtn = {
 //Class Component
 export default class CreateUser extends Component {
 
+    //Set state and bindings
     constructor(props){
         //Need super if a sub class, this is not in app.js
         super(props);
@@ -35,25 +37,29 @@ export default class CreateUser extends Component {
             image:'',
         }
     }
-
+    
+    //Set state when the name changes
     onChangeName(e){
         this.setState({
             name: e.target.value
         });
     }
 
+    //Set state when the skill level changes
     onChangeSkillLevel(e){
         this.setState({
             skillLevel: e.target.value
         });
     }
 
+    //Set state when the image url changes
     onChangeImage(e){
         this.setState({
             image: e.target.value
         });
     }
 
+    //Method to route to root when clicks cancel
     onCancel(e){
         //Prevent default submission
         e.preventDefault();
@@ -62,6 +68,7 @@ export default class CreateUser extends Component {
         window.location = '/';
     }
 
+    //Method when click Save Changes button
     onSubmit(e){
         //Prevent default submission
         e.preventDefault();
@@ -74,7 +81,6 @@ export default class CreateUser extends Component {
         }
 
         //Send to back-end, look at routes/rally.route.js
-        //todo need to change to production and local db
         axios.post(`${API_URL}/add`, user)
         .then(res => console.log(res.data))
         .catch(err => console.log(err));

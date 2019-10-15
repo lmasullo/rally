@@ -1,3 +1,4 @@
+//Dependencies
 import React from 'react';
 import "bootstrap/dist/css/bootstrap.min.css"
 import { BrowserRouter as Router, Route } from "react-router-dom";
@@ -8,6 +9,7 @@ import UserList from "./components/userList.component";
 import CreateUser from "./components/createUser.component";
 import EditUser from "./components/editUser.component";
 
+//Main Component that is served up in index.js
 function App() {
   return (
     <Router>
@@ -22,4 +24,5 @@ function App() {
   );
 }
 
+//Export the component
 export default App;

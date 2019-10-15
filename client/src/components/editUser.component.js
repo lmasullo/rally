@@ -1,3 +1,4 @@
+//Dependencies
 import React , { Component } from "react";
 import axios from 'axios';
 
@@ -10,14 +11,15 @@ if (process.env.NODE_ENV === 'production') {
     API_URL = 'http://localhost:4000/rally/';
 }
 
-
 //CSS Styles
 const styleBtn = {
     marginRight: '5px' 
 };
 
+//Class Component
 export default class EditUser extends Component {
 
+    //Set state and bindings
     constructor(props){
         //Need super if a sub class, this is not in app.js
         super(props);
@@ -36,6 +38,7 @@ export default class EditUser extends Component {
         }
     }
 
+    //Get the user that matches the id when the component mounts
     componentDidMount(){
         console.log(`${API_URL}${this.props.match.params.id}`);
         //Get the user by ID
@@ -52,24 +55,28 @@ export default class EditUser extends Component {
         })
     }
 
+    //Set state when the name changes
     onChangeName(e){
         this.setState({
             name: e.target.value
         });
     }
 
+    //Set state when the skill level changes
     onChangeSkillLevel(e){
         this.setState({
             skillLevel: e.target.value
         });
     }
 
+    //Set state when the image url changes
     onChangeImage(e){
         this.setState({
             image: e.target.value
         });
     }
 
+    //Method to route to root when clicks cancel
     onCancel(e){
         //Prevent default submission
         e.preventDefault();
@@ -78,6 +85,7 @@ export default class EditUser extends Component {
         window.location = '/';
     }
 
+    //Method when click Save Changes button
     onSubmit(e){
         //Prevent default submission
         e.preventDefault();

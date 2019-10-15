@@ -43,7 +43,6 @@ mongoose
 // Require routes
 const UsersRoutes = require('./Routes/rally.route');
 
-//! Do we want all base of rally or root?????
 // Sets the base route as localhost:4000/rally
 // All routes will be off rally
 app.use('/rally', UsersRoutes);
