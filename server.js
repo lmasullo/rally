@@ -1,7 +1,7 @@
 // Dependencies ************************************************
 const express = require('express');
 const mongoose = require('mongoose');
-//const cors = require('cors');
+const cors = require('cors');
 // const axios = require('axios');
 const path = require('path');
 
@@ -9,7 +9,7 @@ const path = require('path');
 const app = express();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-//app.use(cors());
+app.use(cors());
 
 // Set port
 const PORT = process.env.PORT || 4000;
@@ -41,7 +41,7 @@ mongoose
   });
 
 // Require routes
-const UsersRoutes = require('./Routes/rally');
+const UsersRoutes = require('./Routes/rally.route');
 
 //! Do we want all base of rally or root?????
 // Sets the base route as localhost:4000/rally
@@ -50,9 +50,9 @@ app.use('/rally', UsersRoutes);
 
 // Send every other request to the React app
 // Define any API routes before this runs
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, './client/build/index.html'));
-});
+// app.get('*', (req, res) => {
+//   res.sendFile(path.join(__dirname, './client/build/index.html'));
+// });
 
 // Start the server **********************************************
 app.listen(PORT, function() {
