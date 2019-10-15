@@ -1,6 +1,20 @@
 import React , { Component } from "react";
 import axios from 'axios';
 
+//! Is this the correct way????????
+//Check if production or local
+let API_URL = '';
+if (process.env.NODE_ENV === 'production') {
+    API_URL = 'https://racquet-rally.herokuapp.com/rally';
+}else{
+    API_URL = 'http://localhost:4000/rally';
+}
+
+//CSS Styles
+const styleBtn = {
+    marginRight: '5px' 
+};
+
 //Class Component
 export default class CreateUser extends Component {
 
@@ -13,10 +27,11 @@ export default class CreateUser extends Component {
         this.onChangeSkillLevel = this.onChangeSkillLevel.bind(this);
         this.onChangeImage = this.onChangeImage.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
+        this.onCancel = this.onCancel.bind(this);
 
         this.state = {
-            name: "",
-            skillLevel:'',
+            name: '',
+            skillLevel:0,
             image:'',
         }
     }
@@ -39,6 +54,14 @@ export default class CreateUser extends Component {
         });
     }
 
+    onCancel(e){
+        //Prevent default submission
+        e.preventDefault();
+
+        //Send back to Users List
+        window.location = '/';
+    }
+
     onSubmit(e){
         //Prevent default submission
         e.preventDefault();
@@ -52,7 +75,7 @@ export default class CreateUser extends Component {
 
         //Send to back-end, look at routes/rally.route.js
         //todo need to change to production and local db
-        axios.post('http://localhost:4000/rally/add', user)
+        axios.post(`${API_URL}/add`, user)
         .then(res => console.log(res.data))
         .catch(err => console.log(err));
 
@@ -78,7 +101,8 @@ export default class CreateUser extends Component {
                         <label>Image</label>
                         <input type="text" className="form-control" value={this.state.image} onChange={this.onChangeImage}></input>
                     </div>
-                    <button className="btn btn-primary" type="submit">Add User</button>
+                    <button className="btn btn-primary" type="submit" style={styleBtn}>Add User</button>
+                    <button className="btn btn-warning" type="button" onClick={this.onCancel}>Cancel</button>
                 </form>
             </div>
         )

@@ -2,16 +2,14 @@ import React , { Component } from "react";
 import {Link} from 'react-router-dom';
 import axios from 'axios';
 
-let API_URL = '';
-
+//! Is this the correct way????????
 //Check if production or local
+let API_URL = '';
 if (process.env.NODE_ENV === 'production') {
-    API_URL = 'https://racquet-rally.herokuapp.com/rally';
+    API_URL = 'https://racquet-rally.herokuapp.com/rally/';
 }else{
-    API_URL = 'http://localhost:4000/rally';
+    API_URL = 'http://localhost:4000/rally/';
 }
-
-//`${API_URL}/rally`
 
 //CSS Styles
 const styleLink = {
@@ -66,7 +64,7 @@ export default class UserList extends Component {
 
     //Function to delete a user
     deleteUser(id){
-        axios.delete('http://localhost:4000/rally/'+id)
+        axios.delete(`${API_URL}${id}`)
         .then(res => {
             console.log(res.data);
             //Delete the user from view by filtering out the deleted user

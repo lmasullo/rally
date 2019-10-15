@@ -1,9 +1,19 @@
 import React , { Component } from "react";
 import axios from 'axios';
 
+//! Is this the correct way????????
+//Check if production or local
+let API_URL = '';
+if (process.env.NODE_ENV === 'production') {
+    API_URL = 'https://racquet-rally.herokuapp.com/rally/';
+}else{
+    API_URL = 'http://localhost:4000/rally/';
+}
+
+
 //CSS Styles
 const styleBtn = {
-    margin: '5px' 
+    marginRight: '5px' 
 };
 
 export default class EditUser extends Component {
@@ -17,16 +27,19 @@ export default class EditUser extends Component {
         this.onChangeSkillLevel = this.onChangeSkillLevel.bind(this);
         this.onChangeImage = this.onChangeImage.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
+        this.onCancel = this.onCancel.bind(this);
 
         this.state = {
-            name: "",
+            name: '',
             skillLevel:'',
             image:'',
         }
     }
 
     componentDidMount(){
-        axios.get('http://localhost:4000/rally/'+this.props.match.params.id)
+        console.log(`${API_URL}${this.props.match.params.id}`);
+        //Get the user by ID
+        axios.get(`${API_URL}${this.props.match.params.id}`)
         .then(response => {
             this.setState({
                 name: response.data.name,
@@ -77,8 +90,7 @@ export default class EditUser extends Component {
         }
 
         //Send to back-end, look at routes/books.js
-        //todo need to change to production and local db
-        axios.post('http://localhost:4000/rally/update/'+this.props.match.params.id, user)
+        axios.post(`${API_URL}update/${this.props.match.params.id}`, user)
         .then(res => console.log(res.data))
         .catch(err => console.log(err));
 
@@ -107,7 +119,7 @@ export default class EditUser extends Component {
                         <input type="text" className="form-control" value={this.state.image} onChange={this.onChangeImage}></input>
                     </div>
                     <button className="btn btn-primary" type="submit" style={styleBtn}>Save Changes</button>
-                    <button className="btn btn-warning" type="submit" onClick={this.onCancel}>Cancel</button>
+                    <button className="btn btn-warning" type="button" onClick={this.onCancel}>Cancel</button>
                 </form>
             </div>
         )
