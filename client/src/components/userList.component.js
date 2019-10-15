@@ -2,6 +2,17 @@ import React , { Component } from "react";
 import {Link} from 'react-router-dom';
 import axios from 'axios';
 
+let API_URL = '';
+
+//Check if production or local
+if (process.env.NODE_ENV === 'production') {
+    API_URL = 'https://racquet-rally.herokuapp.com/rally';
+}else{
+    API_URL = 'http://localhost:4000/rally';
+}
+
+//`${API_URL}/rally`
+
 //CSS Styles
 const styleLink = {
     overflow: 'visible',
@@ -31,7 +42,8 @@ const User = props => (
 )
 
 //Class Component
-export default class UserList extends Component {
+export default class UserList extends Component {   
+
     constructor(props){
         super(props);
         this.deleteUser  = this.deleteUser.bind(this);
@@ -39,7 +51,7 @@ export default class UserList extends Component {
     }
 
     componentDidMount(){
-        axios.get('http://localhost:4000/rally/')
+        axios.get(API_URL)
         .then(response => {
             console.log(response.data);
             
