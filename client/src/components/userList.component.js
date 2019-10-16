@@ -34,6 +34,15 @@ const User = props => (
         <td>{props.users.skillLevel}</td>
         <td>{props.users.image}</td>
         <td>
+            <img src={props.users.image}/>
+        </td>
+        <td>
+        {/* Map over the centers array and display */}
+        {props.users.centers.map(function(center, index){
+            return <li key={ index }>{center}</li>;
+        })}
+        </td>
+        <td>
             <Link to={"/edit/"+props.users._id}>Edit</Link> | 
             <button onClick={() => {props.deleteUser(props.users._id)}} style={styleLink}>Delete</button>
             {/* <a href="#" onClick={() => {props.deleteUser(props.users._id)}}>Delete</a> */}
@@ -51,7 +60,7 @@ export default class UserList extends Component {
         this.state = {users: []};
     }
 
-    //Get all the users when the component mounts
+    //Get all the users when the component mounts and put in users
     componentDidMount(){
         axios.get(API_URL)
         .then(response => {
@@ -89,6 +98,8 @@ export default class UserList extends Component {
             //The User component is above in this file as a functional component
             return <User users={currentUser} deleteUser={this.deleteUser} key={currentUser._id}/>;
     });
+
+
 };
 
     render(){
@@ -100,7 +111,9 @@ export default class UserList extends Component {
                         <tr>
                             <th>Name</th>
                             <th>Skill Level</th>
+                            <th>Image URL</th>
                             <th>Image</th>
+                            <th>Centers</th>
                             <th>Edit/Delete</th>
                         </tr>
                     </thead>

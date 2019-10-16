@@ -17,7 +17,8 @@ const UserSchema = new Schema({
   },
   image: {
     type:String
-  }
+  },
+  centers: [String]
 },
 {
   //This will create createdAt and updatedAt fields
