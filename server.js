@@ -41,11 +41,13 @@ mongoose
   });
 
 // Require routes
-const UsersRoutes = require('./Routes/rally.route');
+const UsersRoutes = require('./Routes/users.route');
+const CentersRoutes = require('./Routes/centers.route');
 
 // Sets the base route as localhost:4000/rally
 // All routes will be off rally
-app.use('/rally', UsersRoutes);
+app.use('/user', UsersRoutes);
+app.use('/center', CentersRoutes);
 
 // Send every other request to the React app
 // Define any API routes before this runs

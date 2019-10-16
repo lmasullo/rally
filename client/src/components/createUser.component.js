@@ -6,9 +6,9 @@ import axios from 'axios';
 //Check if production or local
 let API_URL = '';
 if (process.env.NODE_ENV === 'production') {
-    API_URL = 'https://racquet-rally.herokuapp.com/rally';
+    API_URL = 'https://racquet-rally.herokuapp.com/user';
 }else{
-    API_URL = 'http://localhost:4000/rally';
+    API_URL = 'http://localhost:4000/user';
 }
 
 //CSS Styles
@@ -28,6 +28,7 @@ export default class CreateUser extends Component {
         this.onChangeName = this.onChangeName.bind(this);
         this.onChangeSkillLevel = this.onChangeSkillLevel.bind(this);
         this.onChangeImage = this.onChangeImage.bind(this);
+        // this.onChangeCenter = this.onChangeCenter.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
         this.onCancel = this.onCancel.bind(this);
 
@@ -35,8 +36,24 @@ export default class CreateUser extends Component {
             name: '',
             skillLevel:0,
             image:'',
+            centers:[],
         }
     }
+
+    //Get all the centers when the component mounts
+    // componentDidMount(){
+    //     axios.get(`${API_URL}/centers`)
+    //     .then(response => {
+    //         console.log(response.data);
+            
+    //         this.setState({
+    //             centers: response.data
+    //         })
+    //     })
+    //     .catch(err =>{
+    //         console.log(err);        
+    //     })
+    // }
     
     //Set state when the name changes
     onChangeName(e){
@@ -58,6 +75,13 @@ export default class CreateUser extends Component {
             image: e.target.value
         });
     }
+
+    //Set state when the center changes
+    // onChangeCenter(e){
+    //     this.setState({
+    //         center: e.target.value
+    //     });
+    // }
 
     //Method to route to root when clicks cancel
     onCancel(e){
@@ -106,6 +130,23 @@ export default class CreateUser extends Component {
                         <input type="text" className="form-control" value={this.state.skillLevel} onChange={this.onChangeSkillLevel}></input>
                         <label>Image</label>
                         <input type="text" className="form-control" value={this.state.image} onChange={this.onChangeImage}></input>
+                        <label>Centers</label>
+                        {/* <select ref="userInput"
+                        required
+                        className="form-control"
+                        value=""
+                        onChange={this.onChangeCenter}
+                        >
+                            {
+                                this.state.users.centers.map(function(center){
+                                    return <option
+                                    key={center}
+                                    value={center}>
+                                        {center}
+                                    </option>
+                                })
+                            }
+                        </select> */}
                     </div>
                     <button className="btn btn-primary" type="submit" style={styleBtn}>Add User</button>
                     <button className="btn btn-warning" type="button" onClick={this.onCancel}>Cancel</button>

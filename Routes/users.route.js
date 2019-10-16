@@ -5,7 +5,7 @@ const router = require('express').Router();
 const User = require('../Models/users.model');
 
 // Route for getting all the Users from the db
-// localhost:4000/rally/
+// localhost:4000/user/
 router.route('/').get((req, res) => {
   // Grab every document in the Users collection
   User.find({})
@@ -35,7 +35,7 @@ router.route('/add').post((req, res) => {
 // Route to get a User
 router.route('/:id').get((req, res) => {
   console.log('userID', req.params.id);
-  // Delete the note
+  // Get the center by ID
   User.findById(req.params.id)
     .then(dbUser => {
       // If we were able to find a user, send it back

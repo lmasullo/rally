@@ -7,9 +7,9 @@ import axios from 'axios';
 //Check if production or local
 let API_URL = '';
 if (process.env.NODE_ENV === 'production') {
-    API_URL = 'https://racquet-rally.herokuapp.com/user/';
+    API_URL = 'https://racquet-rally.herokuapp.com/center/';
 }else{
-    API_URL = 'http://localhost:4000/user/';
+    API_URL = 'http://localhost:4000/center/';
 }
 
 //CSS Styles
@@ -28,46 +28,34 @@ const styleLink = {
 };
 
 //Functional component
-const User = props => (
+const Center = props => (
     <tr>
-        <td>{props.users.name}</td>
-        <td>{props.users.skillLevel}</td>
-        <td>{props.users.image}</td>
+        <td>{props.centers.centerName}</td>
         <td>
-            <img src={props.users.image}/>
-        </td>
-        <td>
-        {/* Map over the centers array and display */}
-        {props.users.centers.map(function(center, index){
-            return <li key={ index }>{center}</li>;
-        })}
-        </td>
-        <td>
-            <Link to={"/edit/"+props.users._id}>Edit</Link> | 
-            <button onClick={() => {props.deleteUser(props.users._id)}} style={styleLink}>Delete</button>
-            {/* <a href="#" onClick={() => {props.deleteUser(props.users._id)}}>Delete</a> */}
+            <Link to={"center/edit/"+props.centers._id}>Edit</Link> | 
+            <button onClick={() => {props.deleteCenter(props.centers._id)}} style={styleLink}>Delete</button>
         </td>
     </tr>
 )
 
 //Class Component
-export default class UserList extends Component {   
+export default class CenterList extends Component {   
 
     //Set state and bindings
     constructor(props){
         super(props);
-        this.deleteUser  = this.deleteUser.bind(this);
-        this.state = {users: []};
+        this.deleteCenter  = this.deleteCenter.bind(this);
+        this.state = {centers: []};
     }
 
-    //Get all the users when the component mounts and put in users
+    //Get all the centers when the component mounts and put in centers
     componentDidMount(){
         axios.get(API_URL)
         .then(response => {
             console.log(response.data);
             
             this.setState({
-                users: response.data
+                centers: response.data
             })
         })
         .catch(err =>{
@@ -75,14 +63,14 @@ export default class UserList extends Component {
         })
     }
 
-    //Function to delete a user
-    deleteUser(id){
+    //Function to delete a center
+    deleteCenter(id){
         axios.delete(`${API_URL}${id}`)
         .then(res => {
             console.log(res.data);
-            //Delete the user from view by filtering out the deleted user
+            //Delete the center from view by filtering out the deleted center
             this.setState({
-                users: this.state.users.filter(el => el._id !==id)
+                centers: this.state.centers.filter(el => el._id !==id)
             })
         })
         .catch(err =>{
@@ -91,35 +79,29 @@ export default class UserList extends Component {
     }
 
     //Method to display each element in the table
-    userList(){
-        // Loop over the users array
-        return this.state.users.map(currentUser => {
+    centerList(){
+        // Loop over the centers array
+        return this.state.centers.map(currentCenter => {
             //Return the User component, pass some props to the User Component
             //The User component is above in this file as a functional component
-            return <User users={currentUser} deleteUser={this.deleteUser} key={currentUser._id}/>;
+            return <Center centers={currentCenter} deleteCenter={this.deleteCenter} key={currentCenter._id}/>;
     });
-
-
 };
 
     render(){
         return(
             <div>
-                <h1>Users</h1>
+                <h1>Centers</h1>
                 <table className="table">
                     <thead className="thead-light">
                         <tr>
                             <th>Name</th>
-                            <th>Skill Level</th>
-                            <th>Image URL</th>
-                            <th>Image</th>
-                            <th>Centers</th>
                             <th>Edit/Delete</th>
                         </tr>
                     </thead>
                     <tbody>
                         {/* Call the bookList method to display each element */}
-                        {this.userList()}
+                        {this.centerList()}
                     </tbody>
                 </table>
             </div>
