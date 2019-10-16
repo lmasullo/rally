@@ -78,7 +78,7 @@ export default class CreateUser extends Component {
                 <form onSubmit={this.onSubmit}>
 
                     <div className="form-group">
-                        <label>User Name</label>
+                        <label>Center Name</label>
                         <input type="text" className="form-control" value={this.state.centerName} onChange={this.onChangeName}></input>
                     </div>
                     <button className="btn btn-primary" type="submit" style={styleBtn}>Add Center</button>

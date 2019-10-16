@@ -130,8 +130,8 @@ export default class CreateUser extends Component {
                         <input type="text" className="form-control" value={this.state.skillLevel} onChange={this.onChangeSkillLevel}></input>
                         <label>Image</label>
                         <input type="text" className="form-control" value={this.state.image} onChange={this.onChangeImage}></input>
-                        <label>Centers</label>
-                        {/* <select ref="userInput"
+                        {/* <label>Centers</label>
+                        <select ref="userInput"
                         required
                         className="form-control"
                         value=""
