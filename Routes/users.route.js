@@ -55,6 +55,7 @@ router.route('/update/:id').post((req, res) => {
       dbUser.name = req.body.name;
       dbUser.skillLevel = req.body.skillLevel;
       dbUser.image = req.body.image;
+      dbUser.centers = req.body.centers;
       dbUser.save()
       // If we were able to successfully update a User, send it back
       .then(() => res.json(dbUser));

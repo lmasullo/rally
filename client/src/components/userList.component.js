@@ -34,7 +34,7 @@ const User = props => (
         <td>{props.users.skillLevel}</td>
         <td>{props.users.image}</td>
         <td>
-            <img src={props.users.image}/>
+            <img src={props.users.image} alt="User"/>
         </td>
         <td>
         {/* Map over the centers array and display */}
