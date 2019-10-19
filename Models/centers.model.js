@@ -10,7 +10,21 @@ const CenterSchema = new Schema({
     type: String,
     required: true,
     trim: true,
-  }
+  },
+  hours: {
+    type: String,
+    trim: true,
+  },
+  cost: {
+    type: Boolean,
+  },
+  numCourts: {
+    type: Number,
+  },
+  addressLink: {
+    type: String,
+    trim: true,
+  },
 },
 {
   //This will create createdAt and updatedAt fields
