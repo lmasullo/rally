@@ -49,12 +49,13 @@ export default class EditUser extends Component {
             centers: [],
             newCenters: [],
             availCenters: [],
+            //userID:'',
         }
     }
 
     //Get the user that matches the id when the component mounts
     componentDidMount(){
-        console.log(`${API_URL}${this.props.match.params.id}`);
+        //console.log(`${API_URL}${this.props.match.params.id}`);
         //Get the user by ID
         axios.get(`${API_URL}${this.props.match.params.id}`)
         .then(response => {
@@ -64,8 +65,9 @@ export default class EditUser extends Component {
                 image: response.data.image,
                 centers: response.data.centers,
                 newCenters: response.data.centers,
+                //userID: this.props.match.params.id,
             })
-            console.log('Affilated',this.state.centers);
+            console.log('Affiliated',this.state.centers);
             console.log('New',this.state.newCenters);           
         })
         .catch(err => {
@@ -125,20 +127,22 @@ export default class EditUser extends Component {
     //Method to delete center from user
     onChangeX(e){
 
-        console.log(e.target.getAttribute('data-value'));
-        
-        // axios.post(`${API_URL}e.target.value`)
-        // .then(res => {
-        //     console.log(res.data);
-        //     //Delete the user from view by filtering out the deleted user
-        //     // this.setState({
-        //     //     users: this.state.users.filter(el => el._id !==id)
-        //     // })
-        // })
-        // .catch(err =>{
-        //     console.log(err);           
-        // })
+        //Get the tennis center to delete
+        let delCenter = e.target.getAttribute('data-value');
 
+        console.log('Center to Delete: ',e.target.getAttribute('data-value'));
+        
+        //Check if the center is in stae
+        let checkCenter = this.state.newCenters.includes(delCenter);
+        if (checkCenter === true){
+            //Remove it from the array of centers
+            this.state.newCenters.pop(e.target.value);
+            //Set State
+            this.setState({
+                newCenters: this.state.newCenters
+            });
+        }   
+        console.log('New Centers: ', this.state.newCenters);
     }
 
     //Method to route to root when clicks cancel
@@ -166,20 +170,10 @@ export default class EditUser extends Component {
         console.log(user);
         
 
-        //Send to back-end, look at routes/books.js
+        //Send to back-end to Update user, look at routes/books.js
         axios.post(`${API_URL}update/${this.props.match.params.id}`, user)
         .then(res => console.log(res.data))
         .catch(err => console.log(err));
-
-        //Clear the fields
-        // this.setState({
-        //     name: "",
-        //     skillLevel: "",
-        //     image: ""
-        // })        
-
-        //Go back to the User list
-        //window.location = '/';
     }
     
     render(){
