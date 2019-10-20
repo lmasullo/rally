@@ -36,6 +36,7 @@ const User = props => (
         <td>
             <img src={props.users.image} alt="User"/>
         </td>
+        <td>{props.users.email}</td>
         <td>
         {/* Map over the centers array and display */}
         {props.users.centers.map(function(center, index){
@@ -113,6 +114,7 @@ export default class UserList extends Component {
                             <th>Skill Level</th>
                             <th>Image URL</th>
                             <th>Image</th>
+                            <th>Email</th>
                             <th>Centers</th>
                             <th>Edit/Delete</th>
                         </tr>

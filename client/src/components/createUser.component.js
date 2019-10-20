@@ -33,6 +33,7 @@ export default class CreateUser extends Component {
         this.onChangeName = this.onChangeName.bind(this);
         this.onChangeSkillLevel = this.onChangeSkillLevel.bind(this);
         this.onChangeImage = this.onChangeImage.bind(this);
+        this.onChangeEmail = this.onChangeEmail.bind(this);
         this.onChangeCenter = this.onChangeCenter.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
         this.onCancel = this.onCancel.bind(this);
@@ -41,6 +42,7 @@ export default class CreateUser extends Component {
             name: '',
             skillLevel:0,
             image:'',
+            email:'',
             centers:[],
             newCenters:[],
         }
@@ -83,6 +85,13 @@ export default class CreateUser extends Component {
         });
     }
 
+    //Set state when the email changes
+    onChangeEmail(e){
+        this.setState({
+            email: e.target.value
+        });
+    }
+
     //Set state when the center changes
     onChangeCenter(e){
         //Need to save to the users collection
@@ -118,6 +127,7 @@ export default class CreateUser extends Component {
             name: this.state.name,
             skillLevel: this.state.skillLevel,
             image: this.state.image,
+            email: this.state.email,
             centers: this.state.newCenters,
         }
 
@@ -130,7 +140,8 @@ export default class CreateUser extends Component {
         this.setState({
             name: "",
             skillLevel: "",
-            image: ""
+            image: "",
+            email: ""
         })       
     }
     
@@ -146,13 +157,9 @@ export default class CreateUser extends Component {
                         <input type="text" className="form-control" value={this.state.skillLevel} onChange={this.onChangeSkillLevel}></input>
                         <label>Image</label>
                         <input type="text" className="form-control" value={this.state.image} onChange={this.onChangeImage}></input>
+                        <label>Email</label>
+                        <input type="text" className="form-control" value={this.state.email} onChange={this.onChangeEmail}></input>
                         <label>Select Affiliated Centers</label>
-                        {/* <select multiple name="selCenter" className="form-control">
-                            {this.state.centers.map(center =>
-                                <option key={center._id} value={center.centerName}>{center.centerName}</option>
-                            )};
-                        </select> */}
-
                         {/* Loop over the Centers and display */}
                         {this.state.centers.map(center =>
                             <div key={`div1${center._id}`} className="input-group mb-3">

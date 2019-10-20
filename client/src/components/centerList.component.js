@@ -31,6 +31,11 @@ const styleLink = {
 const Center = props => (
     <tr>
         <td>{props.centers.centerName}</td>
+        <td>{props.centers.hours}</td>
+        {/* Boolean needs to be converted to string in JSX */}
+        <td>{String(props.centers.cost)}</td>
+        <td>{props.centers.numCourts}</td>
+        <td>{props.centers.addressLink}</td>
         <td>
             <Link to={"center/edit/"+props.centers._id}>Edit</Link> | 
             <button onClick={() => {props.deleteCenter(props.centers._id)}} style={styleLink}>Delete</button>
@@ -96,6 +101,10 @@ export default class CenterList extends Component {
                     <thead className="thead-light">
                         <tr>
                             <th>Name</th>
+                            <th>Hours</th>
+                            <th>Cost (Free)</th>
+                            <th>Number of Courts</th>
+                            <th>Address URL</th>
                             <th>Edit/Delete</th>
                         </tr>
                     </thead>

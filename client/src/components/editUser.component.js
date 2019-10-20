@@ -37,6 +37,7 @@ export default class EditUser extends Component {
         this.onChangeName = this.onChangeName.bind(this);
         this.onChangeSkillLevel = this.onChangeSkillLevel.bind(this);
         this.onChangeImage = this.onChangeImage.bind(this);
+        this.onChangeEmail = this.onChangeEmail.bind(this);
         this.onChangeCenter = this.onChangeCenter.bind(this);
         this.onChangeX = this.onChangeX.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
@@ -46,6 +47,7 @@ export default class EditUser extends Component {
             name: '',
             skillLevel:'',
             image:'',
+            email:'',
             centers: [],
             newCenters: [],
             availCenters: [],
@@ -63,6 +65,7 @@ export default class EditUser extends Component {
                 name: response.data.name,
                 skillLevel: response.data.skillLevel,
                 image: response.data.image,
+                email: response.data.email,
                 centers: response.data.centers,
                 newCenters: response.data.centers,
                 //userID: this.props.match.params.id,
@@ -105,6 +108,13 @@ export default class EditUser extends Component {
     onChangeImage(e){
         this.setState({
             image: e.target.value
+        });
+    }
+
+    //Set state when the email changes
+    onChangeEmail(e){
+        this.setState({
+            email: e.target.value
         });
     }
 
@@ -164,6 +174,7 @@ export default class EditUser extends Component {
             name: this.state.name,
             skillLevel: this.state.skillLevel,
             image: this.state.image,
+            email: this.state.email,
             centers: this.state.newCenters,
         }
 
@@ -188,14 +199,15 @@ export default class EditUser extends Component {
                         <input type="text" className="form-control" value={this.state.skillLevel} onChange={this.onChangeSkillLevel}></input>
                         <label>Image</label>
                         <input type="text" className="form-control" value={this.state.image} onChange={this.onChangeImage}></input>
-                    
+                        <label>Email</label>
+                        <input type="text" className="form-control" value={this.state.email} onChange={this.onChangeEmail}></input>
                         <label>Available Centers</label>
                         {/* Loop over the Centers and display */}
                         {this.state.availCenters.map((center) =>
                            {
                             let checkCenter = this.state.centers.includes(center.centerName);
                             if(checkCenter === true){
-                                return <div>
+                                return <div key={`ret${center._id}`}>
                                  
                                     <div key={`div1${center._id}`} className="input-group mb-3">
                                     <div key={`div2${center._id}`} className="input-group-prepend">
@@ -203,9 +215,9 @@ export default class EditUser extends Component {
                                             X
                                         </div>
                                     </div>
-                                    <div key={`div2${center._id}`} className="input-group-prepend">
-                                        <div key={`div3${center._id}`} className="input-group-text">
-                                            <input key={center._id} type="checkbox" checked value={center.centerName} onChange={this.onChangeCenter}/>
+                                    <div key={`div4${center._id}`} className="input-group-prepend">
+                                        <div key={`div5${center._id}`} className="input-group-text">
+                                            <input key={`chk${center._id}`} type="checkbox" checked value={center.centerName} onChange={this.onChangeCenter}/>
                                         </div>
                                     </div>
                                         <input key={`text${center._id}`} type="text" disabled className="form-control" defaultValue={center.centerName}/>
@@ -214,15 +226,15 @@ export default class EditUser extends Component {
                                 </div>
                             
                             }else{
-                                return <div>
+                                return <div key={`ret2${center._id}`}>
                                  
-                                    <div key={`div1${center._id}`} className="input-group mb-3">
-                                    <div key={`div2${center._id}`} className="input-group-prepend">
-                                        <div key={`div3${center._id}`} className="input-group-text">
-                                            <input key={center._id} type="checkbox" value={center.centerName} onChange={this.onChangeCenter}/>
+                                    <div key={`div6${center._id}`} className="input-group mb-3">
+                                    <div key={`div7${center._id}`} className="input-group-prepend">
+                                        <div key={`div8${center._id}`} className="input-group-text">
+                                            <input key={`chk2${center._id}`} type="checkbox" value={center.centerName} onChange={this.onChangeCenter}/>
                                         </div>
                                     </div>
-                                        <input key={`text${center._id}`} type="text" disabled className="form-control" defaultValue={center.centerName}/>
+                                        <input key={`text2${center._id}`} type="text" disabled className="form-control" defaultValue={center.centerName}/>
                                     </div>
                                 
                                 </div>

@@ -21,16 +21,24 @@ export default class CreateUser extends Component {
 
     //Set state and bindings
     constructor(props){
-        //Need super if a sub class, this is not in app.js
+        //Need super if a sub className, this is not in app.js
         super(props);
 
-        //Need to bind this to the class
+        //Need to bind this to the className
         this.onChangeName = this.onChangeName.bind(this);
+        this.onChangeHours = this.onChangeHours.bind(this);
+        this.onChangeCost = this.onChangeCost.bind(this);
+        this.onChangeNumCourts = this.onChangeNumCourts.bind(this);
+        this.onChangeAddressLink = this.onChangeAddressLink.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
         this.onCancel = this.onCancel.bind(this);
 
         this.state = {
             centerName: '',
+            hours: '',
+            cost: true,
+            numCourts: 1,
+            addressLink: '',
         }
     }
 
@@ -38,6 +46,34 @@ export default class CreateUser extends Component {
     onChangeName(e){
         this.setState({
             centerName: e.target.value
+        });
+    }
+
+    //Set state when the hours changes
+    onChangeHours(e){
+        this.setState({
+            hours: e.target.value
+        });
+    }
+
+    //Set state when the cost changes
+    onChangeCost(e){
+        this.setState({
+            cost: e.target.value
+        });    
+    }
+
+    //Set state when the num courts changes
+    onChangeNumCourts(e){
+        this.setState({
+            numCourts: e.target.value
+        });
+    }
+
+    //Set state when the Address URL changes
+    onChangeAddressLink(e){
+        this.setState({
+            addressLink: e.target.value
         });
     }
 
@@ -58,6 +94,10 @@ export default class CreateUser extends Component {
         //Create user object to save
         const center = {
             centerName: this.state.centerName,
+            hours: this.state.hours,
+            cost: this.state.cost,
+            numCourts: this.state.numCourts,
+            addressLink: this.state.addressLink,
         }
 
         //Send to back-end, look at routes/centers.route.js
@@ -68,6 +108,10 @@ export default class CreateUser extends Component {
         //Clear the fields
         this.setState({
             centerName: "",
+            hours: "",
+            costs: true,
+            numCourts: 1,
+            addressLink: "",
         })       
     }
     
@@ -80,6 +124,25 @@ export default class CreateUser extends Component {
                     <div className="form-group">
                         <label>Center Name</label>
                         <input type="text" className="form-control" value={this.state.centerName} onChange={this.onChangeName}></input>
+                        <label>Hours</label>
+                        <input type="text" className="form-control" value={this.state.hours} onChange={this.onChangeHours}></input>
+                        <label>Cost - Free?</label>
+                        <div className="form-check">
+                            <input className="form-check-input" type="radio" name="radioCost" id="radioCost1" value={true} onChange={this.onChangeCost}/>
+                            <label className="form-check-label" htmlFor="radioCost1">
+                                Yes
+                            </label>
+                        </div>
+                        <div className="form-check">
+                            <input className="form-check-input" type="radio" name="radioCost" id="radioCost2" value={false} onChange={this.onChangeCost}/>
+                            <label className="form-check-label" htmlFor="radioCost2">
+                                No
+                            </label>
+                        </div>
+                        <label>Number of Courts</label>
+                        <input type="text" className="form-control" value={this.state.numCourts} onChange={this.onChangeNumCourts}></input>
+                        <label>Address URL</label>
+                        <input type="text" className="form-control" value={this.state.addressLink} onChange={this.onChangeAddressLink}></input>
                     </div>
                     <button className="btn btn-primary" type="submit" style={styleBtn}>Add Center</button>
                     <button className="btn btn-warning" type="button" onClick={this.onCancel}>Cancel</button>

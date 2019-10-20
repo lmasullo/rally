@@ -52,7 +52,12 @@ router.route('/update/:id').post((req, res) => {
     .then(dbCenter => {
       //Set the new values
       dbCenter.centerName = req.body.centerName;
+      dbCenter.hours = req.body.hours;
+      dbCenter.cost = req.body.cost;
+      dbCenter.numCourts = req.body.numCourts;
+      dbCenter.addressLink = req.body.addressLink;
       dbCenter.save()
+
       // If we were able to successfully update a Center, send it back
       .then(() => res.json(dbCenter));
     })
