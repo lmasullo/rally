@@ -5,8 +5,10 @@ import { BrowserRouter as Router, Link, Switch, Route } from 'react-router-dom';
 class Display extends Component {
 
     render() {
+        
         return (
             <div>
+
                 <div className="container-fluid">
                     <div className="row">
                         <nav>
@@ -41,9 +43,10 @@ class Display extends Component {
                         </footer>
                     </div>
                 </div>
+
             </div>
-        )
-    }
-}
+        );
+    };
+};
 
 export default Display;
