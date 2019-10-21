@@ -10,10 +10,10 @@ class Display extends Component {
                 <div className="container-fluid">
                     <div className="row">
                         <nav>
-                            <div className="col-2 title">
+                            <div className="col-2 float-left">
                                 <h4>Racquet Ralley</h4>
                             </div>
-                            <div className="col-10 right">
+                            <div className="col-10 float-right">
                                 <button className="btn">Login</button>
                             </div>
                         </nav>
@@ -37,7 +37,7 @@ class Display extends Component {
                 <div className="container-fluid">
                     <div className="row">
                         <footer className="col-12">
-                            
+                        <p>Copyright &copy; 2019 Team Racquet Rally.</p>
                         </footer>
                     </div>
                 </div>
