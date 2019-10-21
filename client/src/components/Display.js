@@ -5,7 +5,7 @@ import { BrowserRouter as Router, Link, Switch, Route } from 'react-router-dom';
 class Display extends Component {
 
     render() {
-        
+
         return (
             <div>
 
@@ -16,7 +16,7 @@ class Display extends Component {
                                 <h4>Racquet Ralley</h4>
                             </div>
                             <div className="col-10 float-right">
-                                <button className="btn">Login</button>
+                                <a href="#" className="btn btn-primary">Login</a>
                             </div>
                         </nav>
                     </div>

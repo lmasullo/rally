@@ -14,8 +14,8 @@ class Home extends Component {
                                 <h4>Racquet Ralley</h4>
                             </div>
                             <div className="col-10 float-right">
-                                <button className="btn">My Courts</button>
-                                <button className="btn">Logout</button>
+                                <a href="#" className="btn btn-primary">My Courts</a>
+                                <a href="#" className="btn btn-primary">Logout</a>
                             </div>
                         </nav>
                     </div>
