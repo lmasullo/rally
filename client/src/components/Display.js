@@ -13,7 +13,7 @@ class Display extends Component {
                     <div className="row">
                         <nav>
                             <div className="col-2 float-left">
-                                <h4>Racquet Ralley</h4>
+                                <h2>Racquet Ralley</h2>
                             </div>
                             <div className="col-10 float-right">
                                 <a href="#" className="btn btn-primary">Login</a>
