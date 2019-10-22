@@ -4,6 +4,8 @@ import { BrowserRouter as Router, Link, Switch, Route } from 'react-router-dom';
 
 class Display extends Component {
 
+    handleLogin()
+
     render() {
 
         return (
@@ -16,7 +18,7 @@ class Display extends Component {
                                 <h2>Racquet Ralley</h2>
                             </div>
                             <div className="col-10 float-right">
-                                <a href="#" className="btn btn-primary">Login</a>
+                                <button href="#" className="btn btn-primary" onclick={handleLogin}>Login</button>
                             </div>
                         </nav>
                     </div>
@@ -24,15 +26,19 @@ class Display extends Component {
 
                 <div className="container">
                     <div className="row">
+
                         <div className="col-12 card" id="banner">
                             
                         </div>
+
                         <div className="col-12 card" id="instructions">
                             
                         </div>
+
                         <div className="col-12 card" id="about">
                             
                         </div>
+                        
                     </div>
                 </div>
 
