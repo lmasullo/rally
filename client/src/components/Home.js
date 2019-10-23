@@ -19,9 +19,7 @@ const Home = () => {
                             <Link to='/mycourts'>
                             <button href="#" className="btn btn-primary">My Courts</button>
                             </Link>
-                            <Link to='/display'>
                             <button href="#" className="btn btn-primary" onclick={handleLogout}>Logout</button>
-                            </Link>
                         </div>
                     </nav>
                 </div>
@@ -38,7 +36,7 @@ const Home = () => {
                             <div className="card-body">
                                 <h5 className="card-title">Austin Tennis Center</h5>
                                 <p className="card-text">The Austin Tennis Center is the largest public tennis and Pickleball Center in the Austin and surrounding areas.  Play on any of the ten tournament standard tennis courts or 8 outdoor pickleball courts.</p>
-                                <a href="#" className="btn btn-primary">Go somewhere</a>
+                                <button href="#" className="btn btn-primary">Go somewhere</button>
                             </div>
                         </div>
                         <div className="card col-md-6" style="width: 18rem;">
@@ -46,7 +44,7 @@ const Home = () => {
                             <div className="card-body">
                                 <h5 className="card-title">South Austin Tennis Center</h5>
                                 <p className="card-text">Welcome to Rippner Tennis at South Austin Tennis Center. No matter your age or ability, we’ll help you play more tennis!</p>
-                                <a href="#" className="btn btn-primary">Go somewhere</a>
+                                <button href="#" className="btn btn-primary">Go somewhere</button>
                             </div>
                         </div>
                     </div>
@@ -56,7 +54,7 @@ const Home = () => {
                             <div className="card-body">
                                 <h5 className="card-title">Caswell Tennis Center</h5>
                                 <p className="card-text">Built in 1946, Caswell Tennis Center has been an Austin icon for decades. Located at 24th and Lamar, its central location and historic significance makes Caswell the hub of tennis activity in Austin.</p>
-                                <a href="#" className="btn btn-primary">Go somewhere</a>
+                                <button href="#" className="btn btn-primary">Go somewhere</button>
                             </div>
                         </div>
                         <div className="card col-md-6" style="width: 18rem;">
@@ -64,7 +62,7 @@ const Home = () => {
                             <div className="card-body">
                                 <h5 className="card-title">Pharr Tennis Center</h5>
                                 <p className="card-text">Pharr Tennis Center is a family-friendly, public tennis facility, dedicated to growing the game of tennis and serving the surrounding community.</p>
-                                <a href="#" className="btn btn-primary">Go somewhere</a>
+                                <button href="#" className="btn btn-primary">Go somewhere</button>
                             </div>
                         </div>
                     </div>

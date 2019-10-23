@@ -2,9 +2,11 @@ import React from "react";
 import axios from "axios";
 import { BrowserRouter as Router, Link, Switch, Route } from 'react-router-dom';
 
-const Display = () => {
+const Login = () => {
 
-    handleLogin()
+    function handleLogin() {
+        
+    }
 
     return (
         <div>
@@ -15,10 +17,8 @@ const Display = () => {
                         <div className="col-2 float-left">
                             <h2>Racquet Ralley</h2>
                         </div>
-                        <div className="col-10 float-right">
-                            <Link to='/home'>
-                            <button href="#" className="btn btn-primary">Login</button>
-                            </Link>
+                        <div className="col-10 float-right">                      
+                            <button href="#" className="btn btn-primary">Login</button>                          
                         </div>
                     </nav>
                 </div>
@@ -55,4 +55,4 @@ const Display = () => {
 };
 
 
-export default Display;
+export default Login;
