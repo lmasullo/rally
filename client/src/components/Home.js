@@ -3,27 +3,9 @@ import axios from "axios";
 import { BrowserRouter as Router, Link, Switch, Route } from 'react-router-dom';
 
 const Home = () => {
-    
-    function handleLogout() {}
 
     return (
         <div>
-
-            <div className="container-fluid">
-                <div className="row">
-                    <nav>
-                        <div className="col-2 float-left">
-                            <h2>Racquet Ralley</h2>
-                        </div>
-                        <div className="col-10 float-right">
-                            <Link to='/mycourts'>
-                            <button href="#" className="btn btn-primary">My Courts</button>
-                            </Link>
-                            <button href="#" className="btn btn-primary" onclick={handleLogout}>Logout</button>
-                        </div>
-                    </nav>
-                </div>
-            </div>
 
             <div className="container">
                 <div className="row">
@@ -31,7 +13,7 @@ const Home = () => {
                         <h3>Court Selection</h3>
                     </div>
                     <div className="row">
-                        <div className="card col-md-6" style="width: 18rem;">
+                        <div className="card col-md-6">
                             <img src="..." className="card-img-top" alt="..." />
                             <div className="card-body">
                                 <h5 className="card-title">Austin Tennis Center</h5>
@@ -39,7 +21,7 @@ const Home = () => {
                                 <button href="#" className="btn btn-primary">Go somewhere</button>
                             </div>
                         </div>
-                        <div className="card col-md-6" style="width: 18rem;">
+                        <div className="card col-md-6">
                             <img src="..." className="card-img-top" alt="..." />
                             <div className="card-body">
                                 <h5 className="card-title">South Austin Tennis Center</h5>
@@ -49,7 +31,7 @@ const Home = () => {
                         </div>
                     </div>
                     <div className="row">
-                        <div className="card col-md-6" style="width: 18rem;">
+                        <div className="card col-md-6">
                             <img src="..." className="card-img-top" alt="..." />
                             <div className="card-body">
                                 <h5 className="card-title">Caswell Tennis Center</h5>
@@ -57,7 +39,7 @@ const Home = () => {
                                 <button href="#" className="btn btn-primary">Go somewhere</button>
                             </div>
                         </div>
-                        <div className="card col-md-6" style="width: 18rem;">
+                        <div className="card col-md-6">
                             <img src="..." className="card-img-top" alt="..." />
                             <div className="card-body">
                                 <h5 className="card-title">Pharr Tennis Center</h5>
@@ -66,14 +48,6 @@ const Home = () => {
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-
-            <div className="container-fluid">
-                <div className="row">
-                    <footer className="col-12">
-                    <p>Copyright &copy; 2019 Team Racquet Rally.</p>
-                    </footer>
                 </div>
             </div>
 

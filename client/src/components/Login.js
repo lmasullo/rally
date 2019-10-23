@@ -4,25 +4,8 @@ import { BrowserRouter as Router, Link, Switch, Route } from 'react-router-dom';
 
 const Login = () => {
 
-    function handleLogin() {
-        
-    }
-
     return (
         <div>
-
-            <div className="container-fluid">
-                <div className="row">
-                    <nav>
-                        <div className="col-2 float-left">
-                            <h2>Racquet Ralley</h2>
-                        </div>
-                        <div className="col-10 float-right">                      
-                            <button href="#" className="btn btn-primary">Login</button>                          
-                        </div>
-                    </nav>
-                </div>
-            </div>
 
             <div className="container">
                 <div className="row">
@@ -39,14 +22,6 @@ const Login = () => {
                         
                     </div>
 
-                </div>
-            </div>
-
-            <div className="container-fluid">
-                <div className="row">
-                    <footer className="col-12">
-                    <p>Copyright &copy; 2019 Team Racquet Rally.</p>
-                    </footer>
                 </div>
             </div>
 
