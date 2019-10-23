@@ -4,12 +4,14 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 // const axios = require('axios');
 const path = require('path');
+//const passport = require('passport');
 
 // Initialize Express Server
 const app = express();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cors());
+//app.use(passport.initialize());
 
 // Set port
 const PORT = process.env.PORT || 4000;
@@ -30,6 +32,7 @@ mongoose
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useFindAndModify: false,
+    useCreateIndex: true,
   })
   .then(() => {
     // Display the connection message

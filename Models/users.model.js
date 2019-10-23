@@ -6,6 +6,17 @@ const { Schema } = mongoose;
 
 // Using the Schema constructor, create a new UserSchema object
 const UserSchema = new Schema({
+  username: {
+    type: String,
+    unique: true
+  },
+  userCreated: {
+    type: Date,
+    default: Date.now
+  },
+  jwtToken: String,
+  accessToken: String,
+  githubId: String,
   name: {
     type: String,
     required: true,

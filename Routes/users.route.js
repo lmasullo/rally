@@ -1,14 +1,44 @@
 // Use express router
 const router = require('express').Router();
+//const passport = require("../passport");
+const routeHelper = require('./utils/routeHelper');
+const path = require("path");
 
 // Require Users model
-const User = require('../Models/users.model');
+//const User = require('../Models/users.model');
+const db = require('../Models');
+
+// /* OAuth Github Routes */
+// app.get("/login", passport.authenticate('github'));
+// app.get('/auth', passport.authenticate('github', {session: false, failureRedirect: routeHelper()}), function(req, res) {
+//     // Successful authentication! 
+//     // Store the generated jwt in the client cookie
+//     res.cookie('jwt', req.user.jwtToken);
+    
+//     res.redirect(routeHelper());
+// });
+// app.use(passport.initialize());
+
+
+// router.route("/login", passport.authenticate('github')).get();
+// router.route('/auth', passport.authenticate('github', {session: false, failureRedirect: routeHelper()})).get((req, res) => {
+//      // Successful authentication! 
+//      // Store the generated jwt in the client cookie
+//      res.cookie('jwt', req.user.jwtToken);
+    
+//      res.redirect(routeHelper());
+//  });
+
+
 
 // Route for getting all the Users from the db
 // localhost:4000/user/
+//router.route('/', passport.authenticate('jwt', {session: false})).get((req, res) => {
 router.route('/').get((req, res) => {
+//app.get('/', function (req, res) {
+//app.get('/',(req, res) => {
   // Grab every document in the Users collection
-  User.find({})
+  db.User.find({})
     .then(dbUser => {
       // If we were able to successfully find Users, send them back to the client
       res.json(dbUser);
@@ -22,7 +52,7 @@ router.route('/').get((req, res) => {
 // Route to save a user
 router.route('/add').post((req, res) => {
   // Creates a new user
-  User.create(req.body)
+  db.User.create(req.body)
     .then(dbUser => {
       res.json(dbUser);
     })
@@ -36,7 +66,7 @@ router.route('/add').post((req, res) => {
 router.route('/:id').get((req, res) => {
   console.log('userID', req.params.id);
   // Get the center by ID
-  User.findById(req.params.id)
+  db.User.findById(req.params.id)
     .then(dbUser => {
       // If we were able to find a user, send it back
       res.json(dbUser);
@@ -49,7 +79,7 @@ router.route('/:id').get((req, res) => {
 
 // Route to Update a User
 router.route('/update/:id').post((req, res) => {
-  User.findById(req.params.id)
+  db.User.findById(req.params.id)
     .then(dbUser => {
       //Set the new values
       dbUser.name = req.body.name;
@@ -71,7 +101,7 @@ router.route('/update/:id').post((req, res) => {
 router.route('/:id').delete((req, res) => {
   console.log('UserID', req.params.id);
   // Delete the user
-  User.findByIdAndDelete(req.params.id)
+  db.User.findByIdAndDelete(req.params.id)
     .then(dbUser => {
       // If we were able to successfully delete the user, send it back
       res.json(dbUser);
@@ -84,3 +114,4 @@ router.route('/:id').delete((req, res) => {
 
 //Export the routes
 module.exports = router;
+
