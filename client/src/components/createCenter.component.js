@@ -26,6 +26,7 @@ export default class CreateUser extends Component {
 
         //Need to bind this to the className
         this.onChangeName = this.onChangeName.bind(this);
+        this.onChangeDescription = this.onChangeDescription.bind(this);
         this.onChangeHours = this.onChangeHours.bind(this);
         this.onChangeCost = this.onChangeCost.bind(this);
         this.onChangeNumCourts = this.onChangeNumCourts.bind(this);
@@ -35,6 +36,7 @@ export default class CreateUser extends Component {
 
         this.state = {
             centerName: '',
+            description: '',
             hours: '',
             cost: true,
             numCourts: 1,
@@ -46,6 +48,13 @@ export default class CreateUser extends Component {
     onChangeName(e){
         this.setState({
             centerName: e.target.value
+        });
+    }
+
+    //Set state when the description changes
+    onChangeDescription(e){
+        this.setState({
+            description: e.target.value
         });
     }
 
@@ -94,6 +103,7 @@ export default class CreateUser extends Component {
         //Create user object to save
         const center = {
             centerName: this.state.centerName,
+            description: this.state.description,
             hours: this.state.hours,
             cost: this.state.cost,
             numCourts: this.state.numCourts,
@@ -108,6 +118,7 @@ export default class CreateUser extends Component {
         //Clear the fields
         this.setState({
             centerName: "",
+            description: "",
             hours: "",
             costs: true,
             numCourts: 1,
@@ -124,6 +135,8 @@ export default class CreateUser extends Component {
                     <div className="form-group">
                         <label>Center Name</label>
                         <input type="text" className="form-control" value={this.state.centerName} onChange={this.onChangeName}></input>
+                        <label>Description</label>
+                        <input type="text" className="form-control" value={this.state.description} onChange={this.onChangeDescription}></input>
                         <label>Hours</label>
                         <input type="text" className="form-control" value={this.state.hours} onChange={this.onChangeHours}></input>
                         <label>Cost - Free?</label>

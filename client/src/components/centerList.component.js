@@ -31,6 +31,7 @@ const styleLink = {
 const Center = props => (
     <tr>
         <td>{props.centers.centerName}</td>
+        <td>{props.centers.description}</td>
         <td>{props.centers.hours}</td>
         {/* Boolean needs to be converted to string in JSX */}
         <td>{String(props.centers.cost)}</td>
@@ -101,6 +102,7 @@ export default class CenterList extends Component {
                     <thead className="thead-light">
                         <tr>
                             <th>Name</th>
+                            <th>Description</th>
                             <th>Hours</th>
                             <th>Cost (Free)</th>
                             <th>Number of Courts</th>

@@ -14,6 +14,8 @@ import EditUser from "./components/editUser.component";
 import CreateCenter from "./components/createCenter.component";
 import CenterList from "./components/centerList.component";
 import EditCenter from "./components/editCenter.component";
+//Home page
+import Home from "./components/home.component";
 
 //Main Component that is served up in index.js
 function App() {
@@ -23,6 +25,7 @@ function App() {
         <Navbar/>
         <br/>
         <Route path="/" exact component={UserList}/>
+        <Route path="/home" exact component={Home}/>
         <Route path="/create" exact component={CreateUser}/>
         <Route path="/edit/:id" exact component={EditUser}/>
         <Route path="/createCenter" exact component={CreateCenter}/>

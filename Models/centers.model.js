@@ -11,6 +11,10 @@ const CenterSchema = new Schema({
     required: true,
     trim: true,
   },
+  description:{
+    type: String,
+    trim: true,
+  },
   hours: {
     type: String,
     trim: true,

@@ -52,6 +52,7 @@ router.route('/update/:id').post((req, res) => {
     .then(dbCenter => {
       //Set the new values
       dbCenter.centerName = req.body.centerName;
+      dbCenter.description = req.body.description;
       dbCenter.hours = req.body.hours;
       dbCenter.cost = req.body.cost;
       dbCenter.numCourts = req.body.numCourts;
