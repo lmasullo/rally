@@ -26,6 +26,7 @@ export default class EditCenter extends Component {
 
         //Need to bind this to the class
         this.onChangeName = this.onChangeName.bind(this);
+        this.onChangeDescription = this.onChangeDescription.bind(this);
         this.onChangeHours = this.onChangeHours.bind(this);
         this.onChangeCost = this.onChangeCost.bind(this);
         this.onChangeNumCourts = this.onChangeNumCourts.bind(this);
@@ -35,6 +36,7 @@ export default class EditCenter extends Component {
 
         this.state = {
             centerName: '',
+            description: '',
             hours: '',
             cost: true,
             numCourts: 1,
@@ -51,6 +53,7 @@ export default class EditCenter extends Component {
         .then(response => {
             this.setState({
                 centerName: response.data.centerName,
+                description: response.data.description,
                 hours: response.data.hours,
                 cost: response.data.cost,
                 numCourts: response.data.numCourts,
@@ -72,6 +75,15 @@ export default class EditCenter extends Component {
     onChangeName(e){
         this.setState({
             centerName: e.target.value
+        });
+    }
+
+    //Set state when the description changes
+    onChangeDescription(e){
+        //console.log(e.target.value);
+        
+        this.setState({
+            description: e.target.value
         });
     }
 
@@ -122,10 +134,14 @@ export default class EditCenter extends Component {
     onSubmit(e){
         //Prevent default submission
         e.preventDefault();
+
+        console.log(this.state.description);
+        
         
         //Create center object to save
         const center = {
             centerName: this.state.centerName,
+            description: this.state.description,
             hours: this.state.hours,
             cost: this.state.cost,
             numCourts: this.state.numCourts,
@@ -140,6 +156,7 @@ export default class EditCenter extends Component {
         //Clear the fields
         this.setState({
             centerName: "",
+            description: "",
             hours: "",
             costs: true,
             numCourts: 1,
@@ -147,7 +164,7 @@ export default class EditCenter extends Component {
         })        
 
         //Go back to the User list
-        window.location = '/centers';
+        //window.location = '/centers';
     }
     
     render(){
@@ -158,6 +175,8 @@ export default class EditCenter extends Component {
                     <div className="form-group">
                         <label>User Name</label>
                         <input type="text" className="form-control" value={this.state.centerName} onChange={this.onChangeName}></input>
+                        <label>Description</label>
+                        <input type="text" className="form-control" value={this.state.description} onChange={this.onChangeDescription}></input>
                         <label>Hours</label>
                         <input type="text" className="form-control" value={this.state.hours} onChange={this.onChangeHours}></input>
                         <label>Cost - Free?</label>
