@@ -30,6 +30,7 @@ export default class Navbar extends Component {
                         </li>
                         <li className="navbar-item">
                             <Link to="/logout" className="nav-link">Log Out</Link>
+                            {/* <a href="http://localhost:4000/logout" className="nav-link">Log Out</a> */}
                         </li>
                     </ul>
                 </div>

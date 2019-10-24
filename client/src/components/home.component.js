@@ -19,7 +19,9 @@ const cardStyle = {
 }
 
 
-function handleLogout() {}
+function handleLogout() {
+    console.log('Log out clicked');
+}
 
 //Class Component
 export default class Home extends Component {   

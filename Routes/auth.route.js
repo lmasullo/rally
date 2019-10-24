@@ -24,11 +24,14 @@ router.get('/google/redirect', passport.authenticate('google'),(req,res)=>{
   res.redirect('http://localhost:3000/main')
 });
 
+//Auth Logout
+router.get('/logout', (req,res)=>{
+  //Handle with Passport
+  //res.send('Logging Out')
+  req.logout();
+  //Redirect to Login Page
+  res.redirect('http://localhost:3000/');
+})
 
-// //Auth Logout
-// router.get('/logout', (req,res)=>{
-//   //Handle with Passport
-//   res.send('Logging Out')
-// })
 
 module.exports = router;
