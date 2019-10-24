@@ -63,7 +63,7 @@ class Login extends Component {
               <a href={process.env.REACT_APP_PROD_URL_LOGIN || "http://localhost:4000/auth/google"} className="btn btn-lg btn-primary btn-block" role="button">Google</a>
               <a href={process.env.REACT_APP_PROD_URL_LOGIN || "http://localhost:4000/auth/github"} className="btn btn-lg btn-primary btn-block" role="button">GitHub</a>
 
-              <p className="mt-5 mb-3 text-muted">&copy; 2017-2019</p>
+              <p className="mt-5 mb-3 text-muted">&copy; 2019</p>
             </form>
           </div>
       </div>
