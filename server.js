@@ -1,17 +1,31 @@
 // Dependencies ************************************************
+require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
-// const axios = require('axios');
 const path = require('path');
-//const passport = require('passport');
+const passportSetup = require('./Config/passport-setup');
+const cookieSession = require("cookie-session");
+const passport = require("passport");
 
 // Initialize Express Server
 const app = express();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cors());
-//app.use(passport.initialize());
+
+//This encrypts our id that we send in the cookie
+app.use(cookieSession({
+  //In MS
+  maxAge: 24 * 60 * 60 * 1000,
+  keys: [process.env.COOKIE_KEY],
+}));
+
+//Initialize Passport
+app.use(passport.initialize());
+
+//Initialize Sessions
+app.use(passport.session())
 
 // Set port
 const PORT = process.env.PORT || 4000;
@@ -46,11 +60,16 @@ mongoose
 // Require routes
 const UsersRoutes = require('./Routes/users.route');
 const CentersRoutes = require('./Routes/centers.route');
+const AuthRoutes = require('./Routes/auth.route');
+const HomeRoutes = require('./Routes/home.route');
 
 // Sets the base route as localhost:4000/rally
 // All routes will be off rally
 app.use('/user', UsersRoutes);
 app.use('/center', CentersRoutes);
+app.use('/auth', AuthRoutes);
+app.use('/home', HomeRoutes);
+
 
 // Send every other request to the React app
 // Define any API routes before this runs

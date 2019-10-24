@@ -1,42 +1,15 @@
+//Dependencies
 // Use express router
 const router = require('express').Router();
-//const passport = require("../passport");
-const routeHelper = require('./utils/routeHelper');
-const path = require("path");
+//const path = require("path");
 
 // Require Users model
 //const User = require('../Models/users.model');
 const db = require('../Models');
 
-// /* OAuth Github Routes */
-// app.get("/login", passport.authenticate('github'));
-// app.get('/auth', passport.authenticate('github', {session: false, failureRedirect: routeHelper()}), function(req, res) {
-//     // Successful authentication! 
-//     // Store the generated jwt in the client cookie
-//     res.cookie('jwt', req.user.jwtToken);
-    
-//     res.redirect(routeHelper());
-// });
-// app.use(passport.initialize());
-
-
-// router.route("/login", passport.authenticate('github')).get();
-// router.route('/auth', passport.authenticate('github', {session: false, failureRedirect: routeHelper()})).get((req, res) => {
-//      // Successful authentication! 
-//      // Store the generated jwt in the client cookie
-//      res.cookie('jwt', req.user.jwtToken);
-    
-//      res.redirect(routeHelper());
-//  });
-
-
-
 // Route for getting all the Users from the db
 // localhost:4000/user/
-//router.route('/', passport.authenticate('jwt', {session: false})).get((req, res) => {
 router.route('/').get((req, res) => {
-//app.get('/', function (req, res) {
-//app.get('/',(req, res) => {
   // Grab every document in the Users collection
   db.User.find({})
     .then(dbUser => {
@@ -111,6 +84,17 @@ router.route('/:id').delete((req, res) => {
       res.json(err);
     });
 });
+
+//Route that is called after the user is authenticated on auth.route.js
+// router.get('/home2', (req,res)=>{
+//   // res.send('You are logged in' + req.user.username)
+//   res.send(req.user)
+// });
+
+
+// router.route('/profile').get((req, res) => {
+//   console.log('Logged in User', req.user.username);
+// });
 
 //Export the routes
 module.exports = router;

@@ -34,7 +34,7 @@ const User = props => (
         <td>{props.users.skillLevel}</td>
         <td>{props.users.image}</td>
         <td>
-            <img src={props.users.image} alt="User"/>
+            <img src={props.users.image} alt="User" height="100" width="100"/>
         </td>
         <td>{props.users.email}</td>
         <td>

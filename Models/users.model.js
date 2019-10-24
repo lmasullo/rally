@@ -6,17 +6,6 @@ const { Schema } = mongoose;
 
 // Using the Schema constructor, create a new UserSchema object
 const UserSchema = new Schema({
-  username: {
-    type: String,
-    unique: true
-  },
-  userCreated: {
-    type: Date,
-    default: Date.now
-  },
-  jwtToken: String,
-  accessToken: String,
-  githubId: String,
   name: {
     type: String,
     required: true,
@@ -24,7 +13,6 @@ const UserSchema = new Schema({
   },
   skillLevel: {
     type: Number,
-    required: true,
   },
   image: {
     type:String
@@ -32,7 +20,8 @@ const UserSchema = new Schema({
   email: {
     type:String
   },
-  centers: [String]
+  centers: [String],
+  googleID: String,
 },
 {
   //This will create createdAt and updatedAt fields
