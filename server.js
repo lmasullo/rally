@@ -12,7 +12,29 @@ const passport = require("passport");
 const app = express();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(cors());
+
+
+// view engine setup
+// app.use(function(req, res, next) {
+//   res.header("Access-Control-Allow-Origin", "http://localhost:3000");
+//   res.header("Access-Control-Allow-Origin", "http://localhost:4000");
+//   res.header("Access-Control-Allow-Credentials", "true");
+//   res.header("Access-Control-Allow-Headers", "Origin,Content-Type, Authorization, x-id, Content-Length, X-Requested-With");
+//   res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+//   next();
+// });
+
+//Added this because of trouble passing req.user after authentication
+const corsOptions = {
+  //origin: 'http://localhost:4000',
+  //origin: 'http://localhost:3000',
+  origin: true,
+  credentials: true,
+  //preflightContinue: true,
+}
+app.use(cors(corsOptions));
+
+//app.use(cors());
 
 //This encrypts our id that we send in the cookie
 app.use(cookieSession({
@@ -62,6 +84,7 @@ const UsersRoutes = require('./Routes/users.route');
 const CentersRoutes = require('./Routes/centers.route');
 const AuthRoutes = require('./Routes/auth.route');
 const HomeRoutes = require('./Routes/home.route');
+const ProfileRoutes = require('./Routes/profile.route');
 
 // Sets the base route as localhost:4000/rally
 // All routes will be off rally
@@ -69,6 +92,7 @@ app.use('/user', UsersRoutes);
 app.use('/center', CentersRoutes);
 app.use('/auth', AuthRoutes);
 app.use('/home', HomeRoutes);
+app.use('/profile', ProfileRoutes);
 
 
 // Send every other request to the React app

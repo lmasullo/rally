@@ -9,7 +9,10 @@ const db = require('../Models');
 //This gets called after done is set below after authentication
 //The null is if there is an error
 passport.serializeUser((user, done)=>{
-  //When done authenticating user create cookie
+  console.log('User Serialize!!!!! ' + user);
+  //When done authenticating user - create cookie with the userID
+  //This is using the id from mongo
+  //done passes the infor to the next stage
   done(null, user.id);
 });
 
@@ -17,10 +20,11 @@ passport.serializeUser((user, done)=>{
 passport.deserializeUser((id, done)=>{
   db.User.findById(id).then((user)=>{
     //Have user, now pass to done and to next stage (using in route handlers)
+    console.log('User De-Serialize!!!!! ' + user);
+    //done passes the info to the next stage
     done(null, user);
   });
 });
-
 
 //Use Passport to Authenticate on Google
 passport.use(
@@ -39,13 +43,15 @@ passport.use(
     //Passport Callback function
     //This fires after we have a successful login from Google
     //This is all the user's profile info
-    //console.log('Profile: ', profile);
+    console.log('Profile: ', profile);
 
     db.User.findOneAndUpdate({googleID: profile.id}, {$set: { currentUser: true}})
     .then((currentUser)=>{
       if(currentUser){
         console.log("Found User" + currentUser);
         //Authentication successful, pass user to done method
+        //Done sends current user to Serialize User above
+        //Null is if there is an error
         done(null, currentUser);
         
       }else{     
@@ -53,12 +59,13 @@ passport.use(
           name: profile.displayName,
           googleID: profile.id,
           image: profile.photos[0].value,
-          email: profile.email,
+          email: profile.emails[0].value,
           currentUser: true,
         }).save()
         .then((newUser)=>{
           console.log('New User Created' + newUser);
           //New User created, pass user to done method
+          //Done sends current user to Serialize User above
           done(null, newUser);
         });//End Save User   
       }//End check for user

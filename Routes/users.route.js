@@ -7,9 +7,27 @@ const router = require('express').Router();
 //const User = require('../Models/users.model');
 const db = require('../Models');
 
+//Middleware to check if authenticated and logged in
+// const authCheck = (req,res,next) => {
+//   if(!req.user){
+//     //If user Not logged in
+//     console.log('Not logged in!');
+//     res.redirect('http://localhost:3000/login')
+//     res.redirect('http://localhost:3000/users')
+//   }else{
+//     //Logged in
+//     console.log('Logged In');
+//     //console.log('authCheck: ' + req.user);
+//     //Call next part of middleware
+//     next();
+//   }
+// }
+
+
 // Route for getting all the Users from the db
 // localhost:4000/user/
 router.route('/').get((req, res) => {
+//router.get('/', authCheck, (req,res)=>{
   // Grab every document in the Users collection
   db.User.find({})
     .then(dbUser => {

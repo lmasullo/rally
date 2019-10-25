@@ -13,12 +13,15 @@ const UserSchema = new Schema({
   },
   skillLevel: {
     type: Number,
+    trim: true,
   },
   image: {
-    type:String
+    type:String,
+    trim: true,
   },
   email: {
-    type:String
+    type:String,
+    trim: true,
   },
   centers: [String],
   googleID: String,

@@ -34,9 +34,7 @@ export default class Home extends Component {
         };
     }
 
-    componentDidMount(){
-        console.log(API_URL);
-        
+    componentDidMount(){        
         axios.get(API_URL)
         .then(response => {
             console.log(response);
