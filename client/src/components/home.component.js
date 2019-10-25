@@ -18,11 +18,6 @@ const cardStyle = {
     width: '18rem'
 }
 
-
-// function handleLogout() {
-//     console.log('Log out clicked');
-// }
-
 //Class Component
 export default class Home extends Component {   
 
@@ -52,21 +47,7 @@ export default class Home extends Component {
         render(){
             return (
                 <div>
-                    <div className="container-fluid">
-                        <div className="row">
-                            {/* <nav>
-                                <div className="col-2 float-left">
-                                    <h2>Racquet Ralley</h2>
-                                </div>
-                                <div className="col-10 float-right">
-                                    <Link to='/mycourts'>
-                                    <button href="#" className="btn btn-primary">My Courts</button>
-                                    </Link>
-                                    <button href="#" className="btn btn-primary" onClick={handleLogout}>Logout</button>
-                                </div>
-                            </nav> */}
-                        </div>
-                    </div>
+                   
 
                     <div className="container">
                         <div className="row">

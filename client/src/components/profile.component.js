@@ -1,6 +1,14 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
 import axios from 'axios';
+
+//! Is this the correct way????????
+//Check if production or local
+let API_URL = '';
+if (process.env.NODE_ENV === 'production') {
+    API_URL = 'https://racquet-rally.herokuapp.com/profile/';
+}else{
+    API_URL = 'http://localhost:4000/profile/';
+}
 
 const styleHTML = {
   height: '100%',
@@ -39,9 +47,9 @@ class Login extends Component {
     };
 }
 
-  //Get all the centers when the component mounts and put in centers
+  //Get user info from authentication
   componentDidMount(){
-    axios.get('http://localhost:4000/profile', { withCredentials: true })
+    axios.get(API_URL, { withCredentials: true })
     .then(response => {
         console.log(response.data);
         
