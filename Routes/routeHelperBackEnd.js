@@ -4,6 +4,7 @@
 */
 
 module.exports = () => {
+  //I added a config variable on Heroku called HEROKU and set to true
   if(!process.env.HEROKU) {
       return process.env.REACT_APP_DEV_URL_BACKEND;
   }
