@@ -1,6 +1,7 @@
 //Dependencies
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20');
+const routeHelperBackEnd = require('../Routes/routeHelperBackEnd');
 
 // Require Users model
 const db = require('../Models');
@@ -26,6 +27,9 @@ passport.deserializeUser((id, done)=>{
   });
 });
 
+//Using routeHelper.js to decide if on localhost or production
+let redirectURL = `${routeHelperBackEnd()}auth/google/redirect`;
+
 //Use Passport to Authenticate on Google
 passport.use(
   new GoogleStrategy({
@@ -33,7 +37,10 @@ passport.use(
     //Need to setup on Google at https://console.cloud.google.com/apis/credentials?project=racquet-rally
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    callbackURL: "/auth/google/redirect"
+    // callbackURL: "/auth/google/redirect"
+    callbackURL: redirectURL
+
+    
   //These parameters are what come back from Google
   //accessToken - use this to alter users profile
   //refreshToken - refreshes the accessToken after it expires
