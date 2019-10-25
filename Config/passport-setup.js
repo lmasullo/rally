@@ -32,26 +32,29 @@ passport.use(
     callbackURL: "/auth/google/redirect"
   //These parameters are what come back from Google
   //accessToken - use this to alter users profile
-  //refreshToken -refreshes the accessToken after it expires
+  //refreshToken - refreshes the accessToken after it expires
   //profile - this is the info we need
   //done - this we call when all done
   },(accessToken, refreshToken, profile, done)=> {
     //Passport Callback function
     //This fires after we have a successful login from Google
     //This is all the user's profile info
-    console.log(profile);
+    //console.log('Profile: ', profile);
 
-    db.User.findOne({googleID: profile.id})
+    db.User.findOneAndUpdate({googleID: profile.id}, {$set: { currentUser: true}})
     .then((currentUser)=>{
       if(currentUser){
         console.log("Found User" + currentUser);
         //Authentication successful, pass user to done method
         done(null, currentUser);
+        
       }else{     
         new db.User({
           name: profile.displayName,
           googleID: profile.id,
-          image: profile.photos[0].value
+          image: profile.photos[0].value,
+          email: profile.email,
+          currentUser: true,
         }).save()
         .then((newUser)=>{
           console.log('New User Created' + newUser);

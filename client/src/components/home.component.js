@@ -2,7 +2,7 @@
 import React , { Component } from "react";
 import axios from "axios";
 // import { BrowserRouter as Router, Link, Switch, Route } from 'react-router-dom';
-import { Link } from 'react-router-dom';
+//import { Link } from 'react-router-dom';
 
 //! Is this the correct way????????
 //Check if production or local
@@ -19,9 +19,9 @@ const cardStyle = {
 }
 
 
-function handleLogout() {
-    console.log('Log out clicked');
-}
+// function handleLogout() {
+//     console.log('Log out clicked');
+// }
 
 //Class Component
 export default class Home extends Component {   
@@ -35,6 +35,8 @@ export default class Home extends Component {
     }
 
     componentDidMount(){
+        console.log(API_URL);
+        
         axios.get(API_URL)
         .then(response => {
             console.log(response);
@@ -54,7 +56,7 @@ export default class Home extends Component {
                 <div>
                     <div className="container-fluid">
                         <div className="row">
-                            <nav>
+                            {/* <nav>
                                 <div className="col-2 float-left">
                                     <h2>Racquet Ralley</h2>
                                 </div>
@@ -64,7 +66,7 @@ export default class Home extends Component {
                                     </Link>
                                     <button href="#" className="btn btn-primary" onClick={handleLogout}>Logout</button>
                                 </div>
-                            </nav>
+                            </nav> */}
                         </div>
                     </div>
 

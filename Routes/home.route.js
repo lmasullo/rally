@@ -13,6 +13,7 @@ const authCheck = (req,res,next) => {
     res.redirect('/auth/login')
   }else{
     //Logged in
+    console.log('authCheck: ' + req.user);
     //Call next part of middleware
     next();
   }
@@ -23,7 +24,7 @@ router.get('/', authCheck, (req,res)=>{
 //router.route('/').get((req, res) => {
   //res.send('You are logged in: ' + req.user.name)
 
-  console.log(req.user);
+  //console.log('Req.User home.route: '+ req.user);
 
   res.json(req.user);
 

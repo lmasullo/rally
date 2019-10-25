@@ -16,7 +16,7 @@ app.use(cors());
 
 //This encrypts our id that we send in the cookie
 app.use(cookieSession({
-  //In MS
+  //1 day in Milliseconds
   maxAge: 24 * 60 * 60 * 1000,
   keys: [process.env.COOKIE_KEY],
 }));
