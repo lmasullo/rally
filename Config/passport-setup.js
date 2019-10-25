@@ -28,7 +28,7 @@ passport.deserializeUser((id, done)=>{
 });
 
 //Using routeHelper.js to decide if on localhost or production
-let redirectURL = `${routeHelperBackEnd()}auth/google/redirect`;
+//let redirectURL = `${routeHelperBackEnd()}auth/google/redirect`;
 
 //Use Passport to Authenticate on Google
 passport.use(
@@ -37,8 +37,8 @@ passport.use(
     //Need to setup on Google at https://console.cloud.google.com/apis/credentials?project=racquet-rally
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    // callbackURL: "/auth/google/redirect"
-    callbackURL: redirectURL
+    callbackURL: "/auth/google/redirect"
+    //callbackURL: redirectURL
 
     
   //These parameters are what come back from Google

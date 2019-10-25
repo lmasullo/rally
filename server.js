@@ -62,11 +62,6 @@ if (process.env.NODE_ENV === 'production') {
 const MONGODB_URI =
   process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/rally';
 
-console.log(process.env.PORT);
-console.log(process.env.MONGODB_URI);
-
-
-
 // Connect to the db
 mongoose
   .connect(MONGODB_URI, {

@@ -35,7 +35,7 @@ class Login extends Component {
             <form className="form-signin" style={styleForm}>
               {/* <img className="mb-4" src="/docs/4.3/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72"/> */}
               <h1 className="h3 mb-3 font-weight-normal">Please sign in:</h1>  
-              <a href={`${process.env.REACT_APP_PROD_URL_FRONTEND}auth/google` || "http://localhost:4000/auth/google"} className="btn btn-lg btn-primary btn-block" role="button">Google</a>
+              <a href={process.env.REACT_APP_PROD_URL_LOGIN || "http://localhost:4000/auth/google"} className="btn btn-lg btn-primary btn-block" role="button">Google</a>
               {/* <a href={process.env.REACT_APP_PROD_URL_LOGIN || "http://localhost:4000/auth/google"} className="btn btn-lg btn-primary btn-block" role="button">Google</a> */}
               {/* <a href={process.env.REACT_APP_PROD_URL_LOGIN || "http://localhost:4000/auth/github"} className="btn btn-lg btn-primary btn-block" role="button">GitHub</a> */}
               <p className="mt-5 mb-3 text-muted">&copy; 2019</p>

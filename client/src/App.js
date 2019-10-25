@@ -35,10 +35,6 @@ function App() {
         <Route path="/logout" exact component={Logout}/>
         <Route path="/profile" exact component={Profile}/>
         <Route path="/users" exact component={UserList}/>
-        {/* <Route path="/" exact component={UserList}/> */}
-
-        {/* <Route path="/auth/google" exact component={UserList}/> */}
-
         <Route path="/main" exact component={Home}/>
         <Route path="/create" exact component={CreateUser}/>
         <Route path="/edit/:id" exact component={EditUser}/>
