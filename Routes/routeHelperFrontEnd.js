@@ -6,8 +6,17 @@
 module.exports = () => {
     console.log(process.env.NODE_ENV);
     
-    if(!process.env.NODE_ENV) {
+    // if(!process.env.NODE_ENV) {
+    //     return process.env.REACT_APP_DEV_URL_FRONTEND;
+    // }
+    // return process.env.REACT_APP_PROD_URL_FRONTEND;
+
+
+    if (process.env.NODE_ENV === 'production') {
+        return process.env.REACT_APP_PROD_URL_FRONTEND;
+    }else{
         return process.env.REACT_APP_DEV_URL_FRONTEND;
     }
-    return process.env.REACT_APP_PROD_URL_FRONTEND;
+
+
 }
