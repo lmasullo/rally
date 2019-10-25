@@ -4,7 +4,7 @@
 */
 
 module.exports = () => {
-  if(!process.env.NODE_ENV) {
+  if(!process.env.HEROKU) {
       return process.env.REACT_APP_DEV_URL_BACKEND;
   }
   return process.env.REACT_APP_PROD_URL_BACKEND;
