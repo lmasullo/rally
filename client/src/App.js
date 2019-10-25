@@ -18,6 +18,8 @@ import EditCenter from "./components/editCenter.component";
 import Home from "./components/home.component";
 //Login page
 import Login from "./components/login.component";
+//Logout page
+import Logout from "./components/logout.component";
 //Profile page
 import Profile from "./components/profile.component";
 
@@ -30,6 +32,7 @@ function App() {
         <Navbar/>
         <br/>
         <Route path="/" exact component={Login}/>
+        <Route path="/logout" exact component={Logout}/>
         <Route path="/profile" exact component={Profile}/>
         <Route path="/users" exact component={UserList}/>
         {/* <Route path="/" exact component={UserList}/> */}

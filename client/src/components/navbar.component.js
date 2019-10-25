@@ -32,8 +32,8 @@ export default class Navbar extends Component {
                             <Link to="/" className="nav-link">Log In</Link>
                         </li>
                         <li className="navbar-item">
-                            {/* <Link to="/logout" className="nav-link">Log Out</Link> */}
-                            <a href="http://localhost:4000/auth/logout" className="nav-link">Log Out</a>
+                            <Link to="/logout" className="nav-link">Log Out</Link>
+                            {/* <a href="/logout" className="nav-link">Log Out</a> */}
                         </li>
                     </ul>
                 </div>

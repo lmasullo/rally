@@ -32,17 +32,5 @@ router.get('/google/redirect', passport.authenticate('google'),(req,res)=>{
   res.redirect(redirectURL);
 });
 
-//Auth Logout
-//To delete a user
-//https://console.cloud.google.com/iam-admin/iam?_ga=2.240129280.-2036133568.1571960659&project=racquet-rally&folder=&organizationId=
-//Sign-out of google and it will bring up the log in page again
-router.get('/logout', function(req, res){
-  //console.log('Request Before: ',req);
-  req.logout();
-  //delete req.session;
-  //res.clearCookie('connect.sid');
-  //console.log('Request After: ',req);
-  res.redirect(routeHelperFrontEnd());
-});
 
 module.exports = router;
