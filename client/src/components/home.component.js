@@ -14,18 +14,23 @@ if (process.env.NODE_ENV === 'production') {
 
 //CSS Styles
 const cardStyle = {
-    width: '18rem'
+    height: '300px',
+    width: '200px',
+    border: '3px cyan solid',
+    margin: '1rem',
+    position: 'relative',
+    float: 'left',
 }
 
 //Functional component of center cards to display in home page
 const Center = props => (
     <div className="row">
         <div className="card col-md-6" style={cardStyle}>
-            <img src="..." className="card-img-top" alt="..." />
+            <img src={props.centers.image} className="card-img-top" alt={props.centers.centerName} />
             <div className="card-body">
-                <h5 className="card-title">{props.center.centerName}</h5>
+                <h5 className="card-title">{props.centers.centerName}</h5>
                 <p className="card-text">{props.centers.description}</p>
-                <button href="#" className="btn btn-primary">Go somewhere</button>
+                <button href="#" className="btn btn-primary">Details</button>
             </div>
         </div>
     </div>
