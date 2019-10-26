@@ -22,6 +22,8 @@ router.get('/',authCheck,(req,res)=>{
       // If an error occurred, send it to the client
       res.json(err);
     });
+
+    //res.send(req.user);
 });
 
 // Route to save a user
