@@ -23,7 +23,7 @@ const Center = props => (
         <div className="card col-md-6" style={cardStyle}>
             <img src="..." className="card-img-top" alt="..." />
             <div className="card-body">
-                <h5 className="card-title text-center">{props.center.centerName}</h5>
+                <h5 className="card-title">{props.center.centerName}</h5>
                 <p className="card-text">{props.centers.description}</p>
                 <button href="#" className="btn btn-primary">Go somewhere</button>
             </div>
@@ -83,17 +83,16 @@ export default class Home extends Component {
             return (
                 <div>
                    
-
                     <div className="container">
                         <div className="row">
                             <div className="col-12">
-                                <h3>Court Selection</h3>
+                                <h3 className='text-center'>Court Selection</h3>
                             </div>
-
-                            <div id="cardList">
+                        </div>
+                        <div className='row'>
+                            <div className='col-12' id="cardList">
                                 {this.centerList()}
                             </div>
-                    
                         </div>
                     </div>
 
