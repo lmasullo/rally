@@ -28,7 +28,7 @@ router.get('/google/redirect', passport.authenticate('google'),(req,res)=>{
   //res.redirect('http://localhost:3000/profile')
 
   //Using routeHelper.js to decide if on localhost or production
-  let redirectURL = `${routeHelperFrontEnd()}profile`;
+  let redirectURL = `${routeHelperFrontEnd()}main`;
   res.redirect(redirectURL);
 });
 

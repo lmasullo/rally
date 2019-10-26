@@ -2,7 +2,33 @@
 import React , { Component } from "react";
 import {Link} from 'react-router-dom';
 
+//CSS Styles
+//This is to make the Delete button look like a link
+const styleLink = {
+    overflow: 'visible',
+    width: 'auto',
+    fontSize: '1em',
+    textAlign: 'left',
+    color: 'darkgray',
+    background: 'none',
+    margin: 0,
+    paddingTop: '8px',
+    border: 'none',
+    cursor: 'pointer',
+};
+
+function logout(event) {
+    event.preventDefault(); // prevent page transition
+    fetch('/logout', { method: 'POST', credentials: 'same-origin' }).then(() =>
+      //window.location.reload() // stay at the same url
+      //Send to the Logout Component
+      window.location = '/logout'
+    )
+}
+
 export default class Navbar extends Component {
+
+    
 
     render(){
         return(
@@ -32,8 +58,8 @@ export default class Navbar extends Component {
                             <Link to="/" className="nav-link">Log In</Link>
                         </li>
                         <li className="navbar-item">
-                            <Link to="/logout" className="nav-link">Log Out</Link>
-                            {/* <a href="/logout" className="nav-link">Log Out</a> */}
+                            {/* <a href="#" className="nav-link" onClick={logout}>Log Out</a> */}
+                            <button onClick={logout} style={styleLink}>Log Out</button>
                         </li>
                     </ul>
                 </div>

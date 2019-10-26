@@ -1,33 +1,31 @@
 //Dependencies
 // Use express router
 const router = require('express').Router();
-//const path = require("path");
+const passport = require("passport");
+
 
 // Require Users model
-//const User = require('../Models/users.model');
 const db = require('../Models');
 
 //Middleware to check if authenticated and logged in
-// const authCheck = (req,res,next) => {
-//   if(!req.user){
-//     //If user Not logged in
-//     console.log('Not logged in!');
-//     res.redirect('http://localhost:3000/login')
-//     res.redirect('http://localhost:3000/users')
-//   }else{
-//     //Logged in
-//     console.log('Logged In');
-//     //console.log('authCheck: ' + req.user);
-//     //Call next part of middleware
-//     next();
-//   }
-// }
-
+const authCheck = (req,res,next) => {
+  if(!req.user){
+    //If user Not logged in
+    //This gets sent to component and will redirect to log in from there
+    res.send('Not Logged In!')
+  }else{
+    //Logged in
+    console.log('authCheck: ' + req.user);
+    //Call next part of middleware
+    next();
+  }
+}
 
 // Route for getting all the Users from the db
 // localhost:4000/user/
 router.route('/').get((req, res) => {
-//router.get('/', authCheck, (req,res)=>{
+//router.get('/',authCheck,(req,res)=>{
+
   // Grab every document in the Users collection
   db.User.find({})
     .then(dbUser => {
@@ -38,6 +36,8 @@ router.route('/').get((req, res) => {
       // If an error occurred, send it to the client
       res.json(err);
     });
+
+    //res.send(req.user);
 });
 
 // Route to save a user
@@ -102,17 +102,6 @@ router.route('/:id').delete((req, res) => {
       res.json(err);
     });
 });
-
-//Route that is called after the user is authenticated on auth.route.js
-// router.get('/home2', (req,res)=>{
-//   // res.send('You are logged in' + req.user.username)
-//   res.send(req.user)
-// });
-
-
-// router.route('/profile').get((req, res) => {
-//   console.log('Logged in User', req.user.username);
-// });
 
 //Export the routes
 module.exports = router;

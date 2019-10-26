@@ -7,6 +7,10 @@ const Center = require('../Models/centers.model');
 // Route for getting all the Centers from the db
 // localhost:4000/center/
 router.route('/').get((req, res) => {
+
+  console.log(req.user);
+  
+
   // Grab every document in the Centers collection
   Center.find({})
     .then(dbCenter => {

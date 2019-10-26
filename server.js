@@ -13,28 +13,14 @@ const app = express();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-
-// view engine setup
-// app.use(function(req, res, next) {
-//   res.header("Access-Control-Allow-Origin", "http://localhost:3000");
-//   res.header("Access-Control-Allow-Origin", "http://localhost:4000");
-//   res.header("Access-Control-Allow-Credentials", "true");
-//   res.header("Access-Control-Allow-Headers", "Origin,Content-Type, Authorization, x-id, Content-Length, X-Requested-With");
-//   res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-//   next();
-// });
-
 //Added this because of trouble passing req.user after authentication
 const corsOptions = {
   //origin: 'http://localhost:4000',
   //origin: 'http://localhost:3000',
   origin: true,
   credentials: true,
-  //preflightContinue: true,
 }
 app.use(cors(corsOptions));
-
-//app.use(cors());
 
 //This encrypts our id that we send in the cookie
 app.use(cookieSession({
@@ -85,7 +71,6 @@ const CentersRoutes = require('./Routes/centers.route');
 const AuthRoutes = require('./Routes/auth.route');
 const HomeRoutes = require('./Routes/home.route');
 const ProfileRoutes = require('./Routes/profile.route');
-const LogoutRoutes = require('./Routes/logout.route');
 
 // Sets the base route as localhost:4000/rally
 // All routes will be off rally
@@ -94,13 +79,17 @@ app.use('/center', CentersRoutes);
 app.use('/auth', AuthRoutes);
 app.use('/home', HomeRoutes);
 app.use('/profile', ProfileRoutes);
-app.use('/logout', LogoutRoutes);
-
 
 // Send every other request to the React app
 // Define any API routes before this runs
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, './client/build/index.html'));
+});
+
+//Logout - called from navbar.component
+app.post('/logout', (req, res) => {
+  req.logout();
+  res.send('Logged Out!');
 });
 
 // Start the server **********************************************
