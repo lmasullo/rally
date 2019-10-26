@@ -2,6 +2,7 @@
 import React , { Component } from "react";
 import {Link} from 'react-router-dom';
 import axios from 'axios';
+import {Redirect} from 'react-router-dom';
 
 //! Is this the correct way????????
 //Check if production or local
@@ -50,19 +51,30 @@ export default class CenterList extends Component {
     //Set state and bindings
     constructor(props){
         super(props);
-        this.deleteCenter  = this.deleteCenter.bind(this);
-        this.state = {centers: []};
+        this.deleteCenter = this.deleteCenter.bind(this);
+        this.state = {
+            centers: [],
+            redirect: '',
+        };
     }
 
     //Get all the centers when the component mounts and put in centers
     componentDidMount(){
-        axios.get(API_URL)
+        axios.get(API_URL, { withCredentials: true })
         .then(response => {
             console.log(response.data);
-            
-            this.setState({
-                centers: response.data
-            })
+            //User Not logged in, so redirect to login, by setting redirect to true, it triggers in render
+            if(response.data === 'Not Logged In!'){
+                console.log('no data');
+                this.setState({
+                redirect: true
+                })
+            }else{
+                //User Logged in
+                this.setState({
+                    centers: response.data
+                })
+            }     
         })
         .catch(err =>{
             console.log(err);        
@@ -95,6 +107,10 @@ export default class CenterList extends Component {
 };
 
     render(){
+        //Check if redirect state is true
+        if (this.state.redirect){
+            return <Redirect to="/" />;
+        }
         return(
             <div>
                 <h1>Centers</h1>

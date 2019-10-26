@@ -2,6 +2,7 @@
 import React , { Component } from "react";
 import {Link} from 'react-router-dom';
 import axios from 'axios';
+import {Redirect} from 'react-router-dom';
 
 //! Is this the correct way????????
 //Check if production or local
@@ -34,7 +35,7 @@ const User = props => (
         <td>{props.users.skillLevel}</td>
         <td>{props.users.image}</td>
         <td>
-            <img src={props.users.image} alt="User"/>
+            <img src={props.users.image} alt="User" height="100" width="100"/>
         </td>
         <td>{props.users.email}</td>
         <td>
@@ -58,18 +59,30 @@ export default class UserList extends Component {
     constructor(props){
         super(props);
         this.deleteUser  = this.deleteUser.bind(this);
-        this.state = {users: []};
+        this.state = {
+            users: [],
+            redirect: '',
+        };
+        
     }
 
     //Get all the users when the component mounts and put in users
     componentDidMount(){
-        axios.get(API_URL)
+        axios.get(API_URL, { withCredentials: true })
         .then(response => {
             console.log(response.data);
-            
-            this.setState({
+            //User Not logged in, so redirect to login, by setting redirect to true, it triggers in render
+            if(response.data === 'Not Logged In!'){
+                console.log('no data');
+                this.setState({
+                redirect: true
+                })
+            }else{
+                //User Logged in
+                this.setState({
                 users: response.data
-            })
+                })
+            }    
         })
         .catch(err =>{
             console.log(err);        
@@ -104,6 +117,12 @@ export default class UserList extends Component {
 };
 
     render(){
+
+        //Check if redirect state is true
+        if (this.state.redirect){
+            return <Redirect to="/" />;
+        }
+
         return(
             <div>
                 <h1>Users</h1>

@@ -16,16 +16,26 @@ import CenterList from "./components/centerList.component";
 import EditCenter from "./components/editCenter.component";
 //Home page
 import Home from "./components/home.component";
+//Login page
+import Login from "./components/login.component";
+//Logout page
+import Logout from "./components/logout.component";
+//Profile page
+import Profile from "./components/profile.component";
 
 //Main Component that is served up in index.js
 function App() {
   return (
+    
     <Router>
       <div className="container">
         <Navbar/>
         <br/>
-        <Route path="/" exact component={UserList}/>
-        <Route path="/home" exact component={Home}/>
+        <Route path="/" exact component={Login}/>
+        <Route path="/logout" exact component={Logout}/>
+        <Route path="/profile" exact component={Profile}/>
+        <Route path="/users" exact component={UserList}/>
+        <Route path="/main" exact component={Home}/>
         <Route path="/create" exact component={CreateUser}/>
         <Route path="/edit/:id" exact component={EditUser}/>
         <Route path="/createCenter" exact component={CreateCenter}/>

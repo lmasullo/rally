@@ -51,7 +51,6 @@ export default class EditUser extends Component {
             centers: [],
             newCenters: [],
             availCenters: [],
-            //userID:'',
         }
     }
 
@@ -68,7 +67,6 @@ export default class EditUser extends Component {
                 email: response.data.email,
                 centers: response.data.centers,
                 newCenters: response.data.centers,
-                //userID: this.props.match.params.id,
             })
             console.log('Affiliated',this.state.centers);
             console.log('New',this.state.newCenters);           
@@ -239,11 +237,7 @@ export default class EditUser extends Component {
                                 
                                 </div>
                             }
-
-                           } 
-                            
-
-                            
+                           }                        
                         )}
                     </div>
 
