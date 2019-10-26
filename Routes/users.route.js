@@ -1,30 +1,15 @@
 //Dependencies
-// Use express router
 const router = require('express').Router();
 const passport = require("passport");
 const authCheck = require('../Utils/authCheck');
 
-
 // Require Users model
 const db = require('../Models');
-
-//Middleware to check if authenticated and logged in
-// const authCheck = (req,res,next) => {
-//   if(!req.user){
-//     //If user Not logged in
-//     //This gets sent to component and will redirect to log in from there
-//     res.send('Not Logged In!')
-//   }else{
-//     //Logged in
-//     console.log('authCheck: ' + req.user);
-//     //Call next part of middleware
-//     next();
-//   }
-// }
 
 // Route for getting all the Users from the db
 // localhost:4000/user/
 //router.route('/').get((req, res) => {
+//authCheck uses authCheck.js in Utils folder to check for req.user to ensure user is logged in
 router.get('/',authCheck,(req,res)=>{
 
   // Grab every document in the Users collection
@@ -37,8 +22,6 @@ router.get('/',authCheck,(req,res)=>{
       // If an error occurred, send it to the client
       res.json(err);
     });
-
-    //res.send(req.user);
 });
 
 // Route to save a user

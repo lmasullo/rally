@@ -6,7 +6,6 @@ const routeHelperBackEnd = require('./routeHelperBackEnd');
 const authCheck = require('../Utils/authCheck');
 
 router.get('/', authCheck, (req,res,next)=>{
-  //res.send("You are Logged in as " + req.user.name);
   res.json(req.user);
 })
 

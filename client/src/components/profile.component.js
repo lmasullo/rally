@@ -75,7 +75,6 @@ class Login extends Component {
       return <Redirect to="/" />;
     }
 
-
     return (
       <div style={styleHTML}>
           <div style={styleBody} className="text-center">

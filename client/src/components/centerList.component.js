@@ -51,7 +51,7 @@ export default class CenterList extends Component {
     //Set state and bindings
     constructor(props){
         super(props);
-        this.deleteCenter  = this.deleteCenter.bind(this);
+        this.deleteCenter = this.deleteCenter.bind(this);
         this.state = {
             centers: [],
             redirect: '',
@@ -75,7 +75,7 @@ export default class CenterList extends Component {
                     centers: response.data
                 })
             }     
-            })
+        })
         .catch(err =>{
             console.log(err);        
         })

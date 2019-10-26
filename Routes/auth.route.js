@@ -4,7 +4,6 @@ const passport = require('passport');
 const routeHelperFrontEnd = require('./routeHelperFrontEnd');
 
 //Routes
-
 //Auth with Google - 1st step after clicking the Google Login Button
 //Need to add the middleware passport.authenticate('google')
 //This will try and authenticate
@@ -31,6 +30,5 @@ router.get('/google/redirect', passport.authenticate('google'),(req,res)=>{
   let redirectURL = `${routeHelperFrontEnd()}main`;
   res.redirect(redirectURL);
 });
-
 
 module.exports = router;

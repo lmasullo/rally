@@ -1,6 +1,7 @@
 //Dependencies
 import React , { Component } from "react";
 import axios from 'axios';
+import {Redirect} from 'react-router-dom';
 
 //! Is this the correct way????????
 //Check if production or local
@@ -41,7 +42,27 @@ export default class CreateUser extends Component {
             cost: true,
             numCourts: 1,
             addressLink: '',
+            redirect: '',
         }
+    }
+
+    //Get all the centers when the component mounts
+    //This is used just to authenticate 
+    componentDidMount(){
+        axios.get(API_URL, { withCredentials: true })
+        .then(response => {
+            console.log(response.data);
+            //User Not logged in, so redirect to login, by setting redirect to true, it triggers in render
+            if(response.data === 'Not Logged In!'){
+                console.log('no data');
+                this.setState({
+                redirect: true
+                })
+            }     
+        })
+        .catch(err =>{
+            console.log(err);        
+        })
     }
 
     //Set state when the name changes
@@ -127,6 +148,10 @@ export default class CreateUser extends Component {
     }
     
     render(){
+        //Check if redirect state is true
+        if (this.state.redirect){
+            return <Redirect to="/" />;
+        }
         return(
             <div>
                 <h1>Create New Center</h1>
