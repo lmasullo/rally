@@ -17,6 +17,7 @@ const cardStyle = {
     width: '18rem'
 }
 
+//Functional component of center cards to display in home page
 const Center = props => (
     <div className="row">
         <div className="card col-md-6" style={cardStyle}>
@@ -64,6 +65,7 @@ export default class Home extends Component {
         })
     }
 
+    //Method to display the functional component Center
     centerList(){
         // Loop over the centers array
         return this.state.centers.map(currentCenter => {
