@@ -1,8 +1,7 @@
 //Dependencies
 import React , { Component } from "react";
 import axios from "axios";
-// import { BrowserRouter as Router, Link, Switch, Route } from 'react-router-dom';
-//import { Link } from 'react-router-dom';
+import {Redirect} from 'react-router-dom';
 
 //! Is this the correct way????????
 //Check if production or local
@@ -25,26 +24,38 @@ export default class Home extends Component {
     constructor(props){
         super(props);
         this.state = {
-            userName: ''
+            userName: '',
+            redirect: '',
         };
     }
 
     componentDidMount(){        
-        axios.get(API_URL)
+        axios.get(API_URL, { withCredentials: true })
         .then(response => {
             console.log(response);
-            
-            // this.setState({
-            //     users: response.data
-            // })
+            //User Not logged in, so redirect to login, by setting redirect to true, it triggers in render
+            if(response.data === 'Not Logged In!'){
+                console.log('no data');
+                this.setState({
+                redirect: true
+                })
+            }else{
+                //User Logged in
+                this.setState({
+                users: response.data
+                })
+            }    
         })
         .catch(err =>{
             console.log(err);        
         })
     }
 
-//const Home = () => {
         render(){
+            //Check if redirect state is true
+            if (this.state.redirect){
+                return <Redirect to="/" />;
+            }
             return (
                 <div>
                    
