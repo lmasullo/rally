@@ -29,6 +29,14 @@ const CenterSchema = new Schema({
     type: String,
     trim: true,
   },
+  image:{
+    type:String,
+    trim: true,
+  },
+  mapLink:{
+    type:String,
+    trim: true,
+  }
 },
 {
   //This will create createdAt and updatedAt fields

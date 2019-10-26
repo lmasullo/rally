@@ -37,13 +37,20 @@ const styleForm = {
   zIndex: '2',
 }
 
+//Functional component
+const Center = props => (
+  <tr>
+      <td>{props.centers}</td>
+  </tr>
+)
+
 class Login extends Component {
 
   //Set state and bindings
   constructor(props){
     super(props);
     this.state = {
-        user: '',
+        user: [],
         redirect: '',
     };
 }
@@ -52,7 +59,7 @@ class Login extends Component {
   componentDidMount(){
     axios.get(API_URL, { withCredentials: true })
     .then(response => {
-        console.log(response.data);
+        //console.log(response.data);
         //User Not logged in, so redirect to login, by setting redirect to true, it triggers in render
         if(response.data === 'Not Logged In!'){
           console.log('no data');
@@ -63,10 +70,30 @@ class Login extends Component {
           //User Logged in
           this.setState({
             user: response.data
-          })
+          })          
         }     
     })
 }
+
+  //Method to display each element in the table
+  centerList(){
+    console.log(this.state);
+
+    if (this.state.user.centers){
+      // Loop over the centers array
+    return this.state.user.centers.map(currentCenter => {
+      console.log(currentCenter);
+      
+        //Return the User component, pass some props to the User Component
+        //The User component is above in this file as a functional component
+        return <Center centers={currentCenter} key={currentCenter}/>;
+  });
+    }else {
+      return 'Loading...'
+    }
+    
+    
+};
   
   render() {
 
@@ -84,6 +111,8 @@ class Login extends Component {
               <h3>{this.state.user.email}</h3>
               <img src={this.state.user.image} alt="User" height="100" width="100"/>
               <p className="mt-5 mb-3 text-muted">&copy; 2019</p>
+              {this.centerList()}
+
             </form>
           </div>
       </div>

@@ -25,7 +25,6 @@ const UserSchema = new Schema({
   },
   centers: [String],
   googleID: String,
-  currentUser: Boolean,
 },
 {
   //This will create createdAt and updatedAt fields

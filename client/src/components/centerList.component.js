@@ -51,7 +51,7 @@ export default class CenterList extends Component {
     //Set state and bindings
     constructor(props){
         super(props);
-        this.deleteCenter = this.deleteCenter.bind(this);
+        this.deleteCenter  = this.deleteCenter.bind(this);
         this.state = {
             centers: [],
             redirect: '',

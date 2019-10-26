@@ -1,6 +1,7 @@
 //Dependencies
 import React , { Component } from "react";
 import axios from 'axios';
+import {Redirect} from 'react-router-dom';
 
 //! Is this the correct way????????
 //Check if production or local
@@ -51,6 +52,7 @@ export default class EditUser extends Component {
             centers: [],
             newCenters: [],
             availCenters: [],
+            redirect: '',
         }
     }
 
@@ -58,16 +60,26 @@ export default class EditUser extends Component {
     componentDidMount(){
         //console.log(`${API_URL}${this.props.match.params.id}`);
         //Get the user by ID
-        axios.get(`${API_URL}${this.props.match.params.id}`)
+        axios.get(`${API_URL}${this.props.match.params.id}`,{ withCredentials: true })
         .then(response => {
-            this.setState({
-                name: response.data.name,
-                skillLevel: response.data.skillLevel,
-                image: response.data.image,
-                email: response.data.email,
-                centers: response.data.centers,
-                newCenters: response.data.centers,
-            })
+
+            //User Not logged in, so redirect to login, by setting redirect to true, it triggers in render
+            if(response.data === 'Not Logged In!'){
+                console.log('no data');
+                this.setState({
+                redirect: true
+                })
+            }else{
+                //User Logged in
+                this.setState({
+                    name: response.data.name,
+                    skillLevel: response.data.skillLevel,
+                    image: response.data.image,
+                    email: response.data.email,
+                    centers: response.data.centers,
+                    newCenters: response.data.centers,
+                })
+            }    
             console.log('Affiliated',this.state.centers);
             console.log('New',this.state.newCenters);           
         })
@@ -75,7 +87,7 @@ export default class EditUser extends Component {
             console.log(err);          
         });
 
-        axios.get(`${API_URL_CENTERS}`)      
+        axios.get(`${API_URL_CENTERS}`,{ withCredentials: true })      
         .then(response => {
             console.log(response.data);           
             this.setState({
@@ -186,6 +198,10 @@ export default class EditUser extends Component {
     }
     
     render(){
+        //Check if redirect state is true
+        if (this.state.redirect){
+            return <Redirect to="/" />;
+        }
         return(
             <div>
                 <h1>Edit User</h1>
