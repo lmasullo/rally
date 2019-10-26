@@ -1,15 +1,39 @@
 // Dependencies ************************************************
+require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
-// const axios = require('axios');
 const path = require('path');
+const passportSetup = require('./Config/passport-setup');
+const cookieSession = require("cookie-session");
+const passport = require("passport");
 
 // Initialize Express Server
 const app = express();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(cors());
+
+//Added this because of trouble passing req.user after authentication
+const corsOptions = {
+  //origin: 'http://localhost:4000',
+  //origin: 'http://localhost:3000',
+  origin: true,
+  credentials: true,
+}
+app.use(cors(corsOptions));
+
+//This encrypts our id that we send in the cookie
+app.use(cookieSession({
+  //1 day in Milliseconds
+  maxAge: 24 * 60 * 60 * 1000,
+  keys: [process.env.COOKIE_KEY],
+}));
+
+//Initialize Passport
+app.use(passport.initialize());
+
+//Initialize Sessions
+app.use(passport.session())
 
 // Set port
 const PORT = process.env.PORT || 4000;
@@ -30,6 +54,7 @@ mongoose
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useFindAndModify: false,
+    useCreateIndex: true,
   })
   .then(() => {
     // Display the connection message
@@ -43,16 +68,28 @@ mongoose
 // Require routes
 const UsersRoutes = require('./Routes/users.route');
 const CentersRoutes = require('./Routes/centers.route');
+const AuthRoutes = require('./Routes/auth.route');
+const HomeRoutes = require('./Routes/home.route');
+const ProfileRoutes = require('./Routes/profile.route');
 
 // Sets the base route as localhost:4000/rally
 // All routes will be off rally
 app.use('/user', UsersRoutes);
 app.use('/center', CentersRoutes);
+app.use('/auth', AuthRoutes);
+app.use('/home', HomeRoutes);
+app.use('/profile', ProfileRoutes);
 
 // Send every other request to the React app
 // Define any API routes before this runs
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, './client/build/index.html'));
+});
+
+//Logout - called from navbar.component
+app.post('/logout', (req, res) => {
+  req.logout();
+  res.send('Logged Out!');
 });
 
 // Start the server **********************************************

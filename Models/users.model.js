@@ -13,15 +13,19 @@ const UserSchema = new Schema({
   },
   skillLevel: {
     type: Number,
-    required: true,
+    trim: true,
   },
   image: {
-    type:String
+    type:String,
+    trim: true,
   },
   email: {
-    type:String
+    type:String,
+    trim: true,
   },
-  centers: [String]
+  centers: [String],
+  googleID: String,
+  currentUser: Boolean,
 },
 {
   //This will create createdAt and updatedAt fields
