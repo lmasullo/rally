@@ -69,22 +69,22 @@ export default class Details extends Component {
                                     
                                     <tr>
                                     <th scope="row">Address</th>
-                                    <td>{this.props.centers.addressLink}</td>
+                                    <td>{this.centers.addressLink}</td>
                                     </tr>
 
                                     <tr>
                                     <th scope="row">Hours</th>
-                                    <td>{this.props.centers.hours}</td>
+                                    <td>{this.centers.hours}</td>
                                     </tr>
 
                                     <tr>
                                     <th scope="row">Number of Courts</th>
-                                    <td>{this.props.centers.numCourts}</td>
+                                    <td>{this.centers.numCourts}</td>
                                     </tr>
 
                                     <tr>
                                     <th scope="row">Cost (Free?)</th>
-                                    <td>{this.props.centers.cost}</td>
+                                    <td>{this.centers.cost}</td>
                                     </tr>
 
                                 </tbody>
