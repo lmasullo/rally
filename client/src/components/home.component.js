@@ -37,11 +37,11 @@ const cardStyle = {
 const Center = props => (
     <div className="col-sm-4">
         <div className="card" style={cardStyle}>
-            <img src={props.centers.image} className="card-img-top" alt="Center Picture"/>
+            <img src={props.centers.image} className="card-img-top" alt="Center"/>
             <h5 className="card-header">{props.centers.centerName}</h5>
             <div className="card-body">            
                 <p className="card-text">{props.centers.description}</p>
-                <a href="#" className="btn btn-primary">Go somewhere</a>
+                <a href="{props.centers.addressLink}" className="btn btn-primary">Go somewhere</a>
             </div>
         </div>
     </div>

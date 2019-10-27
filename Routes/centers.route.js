@@ -59,6 +59,8 @@ router.route('/update/:id').post((req, res) => {
       dbCenter.cost = req.body.cost;
       dbCenter.numCourts = req.body.numCourts;
       dbCenter.addressLink = req.body.addressLink;
+      dbCenter.image = req.body.image;
+      dbCenter.mapLink = req.body.mapLink;
       dbCenter.save()
 
       // If we were able to successfully update a Center, send it back

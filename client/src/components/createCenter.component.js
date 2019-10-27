@@ -32,6 +32,8 @@ export default class CreateUser extends Component {
         this.onChangeCost = this.onChangeCost.bind(this);
         this.onChangeNumCourts = this.onChangeNumCourts.bind(this);
         this.onChangeAddressLink = this.onChangeAddressLink.bind(this);
+        this.onChangeMapLink = this.onChangeMapLink.bind(this);
+        this.onChangeImage = this.onChangeImage.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
         this.onCancel = this.onCancel.bind(this);
 
@@ -42,6 +44,8 @@ export default class CreateUser extends Component {
             cost: true,
             numCourts: 1,
             addressLink: '',
+            mapLink: '',
+            image: '',
             redirect: '',
         }
     }
@@ -107,6 +111,20 @@ export default class CreateUser extends Component {
         });
     }
 
+    //Set state when the Map URL changes
+    onChangeMapLink(e){
+        this.setState({
+            mapLink: e.target.value
+        });
+    }
+
+    //Set state when the image uri changes
+    onChangeImage(e){
+        this.setState({
+            image: e.target.value
+        });
+    }
+
     //Method to route to root when clicks cancel
     onCancel(e){
         //Prevent default submission
@@ -129,6 +147,8 @@ export default class CreateUser extends Component {
             cost: this.state.cost,
             numCourts: this.state.numCourts,
             addressLink: this.state.addressLink,
+            mapLink: this.state.mapLink,
+            image: this.state.image,
         }
 
         //Send to back-end, look at routes/centers.route.js
@@ -144,6 +164,8 @@ export default class CreateUser extends Component {
             costs: true,
             numCourts: 1,
             addressLink: "",
+            mapLink: "",
+            image: "",
         })       
     }
     
@@ -181,6 +203,10 @@ export default class CreateUser extends Component {
                         <input type="text" className="form-control" value={this.state.numCourts} onChange={this.onChangeNumCourts}></input>
                         <label>Address URL</label>
                         <input type="text" className="form-control" value={this.state.addressLink} onChange={this.onChangeAddressLink}></input>
+                        <label>Map URL</label>
+                        <input type="text" className="form-control" value={this.state.MapLink} onChange={this.onChangeMapLink}></input>
+                        <label>Image URI</label>
+                        <input type="text" className="form-control" value={this.state.image} onChange={this.onChangeImage}></input>
                     </div>
                     <button className="btn btn-primary" type="submit" style={styleBtn}>Add Center</button>
                     <button className="btn btn-warning" type="button" onClick={this.onCancel}>Cancel</button>

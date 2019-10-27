@@ -38,6 +38,8 @@ const Center = props => (
         <td>{String(props.centers.cost)}</td>
         <td>{props.centers.numCourts}</td>
         <td>{props.centers.addressLink}</td>
+        <td>{props.centers.mapLink}</td>
+        <td>{props.centers.image}</td>
         <td>
             <Link to={"center/edit/"+props.centers._id}>Edit</Link> | 
             <button onClick={() => {props.deleteCenter(props.centers._id)}} style={styleLink}>Delete</button>
@@ -123,6 +125,8 @@ export default class CenterList extends Component {
                             <th>Cost (Free)</th>
                             <th>Number of Courts</th>
                             <th>Address URL</th>
+                            <th>Map URL</th>
+                            <th>Image</th>
                             <th>Edit/Delete</th>
                         </tr>
                     </thead>

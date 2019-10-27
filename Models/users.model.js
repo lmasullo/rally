@@ -14,6 +14,7 @@ const UserSchema = new Schema({
   skillLevel: {
     type: Number,
     trim: true,
+    default: 1,
   },
   image: {
     type:String,
