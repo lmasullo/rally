@@ -28,19 +28,25 @@ if (process.env.NODE_ENV === 'production') {
 //     cursor: 'pointer',
 // };
 
+const cardStyle = {
+     width: '18rem',
+     marginBottom: '20px'
+}
+
 //Functional component of center cards to display in home page
 const Center = props => (
-    <div className="row">
-        <div className="card col-md-6">
-            <img src="..." className="card-img-top" alt="..." />
-            <div className="card-body">
-                <h5 className="card-title">{props.centers.centerName}</h5>
-                <p className="card-text">{props.centers.description}</p>
-                <button href="#" className="btn btn-primary">Go somewhere</button>
+    <div className="col-sm-4">
+        <div className="card" style={cardStyle}>
+            <img src={props.centers.image} className="card-img-top" alt="Center Picture"/>
+            <h5 className="card-header">{props.centers.centerName}</h5>
+            <div className="card-body">            
+                <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                <a href="#" className="btn btn-primary">Go somewhere</a>
             </div>
         </div>
     </div>
 )
+
 
 
 //Class Component
@@ -119,9 +125,7 @@ render(){
                     </div>
                 </div>
                 <div className='row'>
-                    <div className='col-12' id="cardList">
-                        {this.centerList()}
-                    </div>
+                    {this.centerList()}
                 </div>
             </div>
 
