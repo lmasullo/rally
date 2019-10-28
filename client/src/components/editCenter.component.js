@@ -221,7 +221,7 @@ export default class EditCenter extends Component {
                         <label>Address URL</label>
                         <input type="text" className="form-control" value={this.state.addressLink} onChange={this.onChangeAddressLink}></input>
                         <label>Map URL</label>
-                        <input type="text" className="form-control" value={this.state.MapLink} onChange={this.onChangeMapLink}></input>
+                        <input type="text" className="form-control" value={this.state.mapLink} onChange={this.onChangeMapLink}></input>
                         <label>Image URI</label>
                         <input type="text" className="form-control" value={this.state.image} onChange={this.onChangeImage}></input>
                     </div>

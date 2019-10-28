@@ -39,9 +39,7 @@ const styleForm = {
 
 //Functional component
 const Center = props => (
-  <tr>
-      <td>{props.centers}</td>
-  </tr>
+  <span>{props.centers}</span>
 )
 
 class Login extends Component {

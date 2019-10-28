@@ -1,5 +1,5 @@
 //Dependencies
-import React , { Component } from "react";
+import React , { useState, useEffect } from "react";
 //import {Link} from 'react-router-dom';
 import axios from 'axios';
 import {Redirect} from 'react-router-dom';
@@ -33,67 +33,81 @@ const cardStyle = {
      marginBottom: '20px'
 }
 
-//Functional component of center cards to display in home page
-const Center = props => (
-    <div className="col-sm-4">
-        <div className="card" style={cardStyle}>
-            <img src={props.centers.image} className="card-img-top" alt="Center"/>
-            <h5 className="card-header">{props.centers.centerName}</h5>
-            <div className="card-body">            
-                <p className="card-text">{props.centers.description}</p>
-                <a href="{props.centers.addressLink}" className="btn btn-primary">Go somewhere</a>
-            </div>
-        </div>
-    </div>
-)
+//Functional Component with Hools  
+function Home() {
 
-
-
-//Class Component
-export default class Home extends Component {   
-
-    //Set state and bindings
-    constructor(props){
-        super(props);
-        this.deleteCenter  = this.deleteCenter.bind(this);
-        this.state = {
-            centers: [],
-            redirect: '',
-        };
-    }
+    //Set initial State with Hooks
+    const [centers, setCenters] = useState([]);
+    const [redirect, setRedirect] = useState('');
 
     //Get all the centers when the component mounts and put in centers
-    componentDidMount(){
+    //Use useEffect instead of ComponentDidMount
+    //! Review useEffect!!!!!!
+    useEffect(() => {
         axios.get(API_URL, { withCredentials: true })
         .then(response => {
             console.log(response.data);
             //User Not logged in, so redirect to login, by setting redirect to true, it triggers in render
             if(response.data === 'Not Logged In!'){
-                console.log('no data');
-                this.setState({
-                redirect: true
-                })
+                console.log('No Data');
+                setRedirect(true);
             }else{
                 //User Logged in
-                this.setState({
-                    centers: response.data
-                })
+                setCenters(response.data);
+                console.log(centers);            
             }     
         })
         .catch(err =>{
             console.log(err);        
         })
-    }
+      }, []);
+
+    //Functional component of the Centers cards
+    function Center(props) {
+        function onChangeSaveCenter(e) {
+            console.log('Checkbox Clicked: ', e.target.value);    
+            //setCenters(e.target.value);
+            console.log(centers);
+            let categories = [...centers];
+            let checkCenter = categories.includes(e.target.value);
+            console.log(checkCenter);
+            
+            //if (checkCenter === false){
+                //setCenters(centers.push(e.target.value));
+            //}   
+            //console.log('New Centers', props.center);        
+        }
+
+        // Declare a new state variable, which we'll call "count"
+        //const [saveCenter, setSaveCenter] = useState('');
+        return(
+            <div className="col-sm-4">
+                <div className="card" style={cardStyle}>
+                    <img src={props.centers.image} className="card-img-top" alt="Center"/>
+                    <h5 className="card-header">{props.centers.centerName}</h5>
+                    <div className="card-body">            
+                        <p className="card-text">{props.centers.description}</p>
+                        <a target = "_blank" rel="noopener noreferrer" href={props.centers.addressLink} className="btn btn-primary m-2">Web Site</a>
+                        <a target = "_blank" rel="noopener noreferrer" href={props.centers.mapLink} className="btn btn-primary">Map</a>
+                        
+                    </div>
+                    <div className="card-footer text-center">
+                        <input type="checkbox" className="form-check-input" id="chkSaveMe" value={props.centers.centerName} onChange={onChangeSaveCenter} />
+                        <label className="form-check-label" htmlFor="chkSaveMe">Save Me</label>
+                        {/* <label>{saveMe}</label> */}
+                    </div>
+                </div>
+            </div>
+        )//End Return
+    }//End Center Functional Component
 
     //Function to delete a center
-    deleteCenter(id){
+    function deleteCenter(id){
         axios.delete(`${API_URL}${id}`)
         .then(res => {
             console.log(res.data);
             //Delete the center from view by filtering out the deleted center
-            this.setState({
-                centers: this.state.centers.filter(el => el._id !==id)
-            })
+            setCenters(centers.filter(el => el._id !==id))
         })
         .catch(err =>{
             console.log(err);           
@@ -101,23 +115,21 @@ export default class Home extends Component {
     }
 
     //Method to display each element in the table
-    centerList(){
+    function centerList(){
         // Loop over the centers array
-        return this.state.centers.map(currentCenter => {
+        return centers.map(currentCenter => {
             //Return the User component, pass some props to the User Component
             //The User component is above in this file as a functional component
-            return <Center centers={currentCenter} deleteCenter={this.deleteCenter} key={currentCenter._id}/>;
-    });
-};
+            return <Center centers={currentCenter} deleteCenter={deleteCenter} key={currentCenter._id}/>;
+        });
+    };
 
-render(){
     //Check if redirect state is true
-    if (this.state.redirect){
+    if (redirect){
         return <Redirect to="/" />;
     }
     return (
-        <div>
-           
+        <div>         
             <div className="container">
                 <div className="row">
                     <div className="col-12">
@@ -125,7 +137,7 @@ render(){
                     </div>
                 </div>
                 <div className='row'>
-                    {this.centerList()}
+                    {centerList()}
                 </div>
             </div>
 
@@ -141,4 +153,4 @@ render(){
     );
 };
 
-};
+export default Home;

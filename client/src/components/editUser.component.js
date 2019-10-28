@@ -152,7 +152,7 @@ export default class EditUser extends Component {
 
         console.log('Center to Delete: ',e.target.getAttribute('data-value'));
         
-        //Check if the center is in stae
+        //Check if the center is in state
         let checkCenter = this.state.newCenters.includes(delCenter);
         if (checkCenter === true){
             //Remove it from the array of centers
