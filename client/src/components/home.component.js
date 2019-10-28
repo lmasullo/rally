@@ -3,6 +3,7 @@ import React , { useState, useEffect } from "react";
 //import {Link} from 'react-router-dom';
 import axios from 'axios';
 import {Redirect} from 'react-router-dom';
+//import routeHelperBackEnd from '../../../Routes/routeHelperBackEnd';
 
 //! Is this the correct way????????
 //Check if production or local
@@ -39,6 +40,8 @@ function Home() {
     //Set initial State with Hooks
     const [centers, setCenters] = useState([]);
     const [redirect, setRedirect] = useState('');
+    const [user, setUser] = useState('');
+
 
     //Get all the centers when the component mounts and put in centers
     //Use useEffect instead of ComponentDidMount
@@ -60,22 +63,48 @@ function Home() {
         .catch(err =>{
             console.log(err);        
         })
+
+        //Get current user
+        //axios.get(`${process.env.REACT_APP_DEV_URL_BACKEND}user`, { withCredentials: true })
+        axios.get('http://localhost:4000/user', { withCredentials: true })
+        .then(response => {        
+            setUser(response.data); 
+            console.log(response.data);             
+        })
+        .catch(err =>{
+            console.log(err);        
+        })
+
+
       }, []);
 
     //Functional component of the Centers cards
     function Center(props) {
         function onChangeSaveCenter(e) {
-            console.log('Checkbox Clicked: ', e.target.value);    
-            //setCenters(e.target.value);
-            console.log(centers);
-            let categories = [...centers];
-            let checkCenter = categories.includes(e.target.value);
+            console.log('Checkbox Clicked: ', e.target.value);
+            //console.log(user);
+            const justCenters = user[0].centers;
+            //console.log(justCenters);
+            
+            let checkCenter = justCenters.includes(e.target.value);
             console.log(checkCenter);
             
-            //if (checkCenter === false){
-                //setCenters(centers.push(e.target.value));
-            //}   
-            //console.log('New Centers', props.center);        
+            if (checkCenter === false){
+                justCenters.push(e.target.value)
+                console.log('User: ', user[0]._id);
+                
+                console.log('New Centers', justCenters);  
+            
+                //Send to back-end to Update user's centers
+                //5db4ee2c9543c63a3bd90078
+                axios.post(`http://localhost:4000/home/update/${user[0]._id}`, justCenters)
+                .then(res => console.log(res.data))
+                .catch(err => console.log(err));
+                
+                // axios.get('http://localhost:4000/update/5db4ee2c9543c63a3bd90078', { withCredentials: true })
+                // .then(res => console.log(res.data))
+                // .catch(err => console.log(err));
+            }
         }
 
         // Declare a new state variable, which we'll call "count"
