@@ -3,14 +3,24 @@ import React, { Component } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import axios from 'axios';
 
+const routeHelperBackEnd = require('../routeHelperBackEnd');
+
+const redirectURL = `${routeHelperBackEnd()}main`;
+console.log(redirectURL);
+
+// const devBackEnd = routeHelperBackEnd();
+// console.log('Dev Back End: ', devBackEnd);
+
 //! Is this the correct way????????
 // Check if production or local
 let API_URL = '';
-if (process.env.NODE_ENV === 'production') {
-  API_URL = 'https://racquet-rally.herokuapp.com/user/';
-} else {
-  API_URL = 'http://localhost:4000/user/';
-}
+// if (process.env.NODE_ENV === 'production') {
+//   API_URL = 'https://racquet-rally.herokuapp.com/user/';
+// } else {
+//   API_URL = 'http://localhost:4000/user/';
+// }
+
+API_URL = process.env.NODE_ENV || 'http://localhost:4000/user/';
 
 // CSS Styles
 // This is to make the Delete button look like a link

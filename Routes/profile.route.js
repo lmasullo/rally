@@ -1,7 +1,5 @@
 // Dependencies
 const router = require('express').Router();
-const routeHelperFrontEnd = require('./routeHelperFrontEnd');
-const routeHelperBackEnd = require('./routeHelperBackEnd');
 // Middleware to check if authenticated and logged in
 const authCheck = require('../Utils/authCheck');
 

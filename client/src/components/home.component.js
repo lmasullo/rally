@@ -82,6 +82,7 @@ function Home() {
 
   // Function when user clicks Save Me checkbox on center card
   function onChangeSaveCenter(e) {
+    //! Need function to delete if unchecked
     console.log('User Array: ', user);
     console.log('Checkbox Clicked: ', e.target.value);
     // Get just the centers from the user object

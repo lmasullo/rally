@@ -1,7 +1,6 @@
 // Dependencies
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20');
-const routeHelperBackEnd = require('../Routes/routeHelperBackEnd');
 
 // Require Users model
 const db = require('../Models');
@@ -27,9 +26,6 @@ passport.deserializeUser((id, done) => {
   });
 });
 
-// Using routeHelper.js to decide if on localhost or production
-// let redirectURL = `${routeHelperBackEnd()}auth/google/redirect`;
-
 // Use Passport to Authenticate on Google
 passport.use(
   new GoogleStrategy(
@@ -39,7 +35,6 @@ passport.use(
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
       callbackURL: '/auth/google/redirect',
-      // callbackURL: redirectURL
 
       // These parameters are what come back from Google
       // accessToken - use this to alter users profile
@@ -55,7 +50,7 @@ passport.use(
 
       db.User.findOneAndUpdate({ googleID: profile.id }).then(currentUser => {
         if (currentUser) {
-          console.log(`Found User${  currentUser}`);
+          console.log(`Found User${currentUser}`);
           // Authentication successful, pass user to done method
           // Done sends current user to Serialize User above
           // Null is if there is an error

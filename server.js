@@ -15,8 +15,6 @@ app.use(express.json());
 
 // Added this because of trouble passing req.user after authentication
 const corsOptions = {
-  // origin: 'http://localhost:4000',
-  // origin: 'http://localhost:3000',
   origin: true,
   credentials: true,
 };
@@ -41,7 +39,7 @@ app.use(passport.session());
 const PORT = process.env.PORT || 4000;
 
 // Serve up static assets (usually on heroku)
-if (process.env.NODE_ENV === 'production') {
+if (process.env.NODE_ENV) {
   app.use(express.static('client/build'));
 }
 
