@@ -37,8 +37,6 @@
     "passport-google-oauth20": "^2.0.0"
   },
   "devDependencies": {
-    "babel-eslint": "^9.0.0",
-    "eslint": "^5.16.0",
     "eslint-config-airbnb": "^17.1.1",
     "eslint-config-prettier": "^4.3.0",
     "eslint-config-wesbos": "0.0.19",
