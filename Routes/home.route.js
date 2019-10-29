@@ -1,6 +1,6 @@
 // Use express router
 const router = require('express').Router();
-//Middleware to check if authenticated and logged in
+// Middleware to check if authenticated and logged in
 const authCheck = require('../Utils/authCheck');
 
 // Require Centers model
@@ -8,7 +8,7 @@ const db = require('../Models');
 
 // Route for getting all the Centers from the db
 // localhost:4000/center/
-router.get('/',authCheck, (req,res,next)=>{  
+router.get('/', authCheck, (req, res, next) => {
   // Grab every document in the Centers collection
   db.Center.find({})
     .then(dbCenter => {
@@ -23,23 +23,27 @@ router.get('/',authCheck, (req,res,next)=>{
 
 // Route for getting the current user
 // localhost:4000/user/
-router.get('/user',authCheck, (req,res,next)=>{  
+router.get('/user', authCheck, (req, res, next) => {
   res.json(req.user);
-  //console.log(req.user); 
+  // console.log(req.user);
 });
 
 // Route to Update a User's Centers
-router.route('/update/:id').post((req, res) => {
-//router.post('/update/:id',(req,res,next)=>{ 
+// router.route('/update/:id').post((req, res) => {
+router.post('/update/:id', (req, res) => {
   db.User.findById(req.params.id)
     .then(dbUser => {
-      //Set the new values
-      dbUser.centers = req.body.centers;
-      console.log(dbUser.centers);
-      
-      dbUser.save()
-      // If we were able to successfully update a User, send it back
-      .then(() => res.json(dbUser));
+      // Set the new values
+      console.log('Centers: ', dbUser.centers);
+      console.log('Req: ', req.body);
+
+      // Replace the user's centers with the new list from the home page
+      dbUser.centers = req.body.slice(0);
+
+      dbUser
+        .save()
+        // If we were able to successfully update a User, send it back
+        .then(() => res.json(dbUser));
     })
     .catch(err => {
       // If an error occurred, send it to the client
@@ -47,5 +51,5 @@ router.route('/update/:id').post((req, res) => {
     });
 });
 
-//Export the routes
+// Export the routes
 module.exports = router;

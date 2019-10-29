@@ -4,36 +4,38 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const path = require('path');
+const cookieSession = require('cookie-session');
+const passport = require('passport');
 const passportSetup = require('./Config/passport-setup');
-const cookieSession = require("cookie-session");
-const passport = require("passport");
 
 // Initialize Express Server
 const app = express();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-//Added this because of trouble passing req.user after authentication
+// Added this because of trouble passing req.user after authentication
 const corsOptions = {
-  //origin: 'http://localhost:4000',
-  //origin: 'http://localhost:3000',
+  // origin: 'http://localhost:4000',
+  // origin: 'http://localhost:3000',
   origin: true,
   credentials: true,
-}
+};
 app.use(cors(corsOptions));
 
-//This encrypts our id that we send in the cookie
-app.use(cookieSession({
-  //1 day in Milliseconds
-  maxAge: 24 * 60 * 60 * 1000,
-  keys: [process.env.COOKIE_KEY],
-}));
+// This encrypts our id that we send in the cookie
+app.use(
+  cookieSession({
+    // 1 day in Milliseconds
+    maxAge: 24 * 60 * 60 * 1000,
+    keys: [process.env.COOKIE_KEY],
+  })
+);
 
-//Initialize Passport
+// Initialize Passport
 app.use(passport.initialize());
 
-//Initialize Sessions
-app.use(passport.session())
+// Initialize Sessions
+app.use(passport.session());
 
 // Set port
 const PORT = process.env.PORT || 4000;
@@ -86,7 +88,7 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, './client/build/index.html'));
 });
 
-//Logout - called from navbar.component
+// Logout - called from navbar.component
 app.post('/logout', (req, res) => {
   req.logout();
   res.send('Logged Out!');

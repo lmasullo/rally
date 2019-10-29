@@ -1,6 +1,6 @@
-//Dependencies
+// Dependencies
 const router = require('express').Router();
-//Middleware to check if authenticated and logged in
+// Middleware to check if authenticated and logged in
 const authCheck = require('../Utils/authCheck');
 
 // Require Centers model
@@ -8,7 +8,7 @@ const Center = require('../Models/centers.model');
 
 // Route for getting all the Centers from the db
 // localhost:4000/center/
-router.get('/',authCheck, (req,res,next)=>{  
+router.get('/', authCheck, (req, res, next) => {
   // Grab every document in the Centers collection
   Center.find({})
     .then(dbCenter => {
@@ -52,7 +52,7 @@ router.route('/:id').get((req, res) => {
 router.route('/update/:id').post((req, res) => {
   Center.findById(req.params.id)
     .then(dbCenter => {
-      //Set the new values
+      // Set the new values
       dbCenter.centerName = req.body.centerName;
       dbCenter.description = req.body.description;
       dbCenter.hours = req.body.hours;
@@ -61,10 +61,11 @@ router.route('/update/:id').post((req, res) => {
       dbCenter.addressLink = req.body.addressLink;
       dbCenter.image = req.body.image;
       dbCenter.mapLink = req.body.mapLink;
-      dbCenter.save()
+      dbCenter
+        .save()
 
-      // If we were able to successfully update a Center, send it back
-      .then(() => res.json(dbCenter));
+        // If we were able to successfully update a Center, send it back
+        .then(() => res.json(dbCenter));
     })
     .catch(err => {
       // If an error occurred, send it to the client
@@ -86,5 +87,5 @@ router.route('/:id').delete((req, res) => {
     });
 });
 
-//Export the routes
+// Export the routes
 module.exports = router;

@@ -1,6 +1,6 @@
-//Dependencies
+// Dependencies
 const router = require('express').Router();
-const passport = require("passport");
+const passport = require('passport');
 const authCheck = require('../Utils/authCheck');
 
 // Require Users model
@@ -8,10 +8,9 @@ const db = require('../Models');
 
 // Route for getting all the Users from the db
 // localhost:4000/user/
-//router.route('/').get((req, res) => {
-//authCheck uses authCheck.js in Utils folder to check for req.user to ensure user is logged in
-router.get('/',authCheck,(req,res)=>{
-
+// router.route('/').get((req, res) => {
+// authCheck uses authCheck.js in Utils folder to check for req.user to ensure user is logged in
+router.get('/', authCheck, (req, res) => {
   // Grab every document in the Users collection
   db.User.find({})
     .then(dbUser => {
@@ -56,15 +55,16 @@ router.route('/:id').get((req, res) => {
 router.route('/update/:id').post((req, res) => {
   db.User.findById(req.params.id)
     .then(dbUser => {
-      //Set the new values
+      // Set the new values
       dbUser.name = req.body.name;
       dbUser.skillLevel = req.body.skillLevel;
       dbUser.image = req.body.image;
       dbUser.email = req.body.email;
       dbUser.centers = req.body.centers;
-      dbUser.save()
-      // If we were able to successfully update a User, send it back
-      .then(() => res.json(dbUser));
+      dbUser
+        .save()
+        // If we were able to successfully update a User, send it back
+        .then(() => res.json(dbUser));
     })
     .catch(err => {
       // If an error occurred, send it to the client
@@ -87,6 +87,5 @@ router.route('/:id').delete((req, res) => {
     });
 });
 
-//Export the routes
+// Export the routes
 module.exports = router;
-
