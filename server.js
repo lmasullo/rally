@@ -58,7 +58,7 @@ mongoose
   })
   .then(() => {
     // Display the connection message
-    console.log('MongoDB database connection established successfully');
+    console.log('MongoDB database connection established Successfully');
   })
   .catch(function(err) {
     // If an error occurred, log it
