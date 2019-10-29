@@ -3,18 +3,12 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { Redirect } from 'react-router-dom';
 
-//! Is this the correct way????????
 // Check if production or local
-// Users Routes
 let API_URL = '';
-// Centers Routes
-let API_URL_CENTERS = '';
 if (process.env.NODE_ENV === 'production') {
-  API_URL = 'https://racquet-rally.herokuapp.com/user/';
-  API_URL_CENTERS = 'https://racquet-rally.herokuapp.com/center/';
+  API_URL = 'https://racquet-rally.herokuapp.com/';
 } else {
-  API_URL = 'http://localhost:4000/user/';
-  API_URL_CENTERS = 'http://localhost:4000/center/';
+  API_URL = 'http://localhost:4000/';
 }
 
 // CSS Styles
@@ -60,7 +54,7 @@ export default class EditUser extends Component {
     // console.log(`${API_URL}${this.props.match.params.id}`);
     // Get the user by ID
     axios
-      .get(`${API_URL}${this.props.match.params.id}`, { withCredentials: true })
+      .get(`${API_URL}user/${this.props.match.params.id}`, { withCredentials: true })
       .then(response => {
         // User Not logged in, so redirect to login, by setting redirect to true, it triggers in render
         if (response.data === 'Not Logged In!') {
@@ -87,7 +81,7 @@ export default class EditUser extends Component {
       });
 
     axios
-      .get(`${API_URL_CENTERS}`, { withCredentials: true })
+      .get(`${API_URL}center`, { withCredentials: true })
       .then(response => {
         console.log(response.data);
         this.setState({
@@ -191,7 +185,7 @@ export default class EditUser extends Component {
 
     // Send to back-end to Update user, look at routes/books.js
     axios
-      .post(`${API_URL}update/${this.props.match.params.id}`, user)
+      .post(`${API_URL}user/update/${this.props.match.params.id}`, user)
       .then(res => console.log(res.data))
       .catch(err => console.log(err));
   }

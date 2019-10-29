@@ -1,17 +1,14 @@
 // Dependencies
 import React, { useState, useEffect } from 'react';
-// import {Link} from 'react-router-dom';
 import axios from 'axios';
 import { Redirect } from 'react-router-dom';
-// import routeHelperBackEnd from '../../../Routes/routeHelperBackEnd';
 
-//! Is this the correct way????????
 // Check if production or local
 let API_URL = '';
 if (process.env.NODE_ENV === 'production') {
-  API_URL = 'https://racquet-rally.herokuapp.com/center/';
+  API_URL = 'https://racquet-rally.herokuapp.com/';
 } else {
-  API_URL = 'http://localhost:4000/center/';
+  API_URL = 'http://localhost:4000/';
 }
 
 // CSS Styles
@@ -48,8 +45,8 @@ function Home() {
     // Use async await to fetch centers and users
     async function go() {
       try {
-        const centerPromise = axios(API_URL, { withCredentials: true });
-        const userPromise = axios('http://localhost:4000/user', {
+        const centerPromise = axios(`${API_URL}center`, { withCredentials: true });
+        const userPromise = axios(`${API_URL}user`, {
           withCredentials: true,
         });
 
@@ -100,12 +97,11 @@ function Home() {
       // Send to back-end to Update user's centers
       axios
         .post(
-          `http://localhost:4000/home/update/${user[0]._id}`,
+          `${API_URL}home/update/${user[0]._id}`,
           justUserCenterNames
         )
         .then(res => {
           console.log(res.data);
-          // setJustUserCenterNames(res.data)
         })
         .catch(err => console.log(err));
     }

@@ -1,6 +1,8 @@
+//Dependencies
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
+//CSS Styles
 const styleHTML = {
   height: '100%',
 };

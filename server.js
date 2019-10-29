@@ -39,7 +39,7 @@ app.use(passport.session());
 const PORT = process.env.PORT || 4000;
 
 // Serve up static assets (usually on heroku)
-if (process.env.NODE_ENV) {
+if (process.env.NODE_ENV === 'production') {
   app.use(express.static('client/build'));
 }
 

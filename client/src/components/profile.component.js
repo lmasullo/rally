@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { Redirect } from 'react-router-dom';
 
-//! Is this the correct way????????
 // Check if production or local
 let API_URL = '';
 if (process.env.NODE_ENV === 'production') {

@@ -3,18 +3,13 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { Redirect } from 'react-router-dom';
 
-//! Is this the correct way????????
 // Check if production or local
 // Users Routes
 let API_URL = '';
-// Centers Routes
-let API_URL_CENTERS = '';
 if (process.env.NODE_ENV === 'production') {
-  API_URL = 'https://racquet-rally.herokuapp.com/user';
-  API_URL_CENTERS = 'https://racquet-rally.herokuapp.com/center';
+  API_URL = 'https://racquet-rally.herokuapp.com/';
 } else {
-  API_URL = 'http://localhost:4000/user';
-  API_URL_CENTERS = 'http://localhost:4000/center';
+  API_URL = 'http://localhost:4000/';
 }
 
 // CSS Styles
@@ -52,7 +47,7 @@ export default class CreateUser extends Component {
   // Get all the centers when the component mounts
   componentDidMount() {
     axios
-      .get(API_URL_CENTERS, { withCredentials: true })
+      .get(`${API_URL}center`, { withCredentials: true })
 
       .then(response => {
         console.log(response.data);
@@ -143,7 +138,7 @@ export default class CreateUser extends Component {
 
     // Send to back-end to add the new user, look at routes/users.route.js
     axios
-      .post(`${API_URL}/add`, user)
+      .post(`${API_URL}user/add`, user)
       .then(res => console.log(res.data))
       .catch(err => console.log(err));
 

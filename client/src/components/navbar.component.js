@@ -21,7 +21,6 @@ function logout(event) {
   event.preventDefault(); // prevent page transition
   fetch('/logout', { method: 'POST', credentials: 'same-origin' }).then(
     () =>
-      // window.location.reload() // stay at the same url
       // Send to the Logout Component
       (window.location = '/logout')
   );
