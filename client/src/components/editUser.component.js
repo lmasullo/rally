@@ -54,7 +54,9 @@ export default class EditUser extends Component {
     // console.log(`${API_URL}${this.props.match.params.id}`);
     // Get the user by ID
     axios
-      .get(`${API_URL}user/${this.props.match.params.id}`, { withCredentials: true })
+      .get(`${API_URL}user/${this.props.match.params.id}`, {
+        withCredentials: true,
+      })
       .then(response => {
         // User Not logged in, so redirect to login, by setting redirect to true, it triggers in render
         if (response.data === 'Not Logged In!') {
@@ -80,6 +82,7 @@ export default class EditUser extends Component {
         console.log(err);
       });
 
+    // Get the centers
     axios
       .get(`${API_URL}center`, { withCredentials: true })
       .then(response => {
@@ -125,12 +128,13 @@ export default class EditUser extends Component {
   // Set state when the center changes
   onChangeCenter(e) {
     // Need to save to the users collection
-    console.log('Check', e.target.value);
+    console.log('Check: ', e.target.value);
+    console.log('Check ID: ', e.target.id);
 
-    const checkCenter = this.state.newCenters.includes(e.target.value);
+    const checkCenter = this.state.newCenters.includes(e.target.id);
 
     if (checkCenter === false) {
-      this.state.newCenters.push(e.target.value);
+      this.state.newCenters.push(e.target.id);
       this.setState({
         newCenters: this.state.newCenters,
       });
@@ -141,15 +145,16 @@ export default class EditUser extends Component {
   // Method to delete center from user
   onChangeX(e) {
     // Get the tennis center to delete
-    const delCenter = e.target.getAttribute('data-value');
+    // const delCenter = e.target.getAttribute('data-value');
+    const delCenter = e.target.id;
 
-    console.log('Center to Delete: ', e.target.getAttribute('data-value'));
+    // console.log('Center to Delete: ', e.target.getAttribute('data-value'));
 
     // Check if the center is in state
     const checkCenter = this.state.newCenters.includes(delCenter);
     if (checkCenter === true) {
       // Remove it from the array of centers
-      this.state.newCenters.pop(e.target.value);
+      this.state.newCenters.pop(e.target.id);
       // Set State
       this.setState({
         newCenters: this.state.newCenters,
@@ -207,12 +212,31 @@ export default class EditUser extends Component {
               value={this.state.name}
               onChange={this.onChangeName}
             ></input>
- 
+
             <label htmlFor="selSkill">Skill Level</label>
-            <select className="form-control" id="selSkill" onChange={this.onChangeSkillLevel}>
-              <option value="1" selected={this.state.skillLevel === 1 ? "selected" : ""}>Beginner (1-2.5)</option>
-              <option value="2" selected={this.state.skillLevel === 2 ? "selected" : ""}>Intermediate (3-4.5)</option>
-              <option value="3" selected={this.state.skillLevel === 2 ? "selected" : ""}>Expert (Expert 5+)</option>
+            <select
+              className="form-control"
+              id="selSkill"
+              onChange={this.onChangeSkillLevel}
+            >
+              <option
+                value="1"
+                selected={this.state.skillLevel === 1 ? 'selected' : ''}
+              >
+                Beginner (1-2.5)
+              </option>
+              <option
+                value="2"
+                selected={this.state.skillLevel === 2 ? 'selected' : ''}
+              >
+                Intermediate (3-4.5)
+              </option>
+              <option
+                value="3"
+                selected={this.state.skillLevel === 2 ? 'selected' : ''}
+              >
+                Expert (Expert 5+)
+              </option>
             </select>
             <label>Image</label>
             <input
@@ -231,9 +255,7 @@ export default class EditUser extends Component {
             <label>Available Centers</label>
             {/* Loop over the Centers and display */}
             {this.state.availCenters.map(center => {
-              const checkCenter = this.state.centers.includes(
-                center.centerName
-              );
+              const checkCenter = this.state.centers.includes(center._id);
               if (checkCenter === true) {
                 return (
                   <div key={`ret${center._id}`}>
@@ -246,7 +268,7 @@ export default class EditUser extends Component {
                           key={`div3${center._id}`}
                           className="input-group-text red"
                           style={styleRedX}
-                          data-value={center.centerName}
+                          id={center._id}
                           onClick={this.onChangeX}
                         >
                           X
@@ -262,6 +284,7 @@ export default class EditUser extends Component {
                         >
                           <input
                             key={`chk${center._id}`}
+                            id={center._id}
                             type="checkbox"
                             checked
                             value={center.centerName}
@@ -294,6 +317,7 @@ export default class EditUser extends Component {
                         <input
                           key={`chk2${center._id}`}
                           type="checkbox"
+                          id={center._id}
                           value={center.centerName}
                           onChange={this.onChangeCenter}
                         />
