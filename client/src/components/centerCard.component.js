@@ -1,11 +1,15 @@
+//Dependencies
 import React from "react";
+
+//CSS Styles
 const cardStyle = {
     width: '18rem',
     marginBottom: '20px',
-  };
+}
+
   // Functional component of the Centers cards
   function Center(props) {
-      console.log(props);
+    console.log(props);
     // This is the card html
     return (
       <div className="col-sm-4">
@@ -39,19 +43,16 @@ const cardStyle = {
             <input
               type="checkbox"
               className="form-check-input"
-              id="chkSaveMe"
+              id={props.centers._id}
               value={props.centers.centerName}
               onChange={(e) => props.onChangeSaveCenter(e, props.centerId)}
-              // checked={props.checked}
-              checked={props.centers.isFavorite ? "checked" : ""}
-              data-index={props.index}
-              data-arrcheck={props.chkIndex}
+              checked={props.isFavorite ? "checked" : ""}
             />
             <label
               htmlFor="chkSaveMe"
               className="form-check-label"
             >
-              Save Me
+              Favorite
             </label>
           </div>
         </div>

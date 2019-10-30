@@ -2,57 +2,35 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Redirect } from 'react-router-dom';
+//Import the centerCard component
 import Center from "./centerCard.component";
+
 // Check if production or local
 let API_URL = '';
 if (process.env.NODE_ENV === 'production') {
-  API_URL = 'https://racquet-rally.herokuapp.com/';
+  API_URL = 'https://racquet-rally.herokuapp.com/home/';
 } else {
-  API_URL = 'http://localhost:4000/';
+  API_URL = 'http://localhost:4000/home/';
 }
 
-function centerList(centers, justUserCenterNames, onChangeSaveCenter) {
-
-  //Array for checkboxes
-  var arrCheck = [];
+// Method to display each Center's Card on the page
+// This is called in the return statement at the bottom of the page
+function centerList(centers, onChangeSaveCenter) {
 
   // Loop over the centers array
-  return centers.map((currentCenter, index) => {
-
-    // Push the checkbox index to the checkbox array
-    arrCheck.push(index);
-
-    // console.log("The current iteration is: " + index);
-    // Check if the center name is in the user's center array
-    const centerChecked = justUserCenterNames.includes(
-      currentCenter.centerName
-    );
-    console.log('Included: ', currentCenter.centerName, centerChecked);
-
-    // If already saved, check that cards checkbox
-    if (centerChecked) {
-      // setChecked(checked);
-      // console.log(checked);
-
-      // Send props to the above Center functional component
-      // deleteCenter={deleteCenter}
+  return centers.map((currentCenter) => {
+      // Send props to the centerCard component, imported from components
       return (
         <Center
-          centers={currentCenter}
           key={currentCenter._id}
+          centers={currentCenter}         
           centerId={currentCenter._id}
-          index={index}
-          checked="checked"
+          isFavorite={currentCenter.isFavorite}
           onChangeSaveCenter={onChangeSaveCenter}
-          chkIndex={arrCheck}
         />
       );
-    }
-    // IF Not a saved center, don't send the checked parameter
-    return <Center centers={currentCenter} key={currentCenter._id} index={index} chkIndex={arrCheck}/>;
   });
 }
-
 
 // Functional Component with Hooks
 function Home() {
@@ -60,9 +38,7 @@ function Home() {
   const [centers, setCenters] = useState([]);
   const [redirect, setRedirect] = useState('');
   const [user, setUser] = useState([]);
-  const [justUserCenterNames, setJustUserCenterNames] = useState([]);
-  //const [checked, setChecked] = useState(false);
-  //const [checkboxes, setCheckboxes] = useState([]);
+  const [arrayLength, setArrayLength] = useState(0);
 
   // Get all the centers when the component mounts and put in centers
   // Use useEffect instead of ComponentDidMount
@@ -70,21 +46,12 @@ function Home() {
     // Use async await to fetch centers and users
     async function go() {
       try {
-        const centerPromise = axios(`${API_URL}center`, { withCredentials: true });
-        const userPromise = axios(`${API_URL}user`, {
-          withCredentials: true,
-        });
+        //Axios calls for centers and current user
+        const centerPromise = axios(`${API_URL}`, { withCredentials: true });
+        const userPromise = axios(`${API_URL}user`, { withCredentials: true });
 
         // await both promises to come back and destructure the result into their own variables
-        let [centersData, user] = await Promise.all([centerPromise, userPromise]);
-        var firstUser = user.data[0];
-        console.log(firstUser, centersData);
-        centersData.data = centersData.data.map(c => {
-          var isFavorite = firstUser.centers.some(uc => uc === c.centerName);
-          return {isFavorite, ...c}
-        })
-
-        console.log(centersData.data, user.data);
+        let [centersData, userData] = await Promise.all([centerPromise, userPromise]);
         
         // Check if user logged in
         if (centersData.data === 'Not Logged In!') {
@@ -92,118 +59,91 @@ function Home() {
           setRedirect(true);
         } else {
           // User Logged in
-          console.log('Response (Centers):', centersData.data);
+          //!This is the logic to set isFavorite
+          //Maps over the centers array and checks if it is in the user's centers array (using id) and then adds isFavorite true/false
+          centersData.data = centersData.data.map(c => {
+            var isFavorite = userData.data.centers.some(uc => uc === c._id);
+            return {isFavorite, ...c}
+          })
+          //Set centers state
           setCenters(centersData.data);
         }
 
         // Set the user object in state
-        console.log('Response User Array: ', user.data);
-        setUser(user.data);
+        console.log('Response User Array: ', userData.data);
+        setUser(userData.data);
 
-        // Set just the User's Centers in state
-        setJustUserCenterNames(user.data[0].centers);
       } catch (e) {
         console.error(e); // 💩
       }
     }
     // Call the async/await function
     go();
-  }, []); // End Use Effect
+    //Use arrayLength state to tell react to re-run useEffect after each change of the user's array
+  }, [arrayLength]); // End Use Effect
 
   // Function when user clicks Save Me checkbox on center card
   function onChangeSaveCenter(e, centerId) {
-    //! Need function to delete if unchecked
-
-
-    console.log('e.target', e.target);
-    console.log('e.target.checked', e.target.checked);
-    
-    ///console.log('Checked?: ',checked);
-    console.log('Index: ' , e.target.getAttribute("data-index"));
-
-    const index = e.target.getAttribute("data-index");
-
-    console.log('Array Check: ' , e.target.getAttribute("data-arrcheck"));
-
-    //console.log(checkboxes);
-
-    const checkboxes = e.target.getAttribute("data-arrcheck");
-
-    // Add the checkbox to the state variable
-    //setCheckboxes(arrCheck);
-    
-
-    //checkboxes[index].checked = !checkboxes[index].checked;
-    //checkboxes[index].checked = setChecked(!checked);
-
-    
-    // if(checked === true){
-    //   setChecked(false);
-    // }else{
-    //   setChecked(true);
-    // }
-    //setChecked(!checked);
-    
-    console.log('User Array: ', user);
-    console.log('Checkbox Clicked: ', e.target.value);
-    // Get just the centers from the user object
-    console.log(justUserCenterNames);
-
     // See if the clicked center is already a favorite of the user
-    const checkCenter = justUserCenterNames.includes(e.target.value);
+    const checkCenter = e.target.checked;
     console.log(checkCenter);
+    
+    //Create object of the center's id to send to backend
+    const newCenter = {
+      id: centerId
+    }
 
     // If not already a favorite, push to an array and then send to the home route to save
-    if (checkCenter === false) {
-      // Push the new center to the user's centers array
-      justUserCenterNames.push(e.target.value);
-
+    if (checkCenter === true) {
       // Send to back-end to Update user's centers
-      //! save by ID
+      //! save by ID, not name
       axios
         .post(
-          `${API_URL}home/update/${user[0]._id}`,
-          justUserCenterNames
+          `${API_URL}update/${user._id}`,
+          newCenter
         )
         .then(res => {
           console.log(res.data);
+          //Set the setArrayLength state to re-trigger useEffect and re-render cards
+          setArrayLength(res.data.length);
+        })
+        .catch(err => console.log(err));
+    }else{
+      //Delete center
+      // Send to back-end to Update user's centers
+      //! save by ID, not name
+      axios
+        .post(
+          `${API_URL}delete/${user._id}`,
+          newCenter
+        )
+        .then(res => {
+          console.log(res.data);
+          //Set the setArrayLength state to re-trigger useEffect and re-render cards
+          setArrayLength(res.data.length);
         })
         .catch(err => console.log(err));
     }
+    
   }
-
-  // Function to delete a center
-  // function deleteCenter(id){
-  //     axios.delete(`${API_URL}${id}`)
-  //     .then(res => {
-  //         //console.log(res.data);
-  //         //Delete the center from view by filtering out the deleted center
-  //         setCenters(centers.filter(el => el._id !==id))
-  //     })
-  //     .catch(err =>{
-  //         console.log(err);
-  //     })
-  // }
-
-  // Method to display each Center's Card on the page
-  // This is called in the return statement at the bottom of the page
-  
 
   // Check if redirect state is true
   if (redirect) {
     return <Redirect to="/" />;
   }
+
   return (
     <div>
       <div className="container">
         <div className="row">
           <div className="col-12">
-            <h3 className="text-center">Court Selection</h3>
+            <h3 className="text-center">Choose Your Favorite Courts!</h3>
           </div>
         </div>
-        <div className="row">{centerList(centers, justUserCenterNames, onChangeSaveCenter)}</div>
+        {/* Call centerList function to map over the centers and render the cards */}
+        {/* Pass in the centers, onChangeSaveCenter Function */}
+        <div className="row">{centerList(centers, onChangeSaveCenter)}</div>
       </div>
-
       <div className="container-fluid">
         <div className="row">
           <footer className="col-12">
