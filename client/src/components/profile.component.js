@@ -61,6 +61,7 @@ class Login extends Component {
         });
       } else {
         // User Logged in
+        console.log('Response',response.data);
         this.setState({
           user: response.data,
         });
@@ -104,8 +105,14 @@ class Login extends Component {
               height="100"
               width="100"
             />
-            <p className="mt-5 mb-3 text-muted">&copy; 2019</p>
+            
+            <h3><label>Skill Level: </label>{this.state.user.skillLevel}</h3>
             {this.centerList()}
+            {/* <button href={`/edit/${this.state.user._id}`} className="btn btn-primary">Edit Info</button> */}
+            {/* <Link to={`/edit/${this.state.user._id}`}>Edit</Link> */}
+            <a className="btn btn-primary" href={`/edit/${this.state.user._id}`} role="button">Edit Profile</a>
+            <p className="mt-5 mb-3 text-muted">&copy; 2019</p>
+            
           </form>
         </div>
       </div>

@@ -48,7 +48,7 @@ passport.use(
       // This is all the user's profile info
       console.log('Profile: ', profile);
 
-      db.User.findOneAndUpdate({ googleID: profile.id }).then(currentUser => {
+      db.User.findOne({ googleID: profile.id }).then(currentUser => {
         if (currentUser) {
           console.log(`Found User${currentUser}`);
           // Authentication successful, pass user to done method
