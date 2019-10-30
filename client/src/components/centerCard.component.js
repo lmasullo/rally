@@ -1,8 +1,12 @@
+//Dependencies
 import React from "react";
+
+//CSS Styles
 const cardStyle = {
     width: '18rem',
     marginBottom: '20px',
   };
+  
   // Functional component of the Centers cards
   function Center(props) {
       console.log(props);
