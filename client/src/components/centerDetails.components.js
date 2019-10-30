@@ -90,6 +90,18 @@ export default class Details extends Component {
                                 </tbody>
                             </table>
                         </div>
+
+                        <div className="row">
+                            <div className="col-12">
+                                <h3 className="text-center">
+                                    Players At This Court
+                                </h3>
+                                <br></br>
+                                <div className="courtPlayers">
+                                    {/* Render current players playing at this court */}
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                     <div className="container-fluid">
