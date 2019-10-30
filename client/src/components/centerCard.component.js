@@ -51,7 +51,7 @@ const cardStyle = {
               htmlFor="chkSaveMe"
               className="form-check-label"
             >
-              Save Me
+              Favorite
             </label>
           </div>
         </div>

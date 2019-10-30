@@ -209,10 +209,10 @@ export default class EditUser extends Component {
             ></input>
  
             <label htmlFor="selSkill">Skill Level</label>
-            <select defaultValue={1} className="form-control" id="selSkill" onChange={this.onChangeSkillLevel}>
+            <select className="form-control" id="selSkill" onChange={this.onChangeSkillLevel}>
               <option value="1" selected={this.state.skillLevel === 1 ? "selected" : ""}>Beginner (1-2.5)</option>
               <option value="2" selected={this.state.skillLevel === 2 ? "selected" : ""}>Intermediate (3-4.5)</option>
-              <option value="3" selected={this.state.skillLevel === 3 ? "selected" : ""}>Expert (Expert 5+)</option>
+              <option value="3" selected={this.state.skillLevel === 2 ? "selected" : ""}>Expert (Expert 5+)</option>
             </select>
             <label>Image</label>
             <input
