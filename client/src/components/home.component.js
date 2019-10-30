@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Redirect } from 'react-router-dom';
-
+import Center from "./centerCard.component";
 // Check if production or local
 let API_URL = '';
 if (process.env.NODE_ENV === 'production') {
@@ -11,25 +11,48 @@ if (process.env.NODE_ENV === 'production') {
   API_URL = 'http://localhost:4000/';
 }
 
-// CSS Styles
-// This is to make the Delete button look like a link
-// const styleLink = {
-//     overflow: 'visible',
-//     width: 'auto',
-//     fontSize: '1em',
-//     textAlign: 'left',
-//     color: 'cornflowerblue',
-//     background: 'none',
-//     margin: 0,
-//     padding: 0,
-//     border: 'none',
-//     cursor: 'pointer',
-// };
+function centerList(centers, justUserCenterNames, onChangeSaveCenter) {
 
-const cardStyle = {
-  width: '18rem',
-  marginBottom: '20px',
-};
+  //Array for checkboxes
+  var arrCheck = [];
+
+  // Loop over the centers array
+  return centers.map((currentCenter, index) => {
+
+    // Push the checkbox index to the checkbox array
+    arrCheck.push(index);
+
+    // console.log("The current iteration is: " + index);
+    // Check if the center name is in the user's center array
+    const centerChecked = justUserCenterNames.includes(
+      currentCenter.centerName
+    );
+    console.log('Included: ', currentCenter.centerName, centerChecked);
+
+    // If already saved, check that cards checkbox
+    if (centerChecked) {
+      // setChecked(checked);
+      // console.log(checked);
+
+      // Send props to the above Center functional component
+      // deleteCenter={deleteCenter}
+      return (
+        <Center
+          centers={currentCenter}
+          key={currentCenter._id}
+          centerId={currentCenter._id}
+          index={index}
+          checked="checked"
+          onChangeSaveCenter={onChangeSaveCenter}
+          chkIndex={arrCheck}
+        />
+      );
+    }
+    // IF Not a saved center, don't send the checked parameter
+    return <Center centers={currentCenter} key={currentCenter._id} index={index} chkIndex={arrCheck}/>;
+  });
+}
+
 
 // Functional Component with Hooks
 function Home() {
@@ -38,6 +61,8 @@ function Home() {
   const [redirect, setRedirect] = useState('');
   const [user, setUser] = useState([]);
   const [justUserCenterNames, setJustUserCenterNames] = useState([]);
+  //const [checked, setChecked] = useState(false);
+  //const [checkboxes, setCheckboxes] = useState([]);
 
   // Get all the centers when the component mounts and put in centers
   // Use useEffect instead of ComponentDidMount
@@ -51,19 +76,27 @@ function Home() {
         });
 
         // await both promises to come back and destructure the result into their own variables
-        const [centers, user] = await Promise.all([centerPromise, userPromise]);
-        console.log(centers.data, user.data);
+        let [centersData, user] = await Promise.all([centerPromise, userPromise]);
+        var firstUser = user.data[0];
+        console.log(firstUser, centersData);
+        centersData.data = centersData.data.map(c => {
+          var isFavorite = firstUser.centers.some(uc => uc === c.centerName);
+          return {isFavorite, ...c}
+        })
 
+        console.log(centersData.data, user.data);
+        
         // Check if user logged in
-        if (centers.data === 'Not Logged In!') {
+        if (centersData.data === 'Not Logged In!') {
           console.log('No Data');
           setRedirect(true);
         } else {
           // User Logged in
-          console.log('Response (Centers):', centers.data);
-          setCenters(centers.data);
+          console.log('Response (Centers):', centersData.data);
+          setCenters(centersData.data);
         }
 
+        // Set the user object in state
         console.log('Response User Array: ', user.data);
         setUser(user.data);
 
@@ -78,8 +111,39 @@ function Home() {
   }, []); // End Use Effect
 
   // Function when user clicks Save Me checkbox on center card
-  function onChangeSaveCenter(e) {
+  function onChangeSaveCenter(e, centerId) {
     //! Need function to delete if unchecked
+
+
+    console.log('e.target', e.target);
+    console.log('e.target.checked', e.target.checked);
+    
+    ///console.log('Checked?: ',checked);
+    console.log('Index: ' , e.target.getAttribute("data-index"));
+
+    const index = e.target.getAttribute("data-index");
+
+    console.log('Array Check: ' , e.target.getAttribute("data-arrcheck"));
+
+    //console.log(checkboxes);
+
+    const checkboxes = e.target.getAttribute("data-arrcheck");
+
+    // Add the checkbox to the state variable
+    //setCheckboxes(arrCheck);
+    
+
+    //checkboxes[index].checked = !checkboxes[index].checked;
+    //checkboxes[index].checked = setChecked(!checked);
+
+    
+    // if(checked === true){
+    //   setChecked(false);
+    // }else{
+    //   setChecked(true);
+    // }
+    //setChecked(!checked);
+    
     console.log('User Array: ', user);
     console.log('Checkbox Clicked: ', e.target.value);
     // Get just the centers from the user object
@@ -95,6 +159,7 @@ function Home() {
       justUserCenterNames.push(e.target.value);
 
       // Send to back-end to Update user's centers
+      //! save by ID
       axios
         .post(
           `${API_URL}home/update/${user[0]._id}`,
@@ -106,59 +171,6 @@ function Home() {
         .catch(err => console.log(err));
     }
   }
-
-  // Functional component of the Centers cards
-  function Center(props) {
-    // This is the card html
-    return (
-      <div className="col-sm-4">
-        <div className="card" style={cardStyle}>
-          <img
-            src={props.centers.image}
-            className="card-img-top"
-            alt="Center"
-          />
-          <h5 className="card-header">{props.centers.centerName}</h5>
-          <div className="card-body">
-            <p className="card-text">{props.centers.description}</p>
-            <a
-              target="_blank"
-              rel="noopener noreferrer"
-              href={props.centers.addressLink}
-              className="btn btn-primary m-2"
-            >
-              Web Site
-            </a>
-            <a
-              target="_blank"
-              rel="noopener noreferrer"
-              href={props.centers.mapLink}
-              className="btn btn-primary"
-            >
-              Map
-            </a>
-          </div>
-          <div className="card-footer text-center">
-            <input
-              type="checkbox"
-              className="form-check-input"
-              id="chkSaveMe"
-              value={props.centers.centerName}
-              onChange={onChangeSaveCenter}
-              checked={props.checked}
-            />
-            <label
-              htmlFor="chkSaveMe"
-              className="form-check-label"
-              htmlFor="chkSaveMe"
-            >
-              Save Me
-            </label>
-          </div>
-        </div>
-      </div>
-    ); // End Return
-  } // End Center Functional Component
 
   // Function to delete a center
   // function deleteCenter(id){
@@ -175,33 +187,7 @@ function Home() {
 
   // Method to display each Center's Card on the page
   // This is called in the return statement at the bottom of the page
-  function centerList() {
-    // Loop over the centers array
-    return centers.map(currentCenter => {
-      // Check if the center name is in the user's center array
-      const centerChecked = justUserCenterNames.includes(
-        currentCenter.centerName
-      );
-      console.log('Included: ', currentCenter.centerName, centerChecked);
-
-      // If already saved, check that cards checkbox
-      if (centerChecked) {
-        // setChecked(checked);
-        // console.log(checked);
-
-        // Send props to the above Center functional component
-        // deleteCenter={deleteCenter}
-        return (
-          <Center
-            centers={currentCenter}
-            key={currentCenter._id}
-            checked="checked"
-          />
-        );
-      }
-      return <Center centers={currentCenter} key={currentCenter._id} />;
-    });
-  }
+  
 
   // Check if redirect state is true
   if (redirect) {
@@ -215,7 +201,7 @@ function Home() {
             <h3 className="text-center">Court Selection</h3>
           </div>
         </div>
-        <div className="row">{centerList()}</div>
+        <div className="row">{centerList(centers, justUserCenterNames, onChangeSaveCenter)}</div>
       </div>
 
       <div className="container-fluid">
