@@ -20,7 +20,6 @@ function centerList(centers, onChangeSaveCenter) {
   // Loop over the centers array
   return centers.map((currentCenter) => {
       // Send props to the centerCard component, imported from components
-      // deleteCenter={deleteCenter}
       return (
         <Center
           key={currentCenter._id}
@@ -39,6 +38,7 @@ function Home() {
   const [centers, setCenters] = useState([]);
   const [redirect, setRedirect] = useState('');
   const [user, setUser] = useState([]);
+  const [arrayLength, setArrayLength] = useState(0);
 
   // Get all the centers when the component mounts and put in centers
   // Use useEffect instead of ComponentDidMount
@@ -62,7 +62,7 @@ function Home() {
           //!This is the logic to set isFavorite
           //Maps over the centers array and checks if it is in the user's centers array (using id) and then adds isFavorite true/false
           centersData.data = centersData.data.map(c => {
-            let isFavorite = userData.data.centers.some(uc => uc === c._id);
+            var isFavorite = userData.data.centers.some(uc => uc === c._id);
             return {isFavorite, ...c}
           })
           //Set centers state
@@ -79,31 +79,22 @@ function Home() {
     }
     // Call the async/await function
     go();
-  }, []); // End Use Effect
+    //Use arrayLength state to tell react to re-run useEffect after each change of the user's array
+  }, [arrayLength]); // End Use Effect
 
   // Function when user clicks Save Me checkbox on center card
   function onChangeSaveCenter(e, centerId) {
-    //! Need function to delete if unchecked
-
-
-    console.log('e.target', e.target);
-    console.log('Checkbox Clicked Value: ', e.target.value);
-
-    const targetID = e.target.id
-    console.log('Checkbox Clicked ID: ', targetID);
-
     // See if the clicked center is already a favorite of the user
     const checkCenter = e.target.checked;
     console.log(checkCenter);
     
     //Create object of the center's id to send to backend
     const newCenter = {
-      id: targetID
+      id: centerId
     }
 
     // If not already a favorite, push to an array and then send to the home route to save
     if (checkCenter === true) {
-      // Push the new center to the user's centers array
       // Send to back-end to Update user's centers
       //! save by ID, not name
       axios
@@ -113,11 +104,12 @@ function Home() {
         )
         .then(res => {
           console.log(res.data);
+          //Set the setArrayLength state to re-trigger useEffect and re-render cards
+          setArrayLength(res.data.length);
         })
         .catch(err => console.log(err));
     }else{
       //Delete center
-      // Push the new center to the user's centers array
       // Send to back-end to Update user's centers
       //! save by ID, not name
       axios
@@ -127,44 +119,31 @@ function Home() {
         )
         .then(res => {
           console.log(res.data);
+          //Set the setArrayLength state to re-trigger useEffect and re-render cards
+          setArrayLength(res.data.length);
         })
         .catch(err => console.log(err));
     }
+    
   }
-
-  // Function to delete a center
-  // function deleteCenter(id){
-  //     axios.delete(`${API_URL}${id}`)
-  //     .then(res => {
-  //         //console.log(res.data);
-  //         //Delete the center from view by filtering out the deleted center
-  //         setCenters(centers.filter(el => el._id !==id))
-  //     })
-  //     .catch(err =>{
-  //         console.log(err);
-  //     })
-  // }
-
-  
-  
 
   // Check if redirect state is true
   if (redirect) {
     return <Redirect to="/" />;
   }
+
   return (
     <div>
       <div className="container">
         <div className="row">
           <div className="col-12">
-            <h3 className="text-center">Court Selection</h3>
+            <h3 className="text-center">Choose Your Favorite Courts!</h3>
           </div>
         </div>
         {/* Call centerList function to map over the centers and render the cards */}
         {/* Pass in the centers, onChangeSaveCenter Function */}
         <div className="row">{centerList(centers, onChangeSaveCenter)}</div>
       </div>
-
       <div className="container-fluid">
         <div className="row">
           <footer className="col-12">
