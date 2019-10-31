@@ -59,7 +59,7 @@ router.route('/update/:id').post((req, res) => {
       dbUser.skillLevel = req.body.skillLevel;
       dbUser.image = req.body.image;
       dbUser.email = req.body.email;
-      dbUser.centers = req.body.centers;
+      //dbUser.centers = req.body.centers;
       dbUser
         .save()
         // If we were able to successfully update a User, send it back
@@ -70,6 +70,43 @@ router.route('/update/:id').post((req, res) => {
       res.json(err);
     });
 });
+
+// Route to Update a User's Centers
+// router.route('/home/update/:id').post((req, res) => {
+router.post('/update/center/:id', (req, res) => {
+  db.User.findById(req.params.id)
+    .then(dbUser => {
+      // Set the new values
+      //console.log('Req: ', req.body.id);
+      dbUser.centers.push(req.body.id);
+      dbUser
+        .save()
+        // If we were able to successfully update a User, send it back
+        .then(() => res.json(dbUser));
+    })
+    .catch(err => {
+      // If an error occurred, send it to the client
+      res.json(err);
+    });
+});
+
+// Route to Delete a User's Centers
+// router.route('/home/delete/:id').post((req, res) => {
+  router.post('/delete/center/:id', (req, res) => {
+    db.User.findById(req.params.id)
+      .then(dbUser => {
+        // Delete the center
+        dbUser.centers.pull(req.body.id);
+        dbUser
+          .save()
+          // If we were able to successfully update a User, send it back
+          .then(() => res.json(dbUser));
+      })
+      .catch(err => {
+        // If an error occurred, send it to the client
+        res.json(err);
+      });
+  });
 
 // Route to delete a User
 router.route('/:id').delete((req, res) => {
