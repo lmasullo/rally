@@ -54,8 +54,10 @@ router.route('/:id').get((req, res) => {
 router.route('/update/:id').post((req, res) => {
   db.User.findById(req.params.id)
     .then(dbUser => {
+      console.log('User Found');
+      
       // Set the new values
-      dbUser.name = req.body.name;
+      dbUser.name = req.body.userName;
       dbUser.skillLevel = req.body.skillLevel;
       dbUser.image = req.body.image;
       dbUser.email = req.body.email;
