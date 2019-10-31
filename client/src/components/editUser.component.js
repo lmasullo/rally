@@ -1,7 +1,7 @@
 // Dependencies
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
+import { Redirect, useParams, useHistory } from 'react-router-dom';
 import axios from 'axios';
-import { Redirect } from 'react-router-dom';
 
 // Check if production or local
 let API_URL = '';
@@ -20,334 +20,304 @@ const styleRedX = {
   color: 'red',
 };
 
-// Class Component
-export default class EditUser extends Component {
-  // Set state and bindings
-  constructor(props) {
-    // Need super if a sub class, this is not in app.js
-    super(props);
+const styleHidden = {
+  display: 'none',
+};
 
-    // Need to bind this to the class
-    this.onChangeName = this.onChangeName.bind(this);
-    this.onChangeSkillLevel = this.onChangeSkillLevel.bind(this);
-    this.onChangeImage = this.onChangeImage.bind(this);
-    this.onChangeEmail = this.onChangeEmail.bind(this);
-    this.onChangeCenter = this.onChangeCenter.bind(this);
-    this.onChangeX = this.onChangeX.bind(this);
-    this.onSubmit = this.onSubmit.bind(this);
-    this.onCancel = this.onCancel.bind(this);
+// Functional Hooks Component
+function EditUser() {
+  // Set initial State with Hooks
+  // const [user, setUser] = useState([]);
+  const [userId, setUserId] = useState(0);
+  const [userName, setUserName] = useState('');
+  const [skillLevel, setSkillLevel] = useState(1);
+  const [email, setEmail] = useState('');
+  const [image, setImage] = useState('');
+  // const [userCenters, setUserCenters] = useState([]);
+  const [availCenters, setAvailCenters] = useState([]);
+  const [redirect, setRedirect] = useState(false);
+  const [arrayLength, setArrayLength] = useState(0);
 
-    this.state = {
-      name: '',
-      skillLevel: '',
-      image: '',
-      email: '',
-      centers: [],
-      newCenters: [],
-      availCenters: [],
-      redirect: '',
-    };
-  }
+  // Get the url id parameter
+  const { id } = useParams();
 
-  // Get the user that matches the id when the component mounts
-  componentDidMount() {
-    // console.log(`${API_URL}${this.props.match.params.id}`);
-    // Get the user by ID
-    axios
-      .get(`${API_URL}user/${this.props.match.params.id}`, {
-        withCredentials: true,
-      })
-      .then(response => {
-        // User Not logged in, so redirect to login, by setting redirect to true, it triggers in render
-        if (response.data === 'Not Logged In!') {
-          console.log('no data');
-          this.setState({
-            redirect: true,
-          });
+  // Use useEffect instead of ComponentDidMount
+  useEffect(() => {
+    //! **************************
+
+    // Use async await to fetch centers and users
+    async function go() {
+      try {
+        // Axios calls for centers and current user
+        const centerPromise = axios(`${API_URL}center`, {
+          withCredentials: true,
+        });
+        const userPromise = axios(`${API_URL}user/${id}`, {
+          withCredentials: true,
+        });
+
+        // await both promises to come back and destructure the result into their own variables
+        const [centersData, userData] = await Promise.all([
+          centerPromise,
+          userPromise,
+        ]);
+
+        console.log(centersData.data);
+        console.log(userData.data);
+
+        // Check if user logged in
+        if (centersData.data === 'Not Logged In!') {
+          console.log('No Data');
+          setRedirect(true);
         } else {
           // User Logged in
-          this.setState({
-            name: response.data.name,
-            skillLevel: response.data.skillLevel,
-            image: response.data.image,
-            email: response.data.email,
-            centers: response.data.centers,
-            newCenters: response.data.centers,
+          //! This is the logic to set isFavorite
+          // Maps over the centers array and checks if it is in the user's centers array (using id) and then adds isFavorite true/false
+          centersData.data = centersData.data.map(c => {
+            const isFavorite = userData.data.centers.some(uc => uc === c._id);
+            return { isFavorite, ...c };
           });
+          // Set the available centers in state
+          setAvailCenters(centersData.data);
         }
-        console.log('Affiliated', this.state.centers);
-        console.log('New', this.state.newCenters);
-      })
-      .catch(err => {
-        console.log(err);
-      });
 
-    // Get the centers
-    axios
-      .get(`${API_URL}center`, { withCredentials: true })
-      .then(response => {
-        console.log(response.data);
-        this.setState({
-          availCenters: response.data,
-        });
-        console.log('Avail', this.state.availCenters);
-      })
-      .catch(err => {
-        console.log(err);
-      });
-  } // End Component Did Mount
+        // Set the user object in state
+        console.log('Response User Array: ', userData.data);
+        // setUser(userData.data);
+        setUserId(userData.data._id);
+        setUserName(userData.data.name);
+        setSkillLevel(userData.data.skillLevel);
+        setImage(userData.data.image);
+        setEmail(userData.data.email);
+        // setUserCenters(userData.data.centers);
+        setArrayLength(userData.data.centers.length);
+      } catch (e) {
+        console.error(e); // 💩
+      }
+    }
+    // Call the async/await function
+    go();
+    // Use arrayLength state to tell react to re-run useEffect after each change of the user's array
+  }, [arrayLength, id]); // End Use Effect
 
   // Set state when the name changes
-  onChangeName(e) {
-    this.setState({
-      name: e.target.value,
-    });
+  function onChangeName(e) {
+    setUserName(e.target.value);
   }
 
   // Set state when the skill level changes
-  onChangeSkillLevel(e) {
-    this.setState({
-      skillLevel: e.target.value,
-    });
+  function onChangeSkillLevel(e) {
+    setSkillLevel(e.target.value);
   }
 
   // Set state when the image url changes
-  onChangeImage(e) {
-    this.setState({
-      image: e.target.value,
-    });
+  function onChangeImage(e) {
+    setImage(e.target.value);
   }
 
   // Set state when the email changes
-  onChangeEmail(e) {
-    this.setState({
-      email: e.target.value,
-    });
+  function onChangeEmail(e) {
+    setEmail(e.target.value);
   }
 
   // Set state when the center changes
-  onChangeCenter(e) {
-    // Need to save to the users collection
+  function onChangeCenter(e) {
+    //   // Need to save to the users collection
     console.log('Check: ', e.target.value);
     console.log('Check ID: ', e.target.id);
 
-    const checkCenter = this.state.newCenters.includes(e.target.id);
+    // See if the clicked center is already a favorite of the user
+    const checkCenter = e.target.checked;
+    const centerId = e.target.id;
+    console.log(checkCenter);
 
-    if (checkCenter === false) {
-      this.state.newCenters.push(e.target.id);
-      this.setState({
-        newCenters: this.state.newCenters,
-      });
+    // Create object of the center's id to send to backend
+    const newCenter = {
+      id: centerId,
+    };
+
+    // If not already a favorite, push to an array and then send to the home route to save
+    if (checkCenter === true) {
+      console.log('true');
+
+      // Send to back-end to Update user's centers
+      axios
+        .post(`${API_URL}user/update/center/${userId}`, newCenter)
+        .then(res => {
+          console.log(res.data);
+          // Set the setArrayLength state to re-trigger Component did Mount and re-render cards
+          setArrayLength(res.data.length);
+        })
+        .catch(err => console.log(err));
     }
-    console.log('New Centers', this.state.newCenters);
   }
 
   // Method to delete center from user
-  onChangeX(e) {
+  function onChangeX(e) {
     // Get the tennis center to delete
-    // const delCenter = e.target.getAttribute('data-value');
-    const delCenter = e.target.id;
+    const centerId = e.target.id;
 
-    // console.log('Center to Delete: ', e.target.getAttribute('data-value'));
+    // Create object of the center's id to send to backend
+    const newCenter = {
+      id: centerId,
+    };
 
-    // Check if the center is in state
-    const checkCenter = this.state.newCenters.includes(delCenter);
-    if (checkCenter === true) {
-      // Remove it from the array of centers
-      this.state.newCenters.pop(e.target.id);
-      // Set State
-      this.setState({
-        newCenters: this.state.newCenters,
-      });
-    }
-    console.log('New Centers: ', this.state.newCenters);
+    // Delete center
+    // Send to back-end to Update user's centers
+    axios
+      .post(`${API_URL}user/delete/center/${userId}`, newCenter)
+      .then(res => {
+        console.log(res.data);
+        // Set the setArrayLength state to re-trigger useEffect and re-render cards
+        setArrayLength(res.data.length);
+      })
+      .catch(err => console.log(err));
   }
 
   // Method to route to root when clicks cancel
-  onCancel(e) {
+  // Use to navigate to another component
+  const history = useHistory();
+  function onCancel(e) {
     // Prevent default submission
     e.preventDefault();
 
+    // Go to profile
+    history.push('/profile');
+
     // Send back to Users List
-    window.location = '/';
+    // This would send to the backend route
+    // window.location = '/profile';
   }
 
   // Method when click Save Changes button
-  onSubmit(e) {
+  function onSubmit(e) {
     // Prevent default submission
     e.preventDefault();
 
     // Create user object to save
-    const user = {
-      name: this.state.name,
-      skillLevel: this.state.skillLevel,
-      image: this.state.image,
-      email: this.state.email,
-      centers: this.state.newCenters,
+    const newUser = {
+      userName,
+      skillLevel,
+      image,
+      email,
     };
 
-    console.log(user);
+    console.log(newUser);
+    console.log(userId);
 
     // Send to back-end to Update user, look at routes/books.js
     axios
-      .post(`${API_URL}user/update/${this.props.match.params.id}`, user)
+      .post(`${API_URL}user/update/${userId}`, newUser)
       .then(res => console.log(res.data))
       .catch(err => console.log(err));
   }
 
-  render() {
-    // Check if redirect state is true
-    if (this.state.redirect) {
-      return <Redirect to="/" />;
-    }
-    return (
-      <div>
-        <h1>Edit User</h1>
-        <form onSubmit={this.onSubmit}>
-          <div className="form-group">
-            <label>User Name</label>
-            <input
-              type="text"
-              className="form-control"
-              value={this.state.name}
-              onChange={this.onChangeName}
-            ></input>
+  // Check if redirect state is true
+  if (redirect) {
+    console.log('Not Logged in!');
+    return <Redirect to="/" />;
+  }
 
-            <label htmlFor="selSkill">Skill Level</label>
-            <select
-              className="form-control"
-              id="selSkill"
-              onChange={this.onChangeSkillLevel}
-            >
-              <option
-                value="1"
-                selected={this.state.skillLevel === 1 ? 'selected' : ''}
-              >
-                Beginner (1-2.5)
-              </option>
-              <option
-                value="2"
-                selected={this.state.skillLevel === 2 ? 'selected' : ''}
-              >
-                Intermediate (3-4.5)
-              </option>
-              <option
-                value="3"
-                selected={this.state.skillLevel === 2 ? 'selected' : ''}
-              >
-                Expert (Expert 5+)
-              </option>
-            </select>
-            <label>Image</label>
-            <input
-              type="text"
-              className="form-control"
-              value={this.state.image}
-              onChange={this.onChangeImage}
-            ></input>
-            <label>Email</label>
-            <input
-              type="text"
-              className="form-control"
-              value={this.state.email}
-              onChange={this.onChangeEmail}
-            ></input>
-            <label>Available Centers</label>
-            {/* Loop over the Centers and display */}
-            {this.state.availCenters.map(center => {
-              const checkCenter = this.state.centers.includes(center._id);
-              if (checkCenter === true) {
-                return (
-                  <div key={`ret${center._id}`}>
-                    <div key={`div1${center._id}`} className="input-group mb-3">
-                      <div
-                        key={`div2${center._id}`}
-                        className="input-group-prepend"
-                      >
-                        <div
-                          key={`div3${center._id}`}
-                          className="input-group-text red"
-                          style={styleRedX}
-                          id={center._id}
-                          onClick={this.onChangeX}
-                        >
-                          X
-                        </div>
-                      </div>
-                      <div
-                        key={`div4${center._id}`}
-                        className="input-group-prepend"
-                      >
-                        <div
-                          key={`div5${center._id}`}
-                          className="input-group-text"
-                        >
-                          <input
-                            key={`chk${center._id}`}
-                            id={center._id}
-                            type="checkbox"
-                            checked
-                            value={center.centerName}
-                            onChange={this.onChangeCenter}
-                          />
-                        </div>
-                      </div>
+  return (
+    <div>
+      <h1>Edit User</h1>
+      <form onSubmit={onSubmit}>
+        <div className="form-group">
+          <span>User Name</span>
+          <input
+            type="text"
+            id="name"
+            className="form-control"
+            value={userName}
+            onChange={onChangeName}
+          ></input>
+          <span>Skill Level</span>
+          <select
+            className="form-control"
+            id="selSkill"
+            onChange={onChangeSkillLevel}
+            value={skillLevel}
+            defaultChecked={skillLevel}
+          >
+            <option value="1">Beginner (1-2.5)</option>
+            <option value="2">Intermediate (3-4.5)</option>
+            <option value="3">Expert (Expert 5+)</option>
+          </select>
+          <span>Image</span>
+          <input
+            type="text"
+            id="image"
+            className="form-control"
+            value={image}
+            onChange={onChangeImage}
+          ></input>
+          <span>Email</span>
+          <input
+            type="text"
+            id="email"
+            className="form-control"
+            value={email}
+            onChange={onChangeEmail}
+          ></input>
+          <span>Available Centers</span>
+
+          {/* Loop over the Centers and display */}
+          {availCenters.map(
+            center => (
+              <div key={`ret${center._id}`}>
+                <div key={`div1${center._id}`} className="input-group mb-3">
+                  <div
+                    key={`div2${center._id}`}
+                    className="input-group-prepend"
+                  >
+                    <div
+                      key={`div3${center._id}`}
+                      className="input-group-text"
+                      id={center._id}
+                      onClick={onChangeX}
+                      style={center.isFavorite ? styleRedX : styleHidden}
+                    >
+                      X
+                    </div>
+                  </div>
+                  <div
+                    key={`div4${center._id}`}
+                    className="input-group-prepend"
+                  >
+                    <div key={`div5${center._id}`} className="input-group-text">
                       <input
-                        key={`text${center._id}`}
-                        type="text"
-                        disabled
-                        className="form-control"
-                        defaultValue={center.centerName}
+                        key={`chk${center._id}`}
+                        id={center._id}
+                        type="checkbox"
+                        checked={center.isFavorite ? 'checked' : ''}
+                        value={center.centerName}
+                        onChange={onChangeCenter}
                       />
                     </div>
                   </div>
-                );
-              }
-              return (
-                <div key={`ret2${center._id}`}>
-                  <div key={`div6${center._id}`} className="input-group mb-3">
-                    <div
-                      key={`div7${center._id}`}
-                      className="input-group-prepend"
-                    >
-                      <div
-                        key={`div8${center._id}`}
-                        className="input-group-text"
-                      >
-                        <input
-                          key={`chk2${center._id}`}
-                          type="checkbox"
-                          id={center._id}
-                          value={center.centerName}
-                          onChange={this.onChangeCenter}
-                        />
-                      </div>
-                    </div>
-                    <input
-                      key={`text2${center._id}`}
-                      type="text"
-                      disabled
-                      className="form-control"
-                      defaultValue={center.centerName}
-                    />
-                  </div>
+                  <input
+                    key={`text${center._id}`}
+                    type="text"
+                    disabled
+                    className="form-control"
+                    defaultValue={center.centerName}
+                  />
                 </div>
-              );
-            })}
-          </div>
+              </div>
+            )
+            // }
+          )}
+        </div>
 
-          <button className="btn btn-primary" type="submit" style={styleBtn}>
-            Save Changes
-          </button>
-          <button
-            className="btn btn-warning"
-            type="button"
-            onClick={this.onCancel}
-          >
-            Cancel
-          </button>
-        </form>
-      </div>
-    );
-  }
+        <button className="btn btn-primary" type="submit" style={styleBtn}>
+          Save Changes
+        </button>
+        <button className="btn btn-warning" type="button" onClick={onCancel}>
+          Cancel
+        </button>
+      </form>
+    </div>
+  );
 }
+
+export default EditUser;
