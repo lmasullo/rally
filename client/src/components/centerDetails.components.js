@@ -102,6 +102,7 @@ export default class CenterDetails extends Component {
                                 </div>
                             </div>
                         </div>
+                        
                     </div>
 
                     <div className="container-fluid">

@@ -42,7 +42,6 @@ function App() {
         <Route path="/createCenter" exact component={CreateCenter} />
         <Route path="/centers" exact component={CenterList} />
         <Route path="/center/edit/:id" exact component={EditCenter} />
-
         <Route path="/center/:id" exact component={CenterDetails} />      
       </div>
     </Router>
