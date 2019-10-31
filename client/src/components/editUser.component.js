@@ -1,6 +1,6 @@
 // Dependencies
 import React, { useState, useEffect } from 'react';
-import { Redirect, useParams } from 'react-router-dom';
+import { Redirect, useParams, useHistory } from 'react-router-dom';
 import axios from 'axios';
 
 // Check if production or local
@@ -175,12 +175,18 @@ function EditUser() {
   }
 
   // Method to route to root when clicks cancel
+  // Use to navigate to another component
+  const history = useHistory();
   function onCancel(e) {
     // Prevent default submission
     e.preventDefault();
 
+    // Go to profile
+    history.push('/profile');
+
     // Send back to Users List
-    window.location = '/profile';
+    // This would send to the backend route
+    // window.location = '/profile';
   }
 
   // Method when click Save Changes button
