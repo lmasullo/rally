@@ -22,6 +22,8 @@ import Login from './components/login.component';
 import Logout from './components/logout.component';
 // Profile page
 import Profile from './components/profile.component';
+// Center Details
+import CenterDetails from './components/centerDetails.components';
 
 // Main Component that is served up in index.js
 function App() {
@@ -40,6 +42,8 @@ function App() {
         <Route path="/createCenter" exact component={CreateCenter} />
         <Route path="/centers" exact component={CenterList} />
         <Route path="/center/edit/:id" exact component={EditCenter} />
+
+        <Route path="/center/:id" exact component={CenterDetails} />      
       </div>
     </Router>
   );

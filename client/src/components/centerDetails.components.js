@@ -14,7 +14,7 @@ if (process.env.NODE_ENV === 'production') {
 
 
 //Class Component
-export default class Details extends Component {   
+export default class CenterDetails extends Component {   
 
     //Set state and bindings
     constructor(props){
