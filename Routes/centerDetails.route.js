@@ -19,3 +19,6 @@ router.route('/:id').get((req, res) => {
         res.json(err);
       });
   });
+
+// Export the routes
+module.exports = router;
