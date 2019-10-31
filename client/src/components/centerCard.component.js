@@ -1,5 +1,6 @@
 //Dependencies
 import React from "react";
+import CenterDetails from "./centerDetails.components";
 
 //CSS Styles
 const cardStyle = {
@@ -19,7 +20,9 @@ const cardStyle = {
             className="card-img-top"
             alt="Center"
           />
+          <Link to={CenterDetails}>
           <h5 className="card-header">{props.centers.centerName}</h5>
+          </Link>
           <div className="card-body">
             <p className="card-text">{props.centers.description}</p>
             <a
