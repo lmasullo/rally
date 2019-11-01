@@ -1,6 +1,5 @@
 //Dependencies
 import React from "react";
-import CenterDetails from "./centerDetails.components";
 
 //CSS Styles
 const cardStyle = {
