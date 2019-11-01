@@ -2,6 +2,8 @@
 import React , { Component } from "react";
 import axios from "axios";
 import {Redirect} from 'react-router-dom';
+// Import the centerCard component
+import User from './userCard.component';
 
 //! Is this the correct way????????
 //Check if production or local
