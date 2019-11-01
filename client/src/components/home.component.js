@@ -8,9 +8,9 @@ import Center from './centerCard.component';
 // Check if production or local
 let API_URL = '';
 if (process.env.NODE_ENV === 'production') {
-  API_URL = 'https://racquet-rally.herokuapp.com/home/';
+  API_URL = 'https://racquet-rally.herokuapp.com/';
 } else {
-  API_URL = 'http://localhost:4000/home/';
+  API_URL = 'http://localhost:4000/';
 }
 
 // Method to display each Center's Card on the page
@@ -44,8 +44,12 @@ function Home() {
     async function go() {
       try {
         // Axios calls for centers and current user
-        const centerPromise = axios(`${API_URL}`, { withCredentials: true });
-        const userPromise = axios(`${API_URL}user`, { withCredentials: true });
+        const centerPromise = axios(`${API_URL}center`, {
+          withCredentials: true,
+        });
+        const userPromise = axios(`${API_URL}user/auth`, {
+          withCredentials: true,
+        });
 
         // await both promises to come back and destructure the result into their own variables
         const [centersData, userData] = await Promise.all([
@@ -97,7 +101,7 @@ function Home() {
       // Send to back-end to Update user's centers
       //! save by ID, not name
       axios
-        .post(`${API_URL}update/${user._id}`, newCenter)
+        .post(`${API_URL}user/update/center/${user._id}`, newCenter)
         .then(res => {
           console.log(res.data);
           console.log(res.data.centers.length);
@@ -110,7 +114,7 @@ function Home() {
       // Send to back-end to Update user's centers
       //! save by ID, not name
       axios
-        .post(`${API_URL}delete/${user._id}`, newCenter)
+        .post(`${API_URL}user/delete/center/${user._id}`, newCenter)
         .then(res => {
           console.log(res.data);
           console.log(res.data.centers.length);

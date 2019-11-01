@@ -9,9 +9,9 @@ import { Redirect } from 'react-router-dom';
 // Check if production or local
 let API_URL = '';
 if (process.env.NODE_ENV === 'production') {
-  API_URL = 'https://racquet-rally.herokuapp.com/detail/';
+  API_URL = 'https://racquet-rally.herokuapp.com/';
 } else {
-  API_URL = 'http://localhost:4000/detail/';
+  API_URL = 'http://localhost:4000/';
 }
 
 // Class Component
@@ -28,7 +28,9 @@ export default class CenterDetails extends Component {
 
   componentDidMount() {
     axios
-      .get(`${API_URL}${this.props.match.params.id}`, { withCredentials: true })
+      .get(`${API_URL}center/${this.props.match.params.id}`, {
+        withCredentials: true,
+      })
       .then(response => {
         console.log(response.data);
         // User Not logged in, so redirect to login, by setting redirect to true, it triggers in render
@@ -49,7 +51,7 @@ export default class CenterDetails extends Component {
       });
 
     axios
-      .get(`${API_URL}`, { withCredentials: true })
+      .get(`${API_URL}user`, { withCredentials: true })
       .then(response => {
         console.log(response.data);
         // User Not logged in, so redirect to login, by setting redirect to true, it triggers in render
