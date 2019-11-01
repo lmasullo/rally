@@ -2,6 +2,10 @@
 import React, { useState, useEffect } from 'react';
 import { Redirect, useParams, useHistory } from 'react-router-dom';
 import axios from 'axios';
+// import Toast from 'react-bootstrap/Toast';
+
+// Import the Success Toast component
+import SuccessToast from './successToast.component';
 
 // Check if production or local
 let API_URL = '';
@@ -37,14 +41,13 @@ function EditUser() {
   const [availCenters, setAvailCenters] = useState([]);
   const [redirect, setRedirect] = useState(false);
   const [arrayLength, setArrayLength] = useState(0);
+  const [show, setShow] = useState(false);
 
   // Get the url id parameter
   const { id } = useParams();
 
   // Use useEffect instead of ComponentDidMount
   useEffect(() => {
-    //! **************************
-
     // Use async await to fetch centers and users
     async function go() {
       try {
@@ -147,6 +150,10 @@ function EditUser() {
           console.log(res.data);
           // Set the setArrayLength state to re-trigger Component did Mount and re-render cards
           setArrayLength(res.data.length);
+          setShow(true);
+          setTimeout(function() {
+            setShow(false);
+          }, 1500);
         })
         .catch(err => console.log(err));
     }
@@ -259,6 +266,10 @@ function EditUser() {
             value={email}
             onChange={onChangeEmail}
           ></input>
+
+          {/* Success Toast, send show prop */}
+          <SuccessToast show={show} />
+
           <span>Available Centers</span>
 
           {/* Loop over the Centers and display */}

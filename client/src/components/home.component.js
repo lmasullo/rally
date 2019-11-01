@@ -100,8 +100,9 @@ function Home() {
         .post(`${API_URL}update/${user._id}`, newCenter)
         .then(res => {
           console.log(res.data);
+          console.log(res.data.centers.length);
           // Set the setArrayLength state to re-trigger useEffect and re-render cards
-          setArrayLength(res.data.length);
+          setArrayLength(res.data.centers.length);
         })
         .catch(err => console.log(err));
     } else {
@@ -112,8 +113,10 @@ function Home() {
         .post(`${API_URL}delete/${user._id}`, newCenter)
         .then(res => {
           console.log(res.data);
+          console.log(res.data.centers.length);
+
           // Set the setArrayLength state to re-trigger useEffect and re-render cards
-          setArrayLength(res.data.length);
+          setArrayLength(res.data.centers.length);
         })
         .catch(err => console.log(err));
     }

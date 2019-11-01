@@ -1,6 +1,6 @@
 // Dependencies
 import React from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css'
+import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 // Import Components
@@ -22,6 +22,8 @@ import Login from './components/login.component';
 import Logout from './components/logout.component';
 // Profile page
 import Profile from './components/profile.component';
+// Centers Detail Page
+import CenterDetails from './components/centerDetails.component';
 
 // Main Component that is served up in index.js
 function App() {
@@ -40,6 +42,7 @@ function App() {
         <Route path="/createCenter" exact component={CreateCenter} />
         <Route path="/centers" exact component={CenterList} />
         <Route path="/center/edit/:id" exact component={EditCenter} />
+        <Route path="/detail/:id" exact component={CenterDetails} />
       </div>
     </Router>
   );
