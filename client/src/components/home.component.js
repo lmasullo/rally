@@ -4,6 +4,8 @@ import axios from 'axios';
 import { Redirect } from 'react-router-dom';
 // Import the centerCard component
 import Center from './centerCard.component';
+// Import the Success Toast component
+import RallyToast from './toast.component';
 
 // Check if production or local
 let API_URL = '';
@@ -36,6 +38,9 @@ function Home() {
   const [redirect, setRedirect] = useState('');
   const [user, setUser] = useState([]);
   const [arrayLength, setArrayLength] = useState(0);
+  const [show, setShow] = useState(false);
+  const [toastStyle, setToastStyle] = useState('');
+  const [toastMessage, setToastMessage] = useState('');
 
   // Get all the centers when the component mounts and put in centers
   // Use useEffect instead of ComponentDidMount
@@ -71,11 +76,25 @@ function Home() {
           });
           // Set centers state
           setCenters(centersData.data);
-        }
 
-        // Set the user object in state
-        console.log('Response User Array: ', userData.data);
-        setUser(userData.data);
+          // Set the user object in state
+          console.log('Response User Array: ', userData.data);
+          setUser(userData.data);
+
+          // Check if the user has a skill level entered, if not show toast
+          if (userData.data.skillLevel === 0) {
+            console.log('No Has Skill');
+            setShow(true);
+            setToastStyle('display');
+            setToastMessage(
+              'Please Update your Skill Level from the Profile Page!'
+            );
+            setTimeout(function() {
+              setShow(false);
+              setToastStyle('hide');
+            }, 3000);
+          }
+        }
       } catch (e) {
         console.error(e); // 💩
       }
@@ -136,7 +155,14 @@ function Home() {
       <div className="container">
         <div className="row">
           <div className="col-12">
-            <h3 className="text-center">Choose Your Favorite Courts!</h3>
+            {/* Toast, send show and message prop */}
+            <RallyToast
+              show={show}
+              showStyle={toastStyle}
+              message={toastMessage}
+            />
+
+            <h3 className="text-center mb-4">Choose Your Favorite Courts!</h3>
           </div>
         </div>
         {/* Call centerList function to map over the centers and render the cards */}

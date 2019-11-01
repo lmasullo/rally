@@ -259,6 +259,7 @@ function EditUser() {
             value={skillLevel}
             defaultChecked={skillLevel}
           >
+            <option value="0">Choose a Skill Level</option>
             <option value="1">Beginner (1-2.5)</option>
             <option value="2">Intermediate (3-4.5)</option>
             <option value="3">Expert (Expert 5+)</option>
@@ -280,7 +281,7 @@ function EditUser() {
             onChange={onChangeEmail}
           ></input>
 
-          {/* Success Toast, send show prop */}
+          {/* Toast, send show and message prop */}
           <RallyToast
             show={show}
             showStyle={toastStyle}

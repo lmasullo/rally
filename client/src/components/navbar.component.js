@@ -12,20 +12,6 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 // CSS Styles
-// This is to make the Delete button look like a link
-const styleLink = {
-  overflow: 'visible',
-  width: 'auto',
-  fontSize: '1em',
-  textAlign: 'left',
-  color: 'darkgray',
-  background: 'none',
-  margin: 0,
-  paddingTop: '8px',
-  border: 'none',
-  cursor: 'pointer',
-};
-
 const showNav = {
   display: 'block',
 };
@@ -34,6 +20,7 @@ const hideNav = {
   display: 'none',
 };
 
+// This is to make the Delete button look like a link and display of block
 const styleComb = {
   overflow: 'visible',
   width: 'auto',
@@ -96,10 +83,16 @@ export default class Navbar extends Component {
     return (
       <nav className="navbar navbar-dark bg-dark navbar-expand-lg">
         <Link to="/main" className="navbar-brand">
-          Racquet Rally
+          <img
+            src="/images/rally_white.png"
+            width="80"
+            height="40"
+            alt="Racquet Rally"
+          />
+          <span className="ml-3">Racquet Rally</span>
         </Link>
         <div className="collapse navbar-collapse">
-          <ul className="navbar-nav mr-auto">
+          <ul className="navbar-nav">
             <li className="navbar-item">
               <Link
                 to="/main"

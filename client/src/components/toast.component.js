@@ -18,6 +18,9 @@ function RallyToast(props) {
   if (props.showStyle === 'display') {
     toastStyle = {
       display: 'block',
+      margin: 'auto',
+      marginTop: '20px',
+      marginBottom: '20px',
     };
   } else {
     toastStyle = {
