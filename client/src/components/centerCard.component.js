@@ -9,7 +9,7 @@ const cardStyle = {
 };
 
 const hoverStyle = {
-  transform: 'scale(1.1)',
+  transform: 'scale(0.9)',
   // transition: 'all 1.5s ease-in',
 };
 
@@ -24,8 +24,8 @@ function Center(props) {
       <div
         className="card"
         style={currStyle}
-        onMouseOver={e => setCurrStyle(hoverStyle)}
-        onMouseLeave={e => setCurrStyle(cardStyle)}
+        // onMouseOver={e => setCurrStyle(hoverStyle)}
+        // onMouseLeave={e => setCurrStyle(cardStyle)}
       >
         <Link to={`/detail/${props.centers._id}`}>
           <img
