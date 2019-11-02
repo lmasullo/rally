@@ -9,7 +9,7 @@ import mp4 from "../videos/Neon.mp4";
 import poster from "../image/poster.jpg";
 import "../style.css";
 
-//Check if production or local
+// Check if production or local
 let API_URL = '';
 if (process.env.NODE_ENV === 'production') {
   API_URL = 'https://racquet-rally.herokuapp.com/user/';

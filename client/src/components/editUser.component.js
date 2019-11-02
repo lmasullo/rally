@@ -11,7 +11,7 @@ import "../style.css";
 // import Toast from 'react-bootstrap/Toast';
 
 // Import the Success Toast component
-import SuccessToast from './successToast.component';
+import RallyToast from './toast.component';
 
 // Check if production or local
 let API_URL = '';
@@ -48,6 +48,8 @@ function EditUser() {
   const [redirect, setRedirect] = useState(false);
   const [arrayLength, setArrayLength] = useState(0);
   const [show, setShow] = useState(false);
+  const [toastStyle, setToastStyle] = useState('');
+  const [toastMessage, setToastMessage] = useState('');
 
   // Get the url id parameter
   const { id } = useParams();
@@ -153,12 +155,16 @@ function EditUser() {
       axios
         .post(`${API_URL}user/update/center/${userId}`, newCenter)
         .then(res => {
-          console.log(res.data);
+          console.log(res.data.centers);
+          console.log('Length: ', res.data.centers.length);
           // Set the setArrayLength state to re-trigger Component did Mount and re-render cards
-          setArrayLength(res.data.length);
+          setArrayLength(res.data.centers.length);
           setShow(true);
+          setToastStyle('display');
+          setToastMessage('Favorite Saved Successfully!');
           setTimeout(function() {
             setShow(false);
+            setToastStyle('hide');
           }, 1500);
         })
         .catch(err => console.log(err));
@@ -181,8 +187,16 @@ function EditUser() {
       .post(`${API_URL}user/delete/center/${userId}`, newCenter)
       .then(res => {
         console.log(res.data);
+        console.log('Length: ', res.data.centers.length);
         // Set the setArrayLength state to re-trigger useEffect and re-render cards
-        setArrayLength(res.data.length);
+        setArrayLength(res.data.centers.length);
+        setShow(true);
+        setToastStyle('display');
+        setToastMessage('Favorite Deleted Successfully!');
+        setTimeout(function() {
+          setShow(false);
+          setToastStyle('hide');
+        }, 1500);
       })
       .catch(err => console.log(err));
   }
@@ -257,6 +271,7 @@ function EditUser() {
             value={skillLevel}
             defaultChecked={skillLevel}
           >
+            <option value="0">Choose a Skill Level</option>
             <option value="1">Beginner (1-2.5)</option>
             <option value="2">Intermediate (3-4.5)</option>
             <option value="3">Expert (Expert 5+)</option>
@@ -278,8 +293,12 @@ function EditUser() {
             onChange={onChangeEmail}
           ></input>
 
-          {/* Success Toast, send show prop */}
-          <SuccessToast show={show} />
+          {/* Toast, send show and message prop */}
+          <RallyToast
+            show={show}
+            showStyle={toastStyle}
+            message={toastMessage}
+          />
 
           <span>Available Centers</span>
 
