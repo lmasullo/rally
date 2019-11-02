@@ -5,9 +5,9 @@ import { Redirect } from 'react-router-dom';
 // Check if production or local
 let API_URL = '';
 if (process.env.NODE_ENV === 'production') {
-  API_URL = 'https://racquet-rally.herokuapp.com/profile/';
+  API_URL = 'https://racquet-rally.herokuapp.com/user/';
 } else {
-  API_URL = 'http://localhost:4000/profile/';
+  API_URL = 'http://localhost:4000/user/';
 }
 
 const styleHTML = {
@@ -51,7 +51,7 @@ class Login extends Component {
 
   // Get user info from authentication
   componentDidMount() {
-    axios.get(API_URL, { withCredentials: true }).then(response => {
+    axios.get(`${API_URL}auth`, { withCredentials: true }).then(response => {
       // console.log(response.data);
       // User Not logged in, so redirect to login, by setting redirect to true, it triggers in render
       if (response.data === 'Not Logged In!') {
@@ -61,7 +61,7 @@ class Login extends Component {
         });
       } else {
         // User Logged in
-        console.log('Response',response.data);
+        // console.log('Response', response.data);
         this.setState({
           user: response.data,
         });
@@ -105,14 +105,22 @@ class Login extends Component {
               height="100"
               width="100"
             />
-            
-            <h3><label>Skill Level: </label>{this.state.user.skillLevel}</h3>
+
+            <h3>
+              <label>Skill Level: </label>
+              {this.state.user.skillLevel}
+            </h3>
             {this.centerList()}
             {/* <button href={`/edit/${this.state.user._id}`} className="btn btn-primary">Edit Info</button> */}
             {/* <Link to={`/edit/${this.state.user._id}`}>Edit</Link> */}
-            <a className="btn btn-primary" href={`/edit/${this.state.user._id}`} role="button">Edit Profile</a>
+            <a
+              className="btn btn-primary"
+              href={`/edit/${this.state.user._id}`}
+              role="button"
+            >
+              Edit Profile
+            </a>
             <p className="mt-5 mb-3 text-muted">&copy; 2019</p>
-            
           </form>
         </div>
       </div>

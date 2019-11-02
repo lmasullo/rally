@@ -4,13 +4,15 @@ import axios from 'axios';
 import { Redirect } from 'react-router-dom';
 // Import the centerCard component
 import Center from './centerCard.component';
+// Import the Success Toast component
+import RallyToast from './toast.component';
 
 // Check if production or local
 let API_URL = '';
 if (process.env.NODE_ENV === 'production') {
-  API_URL = 'https://racquet-rally.herokuapp.com/home/';
+  API_URL = 'https://racquet-rally.herokuapp.com/';
 } else {
-  API_URL = 'http://localhost:4000/home/';
+  API_URL = 'http://localhost:4000/';
 }
 
 // Method to display each Center's Card on the page
@@ -36,6 +38,9 @@ function Home() {
   const [redirect, setRedirect] = useState('');
   const [user, setUser] = useState([]);
   const [arrayLength, setArrayLength] = useState(0);
+  const [show, setShow] = useState(false);
+  const [toastStyle, setToastStyle] = useState('');
+  const [toastMessage, setToastMessage] = useState('');
 
   // Get all the centers when the component mounts and put in centers
   // Use useEffect instead of ComponentDidMount
@@ -44,8 +49,12 @@ function Home() {
     async function go() {
       try {
         // Axios calls for centers and current user
-        const centerPromise = axios(`${API_URL}`, { withCredentials: true });
-        const userPromise = axios(`${API_URL}user`, { withCredentials: true });
+        const centerPromise = axios(`${API_URL}center`, {
+          withCredentials: true,
+        });
+        const userPromise = axios(`${API_URL}user/auth`, {
+          withCredentials: true,
+        });
 
         // await both promises to come back and destructure the result into their own variables
         const [centersData, userData] = await Promise.all([
@@ -67,11 +76,25 @@ function Home() {
           });
           // Set centers state
           setCenters(centersData.data);
-        }
 
-        // Set the user object in state
-        console.log('Response User Array: ', userData.data);
-        setUser(userData.data);
+          // Set the user object in state
+          console.log('Response User Array: ', userData.data);
+          setUser(userData.data);
+
+          // Check if the user has a skill level entered, if not show toast
+          if (userData.data.skillLevel === 0) {
+            console.log('No Has Skill');
+            setShow(true);
+            setToastStyle('display');
+            setToastMessage(
+              'Please Update your Skill Level from the Profile Page!'
+            );
+            setTimeout(function() {
+              setShow(false);
+              setToastStyle('hide');
+            }, 3000);
+          }
+        }
       } catch (e) {
         console.error(e); // 💩
       }
@@ -97,11 +120,12 @@ function Home() {
       // Send to back-end to Update user's centers
       //! save by ID, not name
       axios
-        .post(`${API_URL}update/${user._id}`, newCenter)
+        .post(`${API_URL}user/update/center/${user._id}`, newCenter)
         .then(res => {
           console.log(res.data);
+          console.log(res.data.centers.length);
           // Set the setArrayLength state to re-trigger useEffect and re-render cards
-          setArrayLength(res.data.length);
+          setArrayLength(res.data.centers.length);
         })
         .catch(err => console.log(err));
     } else {
@@ -109,11 +133,13 @@ function Home() {
       // Send to back-end to Update user's centers
       //! save by ID, not name
       axios
-        .post(`${API_URL}delete/${user._id}`, newCenter)
+        .post(`${API_URL}user/delete/center/${user._id}`, newCenter)
         .then(res => {
           console.log(res.data);
+          console.log(res.data.centers.length);
+
           // Set the setArrayLength state to re-trigger useEffect and re-render cards
-          setArrayLength(res.data.length);
+          setArrayLength(res.data.centers.length);
         })
         .catch(err => console.log(err));
     }
@@ -129,7 +155,14 @@ function Home() {
       <div className="container">
         <div className="row">
           <div className="col-12">
-            <h3 className="text-center">Choose Your Favorite Courts!</h3>
+            {/* Toast, send show and message prop */}
+            <RallyToast
+              show={show}
+              showStyle={toastStyle}
+              message={toastMessage}
+            />
+
+            <h3 className="text-center mb-4">Choose Your Favorite Courts!</h3>
           </div>
         </div>
         {/* Call centerList function to map over the centers and render the cards */}

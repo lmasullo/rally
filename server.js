@@ -66,19 +66,15 @@ mongoose
   });
 
 // Require routes
+const AuthRoutes = require('./Routes/auth.route');
 const UsersRoutes = require('./Routes/users.route');
 const CentersRoutes = require('./Routes/centers.route');
-const AuthRoutes = require('./Routes/auth.route');
-const HomeRoutes = require('./Routes/home.route');
-const ProfileRoutes = require('./Routes/profile.route');
 
 // Sets the base route as localhost:4000/rally
 // All routes will be off rally
+app.use('/auth', AuthRoutes);
 app.use('/user', UsersRoutes);
 app.use('/center', CentersRoutes);
-app.use('/auth', AuthRoutes);
-app.use('/home', HomeRoutes);
-app.use('/profile', ProfileRoutes);
 
 // Send every other request to the React app
 // Define any API routes before this runs

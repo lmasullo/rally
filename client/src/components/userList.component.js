@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import axios from 'axios';
 
-//Check if production or local
+// Check if production or local
 let API_URL = '';
 if (process.env.NODE_ENV === 'production') {
   API_URL = 'https://racquet-rally.herokuapp.com/user/';
