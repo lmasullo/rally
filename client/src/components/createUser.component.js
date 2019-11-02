@@ -2,6 +2,12 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { Redirect } from 'react-router-dom';
+import VideoBg from "reactjs-videobg";
+import ogg from "../videos/Neon.ogg";
+import webm from "../videos/Neon.webm";
+import mp4 from "../videos/Neon.mp4";
+import poster from "../image/poster.jpg";
+import "../style.css";
 
 // Check if production or local
 // Users Routes
@@ -158,6 +164,11 @@ export default class CreateUser extends Component {
     }
     return (
       <div>
+        <VideoBg poster={poster}>
+            <VideoBg.Source src={ogg} type="video/ogg" />
+            <VideoBg.Source src={webm} type="video/webm" />
+            <VideoBg.Source src={mp4} type="video/mp4" />
+        </VideoBg>
         <h1>Create New User</h1>
         <form onSubmit={this.onSubmit}>
           <div className="form-group">

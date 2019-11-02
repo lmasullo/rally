@@ -1,5 +1,11 @@
 //Dependencies
 import React, { Component } from 'react';
+import VideoBg from "reactjs-videobg";
+import ogg from "../videos/Neon.ogg";
+import webm from "../videos/Neon.webm";
+import mp4 from "../videos/Neon.mp4";
+import poster from "../image/poster.jpg";
+import "../style.css";
 
 //Check if production or local
 let API_URL = '';
@@ -21,7 +27,7 @@ const styleBody = {
   alignItems: 'center',
   paddingTop: '40px',
   paddingBottom: '40px',
-  backgroundColor: '#f5f5f5',
+  backgroundColor: 'none',
 };
 
 const styleForm = {
@@ -36,20 +42,29 @@ const styleForm = {
   zIndex: '2',
 };
 
+const img = {
+  width:'100%',
+  opacity:'100%'
+  
+};
+
 class Login extends Component {
   render() {
     return (
       <div style={styleHTML}>
+        <VideoBg poster={poster}>
+            <VideoBg.Source src={ogg} type="video/ogg" />
+            <VideoBg.Source src={webm} type="video/webm" />
+            <VideoBg.Source src={mp4 } type="video/mp4" />
+        </VideoBg>
+
         <div style={styleBody} className="text-center">
           <form className="form-signin" style={styleForm}>
             <h1 className="h3 mb-3 font-weight-normal">Please sign in:</h1>
-            <a
-              href={API_URL}
-              className="btn btn-lg btn-primary btn-block"
-              role="button"
-            >
-              Google
-            </a>
+            
+            <a href={API_URL} role="button"><img style={img} src="https://www.pentesteracademy.com/img/sign-in-with-google.png" alt="W3Schools.com"></img></a>
+            
+            
             <p className="mt-5 mb-3 text-muted">&copy; 2019</p>
           </form>
         </div>

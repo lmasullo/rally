@@ -1,7 +1,12 @@
 // Dependencies
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-
+import VideoBg from "reactjs-videobg";
+import ogg from "../videos/Neon.ogg";
+import webm from "../videos/Neon.webm";
+import mp4 from "../videos/Neon.mp4";
+import poster from "../image/poster.jpg";
+import "../style.css";
 // CSS Styles
 const cardStyle = {
   width: '18rem',
