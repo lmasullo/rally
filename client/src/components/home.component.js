@@ -162,7 +162,9 @@ function Home() {
               message={toastMessage}
             />
 
-            <h3 className="text-center mb-4">Choose Your Favorite Courts!</h3>
+            <h3 className="text-center mb-4">
+              {user.name}, Choose Your Favorite Courts!
+            </h3>
           </div>
         </div>
         {/* Call centerList function to map over the centers and render the cards */}
