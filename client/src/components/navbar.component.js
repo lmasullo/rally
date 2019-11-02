@@ -26,7 +26,7 @@ const styleComb = {
   width: 'auto',
   fontSize: '1em',
   textAlign: 'left',
-  color: 'darkgray',
+  color: 'none',
   background: 'none',
   margin: 0,
   paddingTop: '8px',
@@ -39,6 +39,10 @@ const styleWelcome = {
   color: 'white',
   display: 'block',
 };
+
+
+
+
 
 function logout(event) {
   event.preventDefault(); // prevent page transition
@@ -81,7 +85,7 @@ export default class Navbar extends Component {
 
   render() {
     return (
-      <nav className="navbar navbar-dark bg-dark navbar-expand-lg">
+      <nav className="navbar navbar-dark bg-none navbar-expand-lg">
         <Link to="/main" className="navbar-brand">
           <img
             src="/images/rally_white.png"
@@ -91,8 +95,11 @@ export default class Navbar extends Component {
           />
           <span className="ml-3">Racquet Rally</span>
         </Link>
-        <div className="collapse navbar-collapse">
-          <ul className="navbar-nav">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div className="collapse navbar-collapse" id="navbarNav">
+          <ul className="navbar-nav mr-auto">
             <li className="navbar-item">
               <Link
                 to="/main"
