@@ -20,7 +20,7 @@ const hideNav = {
   display: 'none',
 };
 
-// This is to make the Delete button look like a link and display of block
+// This is to make the Logout button look like a link and display of block
 const styleComb = {
   overflow: 'visible',
   width: 'auto',
@@ -91,8 +91,19 @@ export default class Navbar extends Component {
           />
           <span className="ml-3">Racquet Rally</span>
         </Link>
-        <div className="collapse navbar-collapse">
-          <ul className="navbar-nav">
+        <button
+          className="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span className="navbar-toggler-icon"></span>
+        </button>
+        <div className="collapse navbar-collapse" id="navbarNav">
+          <ul className="navbar-nav mr-auto">
             <li className="navbar-item">
               <Link
                 to="/main"
@@ -147,7 +158,7 @@ export default class Navbar extends Component {
                 Profile
               </Link>
             </li>
-            <li className="navbar-item">
+            {/* <li className="navbar-item">
               <Link
                 to="/"
                 className="nav-link"
@@ -155,7 +166,7 @@ export default class Navbar extends Component {
               >
                 Log In
               </Link>
-            </li>
+            </li> */}
             <li className="navbar-item">
               {/* <a href="#" className="nav-link" onClick={logout}>Log Out</a> */}
               <button
@@ -166,14 +177,14 @@ export default class Navbar extends Component {
                 Log Out
               </button>
             </li>
-            <li className="navbar-item">
+            {/* <li className="navbar-item">
               <span
                 className="nav-link"
                 style={this.state.user._id ? styleWelcome : hideNav}
               >
                 Welcome {this.state.user.name}
               </span>
-            </li>
+            </li> */}
           </ul>
         </div>
       </nav>

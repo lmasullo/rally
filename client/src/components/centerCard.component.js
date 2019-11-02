@@ -24,8 +24,8 @@ function Center(props) {
       <div
         className="card"
         style={currStyle}
-        onMouseOver={e => setCurrStyle(hoverStyle)}
-        onMouseLeave={e => setCurrStyle(cardStyle)}
+        // onMouseOver={e => setCurrStyle(hoverStyle)}
+        // onMouseLeave={e => setCurrStyle(cardStyle)}
       >
         <Link to={`/detail/${props.centers._id}`}>
           <img
