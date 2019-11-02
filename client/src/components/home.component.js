@@ -4,6 +4,12 @@ import axios from 'axios';
 import { Redirect } from 'react-router-dom';
 // Import the centerCard component
 import Center from './centerCard.component';
+import VideoBg from "reactjs-videobg";
+import ogg from "../videos/Neon.ogg";
+import webm from "../videos/Neon.webm";
+import mp4 from "../videos/Neon.mp4";
+import poster from "../image/poster.jpg";
+import "../style.css";
 
 // Check if production or local
 let API_URL = '';
@@ -129,6 +135,11 @@ function Home() {
 
   return (
     <div>
+      <VideoBg poster={poster}>
+            <VideoBg.Source src={ogg} type="video/ogg" />
+            <VideoBg.Source src={webm} type="video/webm" />
+            <VideoBg.Source src={mp4} type="video/mp4" />
+        </VideoBg>
       <div className="container">
         <div className="row">
           <div className="col-12">

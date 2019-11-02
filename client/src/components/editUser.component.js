@@ -2,6 +2,12 @@
 import React, { useState, useEffect } from 'react';
 import { Redirect, useParams, useHistory } from 'react-router-dom';
 import axios from 'axios';
+import VideoBg from "reactjs-videobg";
+import ogg from "../videos/Neon.ogg";
+import webm from "../videos/Neon.webm";
+import mp4 from "../videos/Neon.mp4";
+import poster from "../image/poster.jpg";
+import "../style.css";
 // import Toast from 'react-bootstrap/Toast';
 
 // Import the Success Toast component
@@ -227,6 +233,11 @@ function EditUser() {
 
   return (
     <div>
+      <VideoBg poster={poster}>
+            <VideoBg.Source src={ogg} type="video/ogg" />
+            <VideoBg.Source src={webm} type="video/webm" />
+            <VideoBg.Source src={mp4} type="video/mp4" />
+        </VideoBg>
       <h1>Edit User</h1>
       <form onSubmit={onSubmit}>
         <div className="form-group">

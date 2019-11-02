@@ -1,7 +1,12 @@
 // Dependencies
 import React from 'react';
 import { Link } from 'react-router-dom';
-
+import VideoBg from "reactjs-videobg";
+import ogg from "../videos/Neon.ogg";
+import webm from "../videos/Neon.webm";
+import mp4 from "../videos/Neon.mp4";
+import poster from "../image/poster.jpg";
+import "../style.css";
 // CSS Styles
 const cardStyle = {
   width: '18rem',
@@ -14,6 +19,11 @@ function Center(props) {
   // This is the card html
   return (
     <div className="col-sm-4">
+    <VideoBg poster={poster}>
+            <VideoBg.Source src={ogg} type="video/ogg" />
+            <VideoBg.Source src={webm} type="video/webm" />
+            <VideoBg.Source src={mp4} type="video/mp4" />
+        </VideoBg>
       <div className="card" style={cardStyle}>
         <Link to={`/detail/${props.centers._id}`}>
           <img
