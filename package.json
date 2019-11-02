@@ -35,7 +35,8 @@
     "passport": "^0.4.0",
     "passport-github2": "^0.1.11",
     "passport-google-oauth20": "^2.0.0",
-    "react-videobg": "^0.1.8"
+    "react-videobg": "^0.1.8",
+    "reactjs-videobg": "^1.2.3"
   },
   "devDependencies": {
     "eslint-config-airbnb": "^17.1.1",
