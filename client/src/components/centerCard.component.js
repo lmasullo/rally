@@ -1,7 +1,7 @@
 // Dependencies
 import React from 'react';
 import { Link } from 'react-router-dom';
-
+import '../css/style.css';
 // CSS Styles
 const cardStyle = {
   width: '18rem',
@@ -15,17 +15,26 @@ const cardStyle = {
 
 // Functional component of the Centers cards
 function Center(props) {
-  // const [currStyle, setCurrStyle] = useState(cardStyle);
+  // const [scale, setScale] = useState(1);
+
+  // function zoomIn() {
+  //   setScale({ scale: scale * 2 });
+  // }
+
+  // function zoomOut() {
+  //   setScale({ scale: scale / 2 });
+  // }
 
   console.log(props);
   // This is the card html
   return (
     <div className="col-sm-4">
       <div
-        className="card"
+        className="card zoom"
         style={cardStyle}
         // onMouseOver={e => setCurrStyle(hoverStyle)}
         // onMouseLeave={e => setCurrStyle(cardStyle)}
+        // onMouseOver={zoomIn}
       >
         <Link to={`/detail/${props.centers._id}`}>
           <img
