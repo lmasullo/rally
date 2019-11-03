@@ -31,12 +31,12 @@ function userList(users) {
 function CenterDetails() {
   // Set initial State with Hooks
   const [center, setCenter] = useState('');
-  const [currentUser, setCurrentUser] = useState('');
+  // const [currentUser, setCurrentUser] = useState('');
   const [users, setUsers] = useState([]);
 
   const [redirect, setRedirect] = useState('');
 
-  const [arrayLength, setArrayLength] = useState(0);
+  // const [arrayLength, setArrayLength] = useState(0);
 
   // Get the url id parameter
   const { id } = useParams();
@@ -51,16 +51,16 @@ function CenterDetails() {
         const centerPromise = axios(`${API_URL}center/${id}`, {
           withCredentials: true,
         });
-        const currentUserPromise = axios(`${API_URL}user/auth`, {
-          withCredentials: true,
-        });
+        // const currentUserPromise = axios(`${API_URL}user/auth`, {
+        //   withCredentials: true,
+        // });
         const usersPromise = axios(`${API_URL}user`, {
           withCredentials: true,
         });
         // await all promises to come back and destructure the result into their own variables
-        const [centerData, currentUserData, usersData] = await Promise.all([
+        const [centerData, usersData] = await Promise.all([
           centerPromise,
-          currentUserPromise,
+          // currentUserPromise,
           usersPromise,
         ]);
         // Check if user logged in
@@ -79,7 +79,7 @@ function CenterDetails() {
           // console.log(id);
           // console.log(usersData.data[0].centers);
 
-          setCurrentUser(currentUserData);
+          // setCurrentUser(currentUserData);
 
           usersData.data = usersData.data.map(function(c, index) {
             const isAffiliated = usersData.data[index].centers.some(

@@ -1,5 +1,5 @@
 // Dependencies
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 
 // CSS Styles
@@ -8,14 +8,14 @@ const cardStyle = {
   marginBottom: '20px',
 };
 
-const hoverStyle = {
-  transform: 'scale(1.1)',
-  // transition: 'all 1.5s ease-in',
-};
+// const hoverStyle = {
+//   transform: 'scale(1.1)',
+//   // transition: 'all 1.5s ease-in',
+// };
 
 // Functional component of the Centers cards
 function Center(props) {
-  const [currStyle, setCurrStyle] = useState(cardStyle);
+  // const [currStyle, setCurrStyle] = useState(cardStyle);
 
   console.log(props);
   // This is the card html
@@ -23,7 +23,7 @@ function Center(props) {
     <div className="col-sm-4">
       <div
         className="card"
-        style={currStyle}
+        style={cardStyle}
         // onMouseOver={e => setCurrStyle(hoverStyle)}
         // onMouseLeave={e => setCurrStyle(cardStyle)}
       >
