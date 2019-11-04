@@ -35,10 +35,10 @@ const styleComb = {
   display: 'block',
 };
 
-const styleWelcome = {
-  color: 'white',
-  display: 'block',
-};
+// const styleWelcome = {
+//   color: 'white',
+//   display: 'block',
+// };
 
 function logout(event) {
   event.preventDefault(); // prevent page transition

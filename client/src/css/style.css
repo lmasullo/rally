@@ -4,3 +4,17 @@
     position: static;
   }
 }
+
+@media (max-width: 100px) {
+  .VideoBg-module_video__2IPmN {
+    display: none;
+  }
+}
+
+.zoom {
+  transition: transform .2s;
+}
+
+.zoom:hover {
+  transform: scale(1.05);
+}
