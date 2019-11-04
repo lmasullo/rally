@@ -127,6 +127,7 @@ function CenterDetails() {
         <div className="container">
           <h1 className="display-4">{center.centerName}</h1>
           <p className="lead">Welcome!</p>
+          <p>{center.description}</p>
         </div>
       </div>
       <div className="container">

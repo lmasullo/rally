@@ -45,7 +45,7 @@ function Center(props) {
         </Link>
         <h5 className="card-header">{props.centers.centerName}</h5>
         <div className="card-body">
-          <p className="card-text">{props.centers.description}</p>
+          {/* <p className="card-text">{props.centers.description}</p> */}
           <a
             target="_blank"
             rel="noopener noreferrer"
