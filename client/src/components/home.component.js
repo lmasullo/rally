@@ -174,7 +174,7 @@ function Home() {
       <div className="container-fluid">
         <div className="row">
           <footer className="col-12">
-            <p>Copyright &copy; 2019 Team Racquet Rally.</p>
+            <p className="mt-5 mb-3 text-muted">Copyright &copy; 2019 Team Racquet Rally.</p>
           </footer>
         </div>
       </div>

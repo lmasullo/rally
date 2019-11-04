@@ -48,7 +48,7 @@ class Logout extends Component {
           <form className="form-signin" style={styleForm}>
             <h1 className="h3 mb-3 font-weight-normal">You are Logged Out!</h1>
             <Link to="/">Click to Log In</Link>
-            <p className="mt-5 mb-3 text-muted">&copy; 2019</p>
+            <p className="mt-5 mb-3 text-muted">Copyright &copy; 2019 Team Racquet Rally.</p>
           </form>
         </div>
       </div>
