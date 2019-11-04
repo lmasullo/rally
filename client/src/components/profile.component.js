@@ -120,7 +120,7 @@ class Login extends Component {
             >
               Edit Profile
             </a>
-            <p className="mt-5 mb-3 text-muted">Copyright &copy; 2019 Team Racquet Rally.</p>
+            <p className="mt-5 mb-3">Copyright &copy; 2019 Team Racquet Rally.</p>
           </form>
         </div>
       </div>
