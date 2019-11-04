@@ -72,7 +72,7 @@ class Login extends Component {
                 alt="W3Schools.com"
               ></img>
             </a>
-            <p className="mt-5 mb-3">&copy; 2019</p>
+            <p className="mt-5 mb-3">Copyright &copy; 2019 Team Racquet Rally.</p>
           </form>
         </div>
       </div>
