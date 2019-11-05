@@ -9,7 +9,6 @@ const cardStyle = {
 
 // Functional component of the Users cards
 function UserCard(props) {
-  console.log(props);
   // This is the card html
   return (
     <div className="col-sm-4">
@@ -20,7 +19,6 @@ function UserCard(props) {
           <p className="card-text">Skill Level: {props.users.skillLevel}</p>
           <p className="card-text">
             Contact:{' '}
-            {/* <a href="mailto:${props.users.email}">{props.users.email}</a> */}
             <a href={`mailto:${props.users.email}`}>{props.users.email}</a>
           </p>
         </div>

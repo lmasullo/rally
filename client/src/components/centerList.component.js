@@ -1,3 +1,5 @@
+// This component used for development only
+// http://localhost:3000/centers
 // Dependencies
 import React, { Component } from 'react';
 import { Link, Redirect } from 'react-router-dom';
@@ -39,8 +41,9 @@ const Center = props => (
     <td>{props.centers.mapLink}</td>
     <td>{props.centers.image}</td>
     <td>
-      <Link to={`center/edit/${  props.centers._id}`}>Edit</Link> |
+      <Link to={`center/edit/${props.centers._id}`}>Edit</Link> |
       <button
+        type="button"
         onClick={() => {
           props.deleteCenter(props.centers._id);
         }}
@@ -69,10 +72,9 @@ export default class CenterList extends Component {
     axios
       .get(API_URL, { withCredentials: true })
       .then(response => {
-        console.log(response.data);
         // User Not logged in, so redirect to login, by setting redirect to true, it triggers in render
         if (response.data === 'Not Logged In!') {
-          console.log('no data');
+          console.log('No data');
           this.setState({
             redirect: true,
           });
@@ -93,7 +95,6 @@ export default class CenterList extends Component {
     axios
       .delete(`${API_URL}${id}`)
       .then(res => {
-        console.log(res.data);
         // Delete the center from view by filtering out the deleted center
         this.setState({
           centers: this.state.centers.filter(el => el._id !== id),

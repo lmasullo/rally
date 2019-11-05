@@ -58,21 +58,16 @@ class Login extends Component {
         <div style={styleBody} className="text-center">
           <form className="form-signin" style={styleForm}>
             <h1 className="h3 mb-3 font-weight-normal">Please sign in:</h1>
-            {/* <a
-              href={API_URL}
-              className="btn btn-lg btn-primary btn-block"
-              role="button"
-            >
-              Google
-            </a> */}
             <a href={API_URL} role="button">
               <img
                 style={img}
                 src="https://www.pentesteracademy.com/img/sign-in-with-google.png"
-                alt="W3Schools.com"
+                alt="Google"
               ></img>
             </a>
-            <p className="mt-5 mb-3">Copyright &copy; 2019 Team Racquet Rally.</p>
+            <p className="mt-5 mb-3">
+              Copyright &copy; 2019 Team Racquet Rally.
+            </p>
           </form>
         </div>
       </div>

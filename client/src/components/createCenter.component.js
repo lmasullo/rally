@@ -1,3 +1,5 @@
+// This component used for development only
+// http://localhost:3000/createcenter
 // Dependencies
 import React, { Component } from 'react';
 import axios from 'axios';
@@ -54,10 +56,9 @@ export default class CreateUser extends Component {
     axios
       .get(API_URL, { withCredentials: true })
       .then(response => {
-        console.log(response.data);
         // User Not logged in, so redirect to login, by setting redirect to true, it triggers in render
         if (response.data === 'Not Logged In!') {
-          console.log('no data');
+          console.log('No data');
           this.setState({
             redirect: true,
           });

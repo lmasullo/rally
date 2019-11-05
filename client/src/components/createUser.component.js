@@ -1,3 +1,5 @@
+// This component used for development only
+// http://localhost:3000/create
 // Dependencies
 import React, { Component } from 'react';
 import axios from 'axios';
@@ -50,7 +52,6 @@ export default class CreateUser extends Component {
       .get(`${API_URL}center`, { withCredentials: true })
 
       .then(response => {
-        console.log(response.data);
         // User Not logged in, so redirect to login, by setting redirect to true, it triggers in render
         if (response.data === 'Not Logged In!') {
           console.log('no data');
@@ -100,8 +101,6 @@ export default class CreateUser extends Component {
   // Set state when the center changes
   onChangeCenter(e) {
     // Need to save to the users collection
-    console.log('Check', e.target.value);
-
     const checkCenter = this.state.newCenters.includes(e.target.value);
 
     if (checkCenter === false) {
@@ -110,7 +109,6 @@ export default class CreateUser extends Component {
         newCenters: this.state.newCenters,
       });
     }
-    console.log(this.state.newCenters);
   }
 
   // Method to route to root when clicks cancel

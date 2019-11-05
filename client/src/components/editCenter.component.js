@@ -1,3 +1,5 @@
+// This component used for development only
+// http://localhost:3000/center/edit/5da749177b74286bb7fd1134
 // Dependencies
 import React, { Component } from 'react';
 import axios from 'axios';
@@ -43,13 +45,11 @@ export default class EditCenter extends Component {
       addressLink: '',
       mapLink: '',
       image: '',
-      check: '',
     };
   }
 
   // Get the center that matches the id when the component mounts
   componentDidMount() {
-    console.log(`${API_URL}${this.props.match.params.id}`);
     // Get the center by ID
     axios
       .get(`${API_URL}${this.props.match.params.id}`)
@@ -68,12 +68,6 @@ export default class EditCenter extends Component {
       .catch(err => {
         console.log(err);
       });
-
-    // if(this.state.cost === true){
-    //     this.setState({
-    //         check: 'checked'
-    //     })
-    // }
   }
 
   // Set state when the centerName changes
@@ -85,8 +79,6 @@ export default class EditCenter extends Component {
 
   // Set state when the description changes
   onChangeDescription(e) {
-    // console.log(e.target.value);
-
     this.setState({
       description: e.target.value,
     });
@@ -104,12 +96,6 @@ export default class EditCenter extends Component {
     this.setState({
       cost: e.target.value,
     });
-
-    // if(this.state.cost === true){
-    //     this.setState({
-    //         check: 'checked',
-    //     })
-    // }
   }
 
   // Set state when the num courts changes
@@ -154,8 +140,6 @@ export default class EditCenter extends Component {
     // Prevent default submission
     e.preventDefault();
 
-    console.log(this.state.description);
-
     // Create center object to save
     const center = {
       centerName: this.state.centerName,
@@ -179,15 +163,12 @@ export default class EditCenter extends Component {
       centerName: '',
       description: '',
       hours: '',
-      costs: true,
+      cost: true,
       numCourts: 1,
       addressLink: '',
       mapLink: '',
       image: '',
     });
-
-    // Go back to the User list
-    // window.location = '/centers';
   }
 
   render() {

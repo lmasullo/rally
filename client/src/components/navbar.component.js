@@ -35,11 +35,6 @@ const styleComb = {
   display: 'block',
 };
 
-// const styleWelcome = {
-//   color: 'white',
-//   display: 'block',
-// };
-
 function logout(event) {
   event.preventDefault(); // prevent page transition
   fetch('/logout', { method: 'POST', credentials: 'same-origin' }).then(
@@ -70,7 +65,6 @@ export default class Navbar extends Component {
         });
       } else {
         // User Logged in
-        console.log('Response NavBar', response.data);
         this.setState({
           user: response.data,
           loginStyle: { display: 'none' },
@@ -113,7 +107,8 @@ export default class Navbar extends Component {
                 Home
               </Link>
             </li>
-            <li className="navbar-item">
+            {/* Used for Development only */}
+            {/* <li className="navbar-item">
               <Link
                 to="/users"
                 className="nav-link"
@@ -121,8 +116,9 @@ export default class Navbar extends Component {
               >
                 Users List
               </Link>
-            </li>
-            <li className="navbar-item">
+            </li> */}
+            {/* Used for Development only */}
+            {/* <li className="navbar-item">
               <Link
                 to="/create"
                 className="nav-link"
@@ -130,8 +126,9 @@ export default class Navbar extends Component {
               >
                 Add User
               </Link>
-            </li>
-            <li className="navbar-item">
+            </li> */}
+            {/* Used for Development only */}
+            {/* <li className="navbar-item">
               <Link
                 to="/createCenter"
                 className="nav-link"
@@ -139,8 +136,9 @@ export default class Navbar extends Component {
               >
                 Add Center
               </Link>
-            </li>
-            <li className="navbar-item">
+            </li> */}
+            {/* Used for Development only */}
+            {/* <li className="navbar-item">
               <Link
                 to="/centers"
                 className="nav-link"
@@ -148,7 +146,7 @@ export default class Navbar extends Component {
               >
                 Centers
               </Link>
-            </li>
+            </li> */}
             <li className="navbar-item">
               <Link
                 to="/profile"
@@ -158,15 +156,6 @@ export default class Navbar extends Component {
                 Profile
               </Link>
             </li>
-            {/* <li className="navbar-item">
-              <Link
-                to="/"
-                className="nav-link"
-                style={this.state.user._id ? hideNav : showNav}
-              >
-                Log In
-              </Link>
-            </li> */}
             <li className="navbar-item">
               {/* <a href="#" className="nav-link" onClick={logout}>Log Out</a> */}
               <button
@@ -177,14 +166,6 @@ export default class Navbar extends Component {
                 Log Out
               </button>
             </li>
-            {/* <li className="navbar-item">
-              <span
-                className="nav-link"
-                style={this.state.user._id ? styleWelcome : hideNav}
-              >
-                Welcome {this.state.user.name}
-              </span>
-            </li> */}
           </ul>
         </div>
       </nav>

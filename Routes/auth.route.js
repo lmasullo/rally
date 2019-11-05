@@ -2,7 +2,7 @@
 const router = require('express').Router();
 const passport = require('passport');
 
-//Check if production or local
+// Check if production or local
 let API_URL = '';
 if (process.env.NODE_ENV === 'production') {
   API_URL = 'https://racquet-rally.herokuapp.com/';
@@ -36,7 +36,7 @@ router.get('/google/redirect', passport.authenticate('google'), (req, res) => {
   // res.redirect('http://localhost:3000/profile')
 
   // Using routeHelper.js to decide if on localhost or production
-  //const redirectURL = `${routeHelperFrontEnd()}main`;
+  // const redirectURL = `${routeHelperFrontEnd()}main`;
   res.redirect(`${API_URL}main`);
 });
 

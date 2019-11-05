@@ -1,3 +1,5 @@
+// This component used for development only
+// http://localhost:3000/users
 // Dependencies
 import React, { Component } from 'react';
 import { Link, Redirect } from 'react-router-dom';
@@ -45,6 +47,7 @@ const User = props => (
     <td>
       <Link to={`/edit/${props.users._id}`}>Edit</Link> |
       <button
+        type="button"
         onClick={() => {
           props.deleteUser(props.users._id);
         }}
@@ -74,7 +77,6 @@ export default class UserList extends Component {
     axios
       .get(API_URL, { withCredentials: true })
       .then(response => {
-        console.log(response.data);
         // User Not logged in, so redirect to login, by setting redirect to true, it triggers in render
         if (response.data === 'Not Logged In!') {
           console.log('no data');
@@ -98,7 +100,6 @@ export default class UserList extends Component {
     axios
       .delete(`${API_URL}${id}`)
       .then(res => {
-        console.log(res.data);
         // Delete the user from view by filtering out the deleted user
         this.setState({
           users: this.state.users.filter(el => el._id !== id),

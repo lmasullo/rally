@@ -68,7 +68,6 @@ function Home() {
           setRedirect(true);
         } else {
           // User Logged in
-          //! This is the logic to set isFavorite
           // Maps over the centers array and checks if it is in the user's centers array (using id) and then adds isFavorite true/false
           centersData.data = centersData.data.map(c => {
             const isFavorite = userData.data.centers.some(uc => uc === c._id);
@@ -78,7 +77,6 @@ function Home() {
           setCenters(centersData.data);
 
           // Set the user object in state
-          console.log('Response User Array: ', userData.data);
           setUser(userData.data);
 
           // Check if the user has a skill level entered, if not show toast
@@ -108,7 +106,6 @@ function Home() {
   function onChangeSaveCenter(e, centerId) {
     // See if the clicked center is already a favorite of the user
     const checkCenter = e.target.checked;
-    console.log(checkCenter);
 
     // Create object of the center's id to send to backend
     const newCenter = {
@@ -118,12 +115,9 @@ function Home() {
     // If not already a favorite, push to an array and then send to the home route to save
     if (checkCenter === true) {
       // Send to back-end to Update user's centers
-      //! save by ID, not name
       axios
         .post(`${API_URL}user/update/center/${user._id}`, newCenter)
         .then(res => {
-          console.log(res.data);
-          console.log(res.data.centers.length);
           // Set the setArrayLength state to re-trigger useEffect and re-render cards
           setArrayLength(res.data.centers.length);
         })
@@ -131,13 +125,9 @@ function Home() {
     } else {
       // Delete center
       // Send to back-end to Update user's centers
-      //! save by ID, not name
       axios
         .post(`${API_URL}user/delete/center/${user._id}`, newCenter)
         .then(res => {
-          console.log(res.data);
-          console.log(res.data.centers.length);
-
           // Set the setArrayLength state to re-trigger useEffect and re-render cards
           setArrayLength(res.data.centers.length);
         })
@@ -174,7 +164,9 @@ function Home() {
       <div className="container-fluid">
         <div className="row">
           <footer className="col-12">
-            <p className="mt-5 mb-3">Copyright &copy; 2019 Team Racquet Rally.</p>
+            <p className="mt-5 mb-3">
+              Copyright &copy; 2019 Team Racquet Rally.
+            </p>
           </footer>
         </div>
       </div>

@@ -10,6 +10,7 @@ if (process.env.NODE_ENV === 'production') {
   API_URL = 'http://localhost:4000/user/';
 }
 
+// CSS Styles
 const styleHTML = {
   height: '100%',
 };
@@ -120,7 +121,9 @@ class Login extends Component {
             >
               Edit Profile
             </a>
-            <p className="mt-5 mb-3">Copyright &copy; 2019 Team Racquet Rally.</p>
+            <p className="mt-5 mb-3">
+              Copyright &copy; 2019 Team Racquet Rally.
+            </p>
           </form>
         </div>
       </div>

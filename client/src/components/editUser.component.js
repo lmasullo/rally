@@ -30,13 +30,11 @@ const styleHidden = {
 // Functional Hooks Component
 function EditUser() {
   // Set initial State with Hooks
-  // const [user, setUser] = useState([]);
   const [userId, setUserId] = useState(0);
   const [userName, setUserName] = useState('');
   const [skillLevel, setSkillLevel] = useState(1);
   const [email, setEmail] = useState('');
   const [image, setImage] = useState('');
-  // const [userCenters, setUserCenters] = useState([]);
   const [availCenters, setAvailCenters] = useState([]);
   const [redirect, setRedirect] = useState(false);
   const [arrayLength, setArrayLength] = useState(0);
@@ -66,16 +64,12 @@ function EditUser() {
           userPromise,
         ]);
 
-        console.log(centersData.data);
-        console.log(userData.data);
-
         // Check if user logged in
         if (centersData.data === 'Not Logged In!') {
           console.log('No Data');
           setRedirect(true);
         } else {
           // User Logged in
-          //! This is the logic to set isFavorite
           // Maps over the centers array and checks if it is in the user's centers array (using id) and then adds isFavorite true/false
           centersData.data = centersData.data.map(c => {
             const isFavorite = userData.data.centers.some(uc => uc === c._id);
@@ -86,14 +80,11 @@ function EditUser() {
         }
 
         // Set the user object in state
-        console.log('Response User Array: ', userData.data);
-        // setUser(userData.data);
         setUserId(userData.data._id);
         setUserName(userData.data.name);
         setSkillLevel(userData.data.skillLevel);
         setImage(userData.data.image);
         setEmail(userData.data.email);
-        // setUserCenters(userData.data.centers);
         setArrayLength(userData.data.centers.length);
       } catch (e) {
         console.error(e); // 💩
@@ -115,9 +106,10 @@ function EditUser() {
   }
 
   // Set state when the image url changes
-  function onChangeImage(e) {
-    setImage(e.target.value);
-  }
+  // Development only
+  // function onChangeImage(e) {
+  //   setImage(e.target.value);
+  // }
 
   // Set state when the email changes
   function onChangeEmail(e) {
@@ -126,14 +118,9 @@ function EditUser() {
 
   // Set state when the center changes
   function onChangeCenter(e) {
-    //   // Need to save to the users collection
-    console.log('Check: ', e.target.value);
-    console.log('Check ID: ', e.target.id);
-
     // See if the clicked center is already a favorite of the user
     const checkCenter = e.target.checked;
     const centerId = e.target.id;
-    console.log(checkCenter);
 
     // Create object of the center's id to send to backend
     const newCenter = {
@@ -142,14 +129,10 @@ function EditUser() {
 
     // If not already a favorite, push to an array and then send to the home route to save
     if (checkCenter === true) {
-      console.log('true');
-
       // Send to back-end to Update user's centers
       axios
         .post(`${API_URL}user/update/center/${userId}`, newCenter)
         .then(res => {
-          console.log(res.data.centers);
-          console.log('Length: ', res.data.centers.length);
           // Set the setArrayLength state to re-trigger Component did Mount and re-render cards
           setArrayLength(res.data.centers.length);
           setShow(true);
@@ -179,8 +162,6 @@ function EditUser() {
     axios
       .post(`${API_URL}user/delete/center/${userId}`, newCenter)
       .then(res => {
-        console.log(res.data);
-        console.log('Length: ', res.data.centers.length);
         // Set the setArrayLength state to re-trigger useEffect and re-render cards
         setArrayLength(res.data.centers.length);
         setShow(true);
@@ -203,10 +184,6 @@ function EditUser() {
 
     // Go to profile
     history.push('/profile');
-
-    // Send back to Users List
-    // This would send to the backend route
-    // window.location = '/profile';
   }
 
   // Method when click Save Changes button
@@ -221,9 +198,6 @@ function EditUser() {
       image,
       email,
     };
-
-    console.log(newUser);
-    console.log(userId);
 
     // Send to back-end to Update user, look at routes/books.js
     axios
@@ -240,20 +214,20 @@ function EditUser() {
 
   return (
     <div>
-      <h1>Edit User</h1>
+      <h1>Edit Your Profile</h1>
       <form onSubmit={onSubmit}>
         <div className="form-group">
-          <span>User Name</span>
+          <span>Name</span>
           <input
             type="text"
             id="name"
-            className="form-control"
+            className="form-control mb-3"
             value={userName}
             onChange={onChangeName}
           ></input>
-          <span>Skill Level</span>
+          <span>My Skill Level</span>
           <select
-            className="form-control"
+            className="form-control mb-3"
             id="selSkill"
             onChange={onChangeSkillLevel}
             value={skillLevel}
@@ -264,19 +238,20 @@ function EditUser() {
             <option value="2">Intermediate (3-4.5)</option>
             <option value="3">Expert (Expert 5+)</option>
           </select>
-          <span>Image</span>
-          <input
+          {/* Only for development */}
+          {/* <span>Image</span> */}
+          {/* <input
             type="text"
             id="image"
             className="form-control"
             value={image}
             onChange={onChangeImage}
-          ></input>
+          ></input> */}
           <span>Email</span>
           <input
             type="text"
             id="email"
-            className="form-control"
+            className="form-control mb-3"
             value={email}
             onChange={onChangeEmail}
           ></input>
@@ -288,7 +263,7 @@ function EditUser() {
             message={toastMessage}
           />
 
-          <span>Available Centers</span>
+          <span>Choose Your Favorite Centers</span>
 
           {/* Loop over the Centers and display */}
           {availCenters.map(
