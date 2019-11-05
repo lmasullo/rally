@@ -135,9 +135,10 @@ function EditUser() {
         .then(res => {
           // Set the setArrayLength state to re-trigger Component did Mount and re-render cards
           setArrayLength(res.data.centers.length);
+          // Trigger the toast
           setShow(true);
           setToastStyle('display');
-          setToastMessage('Favorite Saved Successfully!');
+          setToastMessage('Favorite Court Saved Successfully!');
           setTimeout(function() {
             setShow(false);
             setToastStyle('hide');
@@ -166,7 +167,7 @@ function EditUser() {
         setArrayLength(res.data.centers.length);
         setShow(true);
         setToastStyle('display');
-        setToastMessage('Favorite Deleted Successfully!');
+        setToastMessage('Favorite Court Deleted Successfully!');
         setTimeout(function() {
           setShow(false);
           setToastStyle('hide');
@@ -202,7 +203,17 @@ function EditUser() {
     // Send to back-end to Update user, look at routes/books.js
     axios
       .post(`${API_URL}user/update/${userId}`, newUser)
-      .then(res => console.log(res.data))
+      .then(res => {
+        console.log(res.data);
+        // Trigger the toast
+        setShow(true);
+        setToastStyle('display');
+        setToastMessage('Changes Saved Successfully!');
+        setTimeout(function() {
+          setShow(false);
+          setToastStyle('hide');
+        }, 1500);
+      })
       .catch(err => console.log(err));
   }
 
