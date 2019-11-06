@@ -183,6 +183,7 @@ function CenterDetails() {
         <div className="container">
           <h1 className="display-4">{center.centerName}</h1>
           <p className="lead">Welcome!</p>
+          <p>{center.description}</p>
           <div className="text-left ml-4">
             <input
               name="chkSaveMe"
