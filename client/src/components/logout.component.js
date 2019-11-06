@@ -20,7 +20,7 @@ const styleBody = {
   alignItems: 'center',
   paddingTop: '40px',
   paddingBottom: '40px',
-  backgroundColor: '#f5f5f5',
+  backgroundColor: 'none',
 };
 
 const styleForm = {
