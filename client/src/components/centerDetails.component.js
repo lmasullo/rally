@@ -14,7 +14,7 @@ if (process.env.NODE_ENV === 'production') {
 
 // Method to display each Center's Card on the page
 // This is called in the return statement at the bottom of the page
-function userList(users) {
+  function userList(users) {
   // Loop over the users array
   return users.map(currentUser => (
     // Send props to the userCard component, imported from components
@@ -26,6 +26,7 @@ function userList(users) {
     />
   ));
 }
+
 
 // Functional Component with Hooks
 function CenterDetails() {
@@ -90,7 +91,7 @@ function CenterDetails() {
 
           // Set centers state
           setCenter(centerData.data);
-          // console.log(centerData.data);
+          console.log(centerData.data);
 
           // Set the user object in state
           console.log('Response User Array: ', usersData.data);
@@ -117,6 +118,46 @@ function CenterDetails() {
     // Use arrayLength state to tell react to re-run useEffect after each change of the user's array
   }, [id]); // End Use Effect
 
+  function onChangeSaveCenter(e, centerId) {
+    // See if the clicked center is already a favorite of the user
+    const checkCenter = e.target.checked;
+    console.log(checkCenter);
+
+    // Create object of the center's id to send to backend
+    const newCenter = {
+      id: centerId,
+    };
+
+    // If not already a favorite, push to an array and then send to the home route to save
+    if (checkCenter === true) {
+      // Send to back-end to Update user's centers
+      //! save by ID, not name
+      axios
+        .post(`${API_URL}user/update/center/${user._id}`, newCenter)
+        .then(res => {
+          console.log(res.data);
+          console.log(res.data.centers.length);
+          // Set the setArrayLength state to re-trigger useEffect and re-render cards
+          setArrayLength(res.data.centers.length);
+        })
+        .catch(err => console.log(err));
+    } else {
+      // Delete center
+      // Send to back-end to Update user's centers
+      //! save by ID, not name
+      axios
+        .post(`${API_URL}user/delete/center/${user._id}`, newCenter)
+        .then(res => {
+          console.log(res.data);
+          console.log(res.data.centers.length);
+
+          // Set the setArrayLength state to re-trigger useEffect and re-render cards
+          setArrayLength(res.data.centers.length);
+        })
+        .catch(err => console.log(err));
+    }
+  }
+
   // Check if redirect state is true
   if (redirect) {
     return <Redirect to="/" />;
@@ -131,11 +172,14 @@ function CenterDetails() {
           <input
             type="checkbox"
             className="form-check-input"
-            id={props.centers._id}
-            value={props.centers.centerName}
-            onChange={e => props.onChangeSaveCenter(e, props.centerId)}
-            checked={props.isFavorite ? 'checked' : ''}
+            id={centers._id}
+            value={centers.centerName}
+            onChange={e => onChangeSaveCenter(e, centerId)}
+            checked={isFavorite ? 'checked' : ''}
           />
+          <label htmlFor="chkSaveMe" className="form-check-label">
+            Favorite
+          </label>
         </div>
       </div>
       <div className="container">
