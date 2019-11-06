@@ -11,7 +11,7 @@ A tennis app that puts people together to set up matches based on experience lev
 - run create react-app
 - localhost 4000
 - install npm packages in terminal
--
+- install dependant packages from the list if react hasnt alreday 
 
 ## Build technology:
 
@@ -29,12 +29,10 @@ A tennis app that puts people together to set up matches based on experience lev
 - jsx
 - express
 - dotenv
--
 
 ## Npm packages needed:
 
 - react.js- frameowrk behind app
--
 
 ## Instructions:
 
@@ -42,8 +40,11 @@ A tennis app that puts people together to set up matches based on experience lev
 - run react app
 - navigate to localhost 4000
 - install npm dependant packages
-- oauth2 will allow you to save a unique log in whenever u connect
--
+- once the app is deployed you will log in using oauth google and create an account
+- there you will see multiple court locations on the home screen and the links to each 
+- thge profile page will show your level of experience your google account profile pic and email/name
+- you can add courts that you have enjoyed in the favorites section below
+- you can click map to get exact locations or naviagtion routes with google maps
 
 ## Github link:
 
