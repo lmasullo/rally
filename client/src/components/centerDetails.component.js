@@ -127,6 +127,15 @@ function CenterDetails() {
         <div className="container">
           <h1 className="display-4">{center.centerName}</h1>
           <p className="lead">Welcome!</p>
+          <br></br>
+          <input
+            type="checkbox"
+            className="form-check-input"
+            id={props.centers._id}
+            value={props.centers.centerName}
+            onChange={e => props.onChangeSaveCenter(e, props.centerId)}
+            checked={props.isFavorite ? 'checked' : ''}
+          />
         </div>
       </div>
       <div className="container">
