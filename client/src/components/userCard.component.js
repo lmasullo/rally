@@ -19,7 +19,9 @@ function UserCard(props) {
           <p className="card-text">Skill Level: {props.users.skillLevel}</p>
           <p className="card-text">
             Contact:{' '}
-            <a href={`mailto:${props.users.email}`}>{props.users.email}</a>
+            <a target="_blank" href={`mailto:${props.users.email}`}>
+              {props.users.email}
+            </a>
           </p>
         </div>
       </div>

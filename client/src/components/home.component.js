@@ -3,9 +3,12 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Redirect } from 'react-router-dom';
 // Import the centerCard component
+import VideoBg from 'reactjs-videobg';
 import Center from './centerCard.component';
 // Import the Success Toast component
 import RallyToast from './toast.component';
+import poster from '../images/poster.jpg';
+import '../css/style.css';
 
 // Check if production or local
 let API_URL = '';
@@ -142,6 +145,7 @@ function Home() {
 
   return (
     <div>
+      <VideoBg poster={poster}></VideoBg>
       <div className="container">
         <div className="row">
           <div className="col-12">
