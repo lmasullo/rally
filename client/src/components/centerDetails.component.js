@@ -31,12 +31,11 @@ function userList(users) {
 function CenterDetails() {
   // Set initial State with Hooks
   const [center, setCenter] = useState('');
-  // const [currentUser, setCurrentUser] = useState('');
+  const [currentUser, setCurrentUser] = useState('');
   const [users, setUsers] = useState([]);
-
   const [redirect, setRedirect] = useState('');
-
-  // const [arrayLength, setArrayLength] = useState(0);
+  const [arrayLength, setArrayLength] = useState(0);
+  const [isChecked, setIsChecked] = useState(false);
 
   // Get the url id parameter
   const { id } = useParams();
@@ -51,16 +50,18 @@ function CenterDetails() {
         const centerPromise = axios(`${API_URL}center/${id}`, {
           withCredentials: true,
         });
-        // const currentUserPromise = axios(`${API_URL}user/auth`, {
-        //   withCredentials: true,
-        // });
+
+        const currentUserPromise = axios(`${API_URL}user/auth`, {
+          withCredentials: true,
+        });
+
         const usersPromise = axios(`${API_URL}user`, {
           withCredentials: true,
         });
         // await all promises to come back and destructure the result into their own variables
-        const [centerData, usersData] = await Promise.all([
+        const [centerData, currentUserData, usersData] = await Promise.all([
           centerPromise,
-          // currentUserPromise,
+          currentUserPromise,
           usersPromise,
         ]);
         // Check if user logged in
@@ -70,16 +71,31 @@ function CenterDetails() {
         } else {
           // User Logged in
           //! This is the logic to set isFavorite
+
+          console.log('Center!!:', centerData.data);
+
           // Maps over the centers array and checks if it is in the user's centers array (using id) and then adds isFavorite true/false
           // centerData.data = centerData.data.map(c => {
           //   const isFavorite = usersData.data.centers.some(uc => uc === c._id);
           //   return { isFavorite, ...c };
           // });
+
+          // Look at current user's array of centers
+          // Check if this center's id is in there
+          const isFavorite = currentUserData.data.centers.some(
+            uc => uc === center._id
+          );
+
+          console.log(isFavorite);
+          if (isFavorite) {
+            setIsChecked(true);
+          }
+
           // console.log(usersData.data);
           // console.log(id);
           // console.log(usersData.data[0].centers);
 
-          // setCurrentUser(currentUserData);
+          setCurrentUser(currentUserData);
 
           usersData.data = usersData.data.map(function(c, index) {
             const isAffiliated = usersData.data[index].centers.some(
@@ -90,7 +106,7 @@ function CenterDetails() {
 
           // Set centers state
           setCenter(centerData.data);
-          // console.log(centerData.data);
+          console.log(centerData.data);
 
           // Set the user object in state
           console.log('Response User Array: ', usersData.data);
@@ -115,7 +131,47 @@ function CenterDetails() {
     // Call the async/await function
     go();
     // Use arrayLength state to tell react to re-run useEffect after each change of the user's array
-  }, [id]); // End Use Effect
+  }, [arrayLength, center._id, id]); // End Use Effect
+
+  function onChangeSaveCenter(e, centerId) {
+    // See if the clicked center is already a favorite of the user
+    const checkCenter = e.target.checked;
+    console.log(checkCenter);
+
+    // Create object of the center's id to send to backend
+    const newCenter = {
+      id: centerId,
+    };
+
+    // If not already a favorite, push to an array and then send to the home route to save
+    if (checkCenter === true) {
+      // Send to back-end to Update user's centers
+      //! save by ID, not name
+      axios
+        .post(`${API_URL}user/update/center/${currentUser._id}`, newCenter)
+        .then(res => {
+          console.log(res.data);
+          console.log(res.data.centers.length);
+          // Set the setArrayLength state to re-trigger useEffect and re-render cards
+          setArrayLength(res.data.centers.length);
+        })
+        .catch(err => console.log(err));
+    } else {
+      // Delete center
+      // Send to back-end to Update user's centers
+      //! save by ID, not name
+      axios
+        .post(`${API_URL}user/delete/center/${currentUser._id}`, newCenter)
+        .then(res => {
+          console.log(res.data);
+          console.log(res.data.centers.length);
+
+          // Set the setArrayLength state to re-trigger useEffect and re-render cards
+          setArrayLength(res.data.centers.length);
+        })
+        .catch(err => console.log(err));
+    }
+  }
 
   // Check if redirect state is true
   if (redirect) {
@@ -127,7 +183,30 @@ function CenterDetails() {
         <div className="container">
           <h1 className="display-4">{center.centerName}</h1>
           <p className="lead">Welcome!</p>
-          <p>{center.description}</p>
+          <div className="text-left ml-4">
+            <input
+              name="chkSaveMe"
+              type="checkbox"
+              className="form-check-input"
+              id={center._id}
+              value={center.centerName}
+              onChange={e => onChangeSaveCenter(e, center._id)}
+              checked={isChecked ? 'checked' : ''}
+            />
+            <label htmlFor="chkSaveMe" className="form-check-label">
+              Favorite
+            </label>
+          </div>
+          <div className="mt-3">
+            <a
+              target="_blank"
+              rel="noopener noreferrer"
+              href={center.mapLink}
+              className="btn btn-primary"
+            >
+              Map
+            </a>
+          </div>
         </div>
       </div>
       <div className="container">
@@ -135,8 +214,16 @@ function CenterDetails() {
           <table className="col-12 table">
             <tbody>
               <tr>
-                <th scope="row">Address</th>
-                <td>{center.addressLink}</td>
+                <th scope="row">Web Site</th>
+                <td>
+                  <a
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    href={center.addressLink}
+                  >
+                    {center.centerName}
+                  </a>
+                </td>
               </tr>
               <tr>
                 <th scope="row">Hours</th>
