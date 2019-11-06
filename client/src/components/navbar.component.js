@@ -83,7 +83,6 @@ export default class Navbar extends Component {
             height="40"
             alt="Racquet Rally"
           />
-          <span className="ml-3">Racquet Rally</span>
         </Link>
         <button
           className="navbar-toggler"

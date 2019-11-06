@@ -50,8 +50,13 @@ function Center(props) {
             value={props.centers.centerName}
             onChange={e => props.onChangeSaveCenter(e, props.centerId)}
             checked={props.isFavorite ? 'checked' : ''}
+            hidden={props.isHidden}
           />
-          <label htmlFor="chkSaveMe" className="form-check-label">
+          <label
+            htmlFor="chkSaveMe"
+            className="form-check-label"
+            hidden={props.isHidden}
+          >
             Favorite
           </label>
         </div>
