@@ -38,6 +38,7 @@ Frontend:
 
 - Log in using Google and your account will be created
 - The Home Page displays the tennis centers. You can click on each center for more details and set each as a favorite.
+- On the Center Detail Page you can see all the players that have also made this center a favorite and can easily email them to set up a match.
 - The Web Site and Map buttons will allow you to visit the center's web site and its Google Map location
 - From the Profile Page, you can set your level of experience and contact email. You can also add courts that you have enjoyed to your favorites list.
 
@@ -53,7 +54,7 @@ Frontend:
 
 ## Group members:
 
-- Bikash kadariya
+- Bikash Kadariya
 - Larry Masullo
 - Jacob Rix
 - Thai Phan
