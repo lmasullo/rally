@@ -1,55 +1,53 @@
-# Project 3
+# Project Title
 
-**Rally - A react app for finding other players and tennis courts in the area to set up matches**
+**Racquet Rally - A React App for Tennis Players**
 
 ## Description:
 
-A tennis app that puts people together to set up matches based on experience levels and the ability to choose courts in the area as well as seeing the courts availability.
+Racquet Rally allows you to connect with other tennis players of your skill level at the Austin area tennis centers.
 
 ## Installing:
 
-- run create react-app
-- localhost 4000
-- install npm packages in terminal
--
+- Clone this repo
+- Run npm install
+- Run npm start
+- Your node server will be on localhost:4000
+- The React App will run on localhost:3000
 
-## Build technology:
+## Built With:
 
-- This app is built upon React and the React bootsrap
-- oauth2
-- react.js
-- axios
-- mongodb
-- mongoose
-- react-router-dom
-- node.js
-- heroku deployed
-- github deployed
-- eslint
-- jsx
-- express
-- dotenv
--
+Backend:
 
-## Npm packages needed:
+- Node
+- Express
+- MongoDB
+- Mongoose
+- Dotenv
+- Oauth2.0
+- Passport
 
-- react.js- frameowrk behind app
--
+Frontend:
+
+- React
+- React bootsrap
+- JSX
+- Axios
+- Reactjs-videobg
 
 ## Instructions:
 
-- clone the repo on github or the heroku deployed link
-- run react app
-- navigate to localhost 4000
-- install npm dependant packages
-- oauth2 will allow you to save a unique log in whenever u connect
--
+- Log in using Google and your account will be created
+- The Home Page displays the tennis centers. You can click on each center for more details and set each as a favorite.
+- The Web Site and Map buttons will allow you to visit the center's web site and its Google Map location
+- From the Profile Page, you can set your level of experience and contact email. You can also add courts that you have enjoyed to your favorites list.
+
+![alt text](client/public/images/rally-readme.png "Home Page")
 
 ## Github link:
 
 - https://github.com/lmasullo/rally.git
 
-## Heroku deployed link:
+## Heroku Deployed link:
 
 - https://racquet-rally.herokuapp.com/
 
@@ -61,4 +59,15 @@ A tennis app that puts people together to set up matches based on experience lev
 - Thai Phan
 - Thomas Bradford
 
-## List of things we want to add on later:
+## Versioning
+
+We use [SemVer](http://semver.org/) for versioning.
+Current version is 1.0
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+
+## Acknowledgments
+
+Thanks to the Instructors and Teaching Assistants in the UT Full Stack Coding Bootcamp for their support.
